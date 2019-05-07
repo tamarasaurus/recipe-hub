@@ -1,6 +1,6 @@
 # recipe-hub
 
-Scrape recipes to https://schema.org/Recipe and generate shopping lists
+Scrape and store recipes to generate shopping lists
 
 ### Sites
 - [ ] HelloFresh
