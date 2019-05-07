@@ -4,8 +4,19 @@
   "description": "Scraper for recipe-hub",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "scrape": "ts-node index.ts",
+    "lint-fix": "tslint --fix --project tslint.json"
   },
   "author": "Tamara Robichet",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "contract-scraper": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.0",
+    "ts-node": "^8.1.0",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.4.5"
+  }
 }
