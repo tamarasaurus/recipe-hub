@@ -1,0 +1,17 @@
+{
+  "name": "Recipe name",
+  "duration": "1 hour",
+  "ingredients": [
+    {
+      "name": "Cubed carrot",
+      "amount": 1
+    }
+  ],
+  "portions": 2,
+  "url": "http://recipes.com/blah",
+  "source": "http://recipes.com",
+  "category": "dessert",
+  "cuisine": "french",
+  "calories": 240,
+  "difficulty": 0.5
+}

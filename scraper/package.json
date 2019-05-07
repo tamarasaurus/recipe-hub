@@ -1,0 +1,11 @@
+{
+  "name": "recipe-hub-scraper",
+  "version": "1.0.0",
+  "description": "Scraper for recipe-hub",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Tamara Robichet",
+  "license": "MIT"
+}

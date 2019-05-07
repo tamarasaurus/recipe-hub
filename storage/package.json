@@ -1,0 +1,11 @@
+{
+  "name": "recipe-hub-storage",
+  "version": "1.0.0",
+  "description": "Database storage for recipe-hub",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "Tamara Robichet",
+  "license": "MIT"
+}
