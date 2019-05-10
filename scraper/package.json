@@ -10,7 +10,9 @@
   "author": "Tamara Robichet",
   "license": "MIT",
   "dependencies": {
-    "contract-scraper": "^1.0.3"
+    "array-flatten": "^2.1.2",
+    "contract-scraper": "^1.0.3",
+    "moment": "^2.24.0"
   },
   "devDependencies": {
     "@types/moment": "^2.13.0",
