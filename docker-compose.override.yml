@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  monitor:
+    image: scraper
+    ports:
+      - 4567:4567
+    command: 'npm run monitor'
+    depends_on:
+      - scraper
+      - postgres
+      - redis
+
+  redis:
+    ports:
+      - 6379:6379
+
+  scraper:
+    volumes:
+      - ./scraper:/usr/src/app

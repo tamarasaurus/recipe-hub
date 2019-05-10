@@ -6,20 +6,19 @@ import * as moment from 'moment';
 import * as flatten from 'array-flatten';
 import * as Queue from 'bull';
 
-const scrapingQueue = new Queue('scraping', 'redis://127.0.0.1:6379');
+const scrapingQueue = new Queue('scraping', process.env.REDIS_URL);
 
 scrapingQueue.process((job: any, done) => {
+  const { url, contract } = job.data
 
-  const scraper = new Scraper(job.url, job.contract, {
+  const scraper = new Scraper(url, contract, {
     'csv': csv,
     'ingredient-list': ingredientList,
     'duration': duration,
   })
 
-  console.log(job.url);
-
   scraper.scrapePage().then(items => {
-    console.log('scraped items', items)
+    // Pass the url here
     done(null, items)
   }).catch((e: Error) => {
     done(e, [])
@@ -27,7 +26,9 @@ scrapingQueue.process((job: any, done) => {
 });
 
 scrapingQueue.on('completed', (job: any, result) => {
-  console.log(job.url, result)
+  console.log('complete', job, result)
+}).on('error', (error: Error) => {
+  console.log('error', error)
 })
 
 const weeks = [

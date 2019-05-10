@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+
+  scraper:
+    image: scraper
+    build:
+      context: .
+      dockerfile: scraper/Dockerfile
+    environment:
+      REDIS_URL: 'redis://cache:6379'
+      POSTGRES_HOST: 'postgres'
+    depends_on:
+      - redis
+
+  redis:
+    image: redis
+    container_name: cache
+
+volumes:
+  postgres: ~

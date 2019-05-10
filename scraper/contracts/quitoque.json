@@ -1,6 +1,6 @@
 {
     "itemSelector": ".recipe",
-    "scrapeAfterLoading": true,
+    "scrapeAfterLoading": false,
     "attributes": {
         "name": {
             "type": "text",
