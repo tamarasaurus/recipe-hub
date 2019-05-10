@@ -9,33 +9,33 @@ import * as Queue from 'bull';
 const scrapingQueue = new Queue('scraping', process.env.REDIS_URL);
 
 scrapingQueue.process((job: any, done) => {
-  const { url, contract } = job.data
+  const { url, contract } = job.data;
 
   const scraper = new Scraper(url, contract, {
-    'csv': csv,
+    csv,
+    duration,
     'ingredient-list': ingredientList,
-    'duration': duration,
-  })
+  });
 
-  scraper.scrapePage().then(items => {
+  scraper.scrapePage().then((items: any[]) => {
     // Pass the url here
-    done(null, items)
+    done(null, items);
   }).catch((e: Error) => {
-    done(e, [])
+    done(e, []);
   });
 });
 
 scrapingQueue.on('completed', (job: any, result) => {
-  console.log('complete', job, result)
+  console.log('complete', job, result);
 }).on('error', (error: Error) => {
-  console.log('error', error)
-})
+  console.log('error', error);
+});
 
 const weeks = [
   moment().add(1, 'week').startOf('isoWeek').format('YYYY-MM-DD'),
   moment().add(2, 'week').startOf('isoWeek').format('YYYY-MM-DD'),
-  moment().add(3, 'week').startOf('isoWeek').format('YYYY-MM-DD')
-]
+  moment().add(3, 'week').startOf('isoWeek').format('YYYY-MM-DD'),
+];
 
 const contracts = {
   quitoque: {
@@ -45,27 +45,27 @@ const contracts = {
       `https://www.quitoque.fr/au-menu/2_personnes/${weeks[0]}`,
       `https://www.quitoque.fr/au-menu/2_personnes/${weeks[1]}`,
       `https://www.quitoque.fr/au-menu/2_personnes/${weeks[2]}`,
-    ]
-  }
-}
+    ],
+  },
+};
 
-function collectLinks(url: string, contract) {
+function collectLinks(url: string, contract: any) {
   const scraper = new Scraper(url, contract);
   return scraper.scrapePage();
 }
 
 async function scrapeRecipes() {
   const linkPromises = contracts.quitoque.urls.map((url: string) => {
-    return collectLinks(url, contracts.quitoque.links)
+    return collectLinks(url, contracts.quitoque.links);
   });
 
   const links = await Promise.all(linkPromises).then((...values) => {
     return flatten(values).map((url: any) => url.link).filter((url: string) => url !== null);
-  })
+  });
 
   links.forEach((url: string) => scrapingQueue.add({
-    url, contract: contracts.quitoque.recipes
-  }))
+    url, contract: contracts.quitoque.recipes,
+  }));
 }
 
 scrapeRecipes();
