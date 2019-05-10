@@ -14,9 +14,15 @@ function collectPagesToScrape() {
 }
 
 function scrapePage(url: string, contract) {
-  const scraper = new Scraper(url, contract)
+  const scraper = new Scraper(url, contract, {
+    list: function() {
+      this.value = ''
+    }
+  })
 
-  console.log(url, contract)
+  scraper.scrapePage().then(items => {
+    console.log('scraped items', items)
+  })
 }
 
 scrapePage(sources.quitoque.links[0], sources.quitoque.contract)

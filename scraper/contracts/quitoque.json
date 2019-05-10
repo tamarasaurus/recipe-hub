@@ -1,3 +1,48 @@
 {
-
+    "itemSelector": ".recipe",
+    "scrapeAfterLoading": false,
+    "attributes": {
+        "name": {
+            "type": "text",
+            "selector": ".recipe__title"
+        },
+        "duration": {
+            "type": "text",
+            "selector": ".recipe__description"
+        },
+        "ingredients": {
+            "type": "list",
+            "selector": ".recipe__articles, .recipe__kitchen"
+        },
+        "portions": {
+            "type": "text",
+            "selector": "[data-nbpersons]",
+            "attribute": "value"
+        },
+        "url": {
+            "type": "link",
+            "selector": ".recipe__articles",
+            "data": {
+                "name": "recipe",
+                "key": "slug"
+            }
+        },
+        "imageUrl": {
+            "type": "link",
+            "selector": ".recipe__img--img",
+            "attribute": "src"
+        },
+        "category": {
+            "type": "text",
+            "selector": ".recipe__tags"
+        },
+        "calories": {
+            "type": "text",
+            "selector": ".calories"
+        },
+        "difficulty": {
+            "type": "text",
+            "selector": ".difficulty"
+        }
+    }
 }
