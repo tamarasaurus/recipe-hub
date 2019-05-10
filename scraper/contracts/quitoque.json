@@ -1,17 +1,17 @@
 {
     "itemSelector": ".recipe",
-    "scrapeAfterLoading": false,
+    "scrapeAfterLoading": true,
     "attributes": {
         "name": {
             "type": "text",
             "selector": ".recipe__title"
         },
         "duration": {
-            "type": "text",
-            "selector": ".recipe__description"
+            "type": "duration",
+            "selector": ".js-waitingTime"
         },
         "ingredients": {
-            "type": "list",
+            "type": "ingredient-list",
             "selector": ".recipe__articles, .recipe__kitchen"
         },
         "portions": {
@@ -32,8 +32,8 @@
             "selector": ".recipe__img--img",
             "attribute": "src"
         },
-        "category": {
-            "type": "text",
+        "categories": {
+            "type": "csv",
             "selector": ".recipe__tags"
         },
         "calories": {
