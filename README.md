@@ -4,7 +4,7 @@ Scrape and store recipes to generate shopping lists
 
 ### Sites
 - [ ] HelloFresh
-- [ ] Quitoque 
+- [x] Quitoque 
 - [ ] Rutabago
 - [ ] Les commis
 - [ ] Bon Appetit
