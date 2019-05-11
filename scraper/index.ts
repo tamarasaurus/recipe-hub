@@ -47,6 +47,11 @@ function collectLinks(url: string, contract: any): Promise<string[]> {
 }
 
 const contracts = {
+  lescommis: {
+    indexContract: require('./contracts/lescommis-index.json'),
+    index: 'https://lescommis.com/cookbook/recettes/',
+    recipeContract: require('./contracts/lescommis.json'),
+  },
   hellofresh: {
     indexContract: require('./contracts/hellofresh-index.json'),
     index: 'https://www.hellofresh.fr/recipes/search/?order=-date',

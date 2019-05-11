@@ -1,0 +1,10 @@
+{
+    "itemSelector": ".cookbook-recipes .col-xs-12 a",
+    "scrapeAfterLoading": true,
+    "attributes": {
+        "link": {
+            "type": "link",
+            "attribute": "href"
+        }
+    }
+}

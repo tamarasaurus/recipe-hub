@@ -1,0 +1,30 @@
+{
+    "itemSelector": "#recipe-details",
+    "scrapeAfterLoading": false,
+    "attributes": {
+        "name": {
+            "type": "text",
+            "selector": ".recipe-name h1[itemprop=\"name\"]"
+        },
+        "duration": {
+            "type": "duration",
+            "selector": "span[itemprop=\"totalTime\"] + .text-bold"
+        },
+        "ingredients": {
+            "itemSelector": ".recipe-ingredients tbody tr:not(tr:first-child)",
+            "attributes": {
+                "label": { "type": "text", "selector": "[itemprop=\"recipeIngredient\"]" },
+                "quantity": { "type": "text", "selector": ".td_quantity_for_2" }
+            }
+        },
+        "portions": {
+            "type": "digit",
+            "selector": ".recipe-ingredients tbody tr:first-child td:nth-child(2)"
+        },
+        "imageUrl": {
+            "type": "link",
+            "selector": ".recipe-image",
+            "attribute": "src"
+        }
+    }
+}
