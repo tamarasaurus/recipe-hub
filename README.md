@@ -6,6 +6,6 @@ Scrape and store recipes to generate shopping lists
 - [x] HelloFresh
 - [x] Quitoque
 - [x] Les commis
-- [ ] Bon Appetit
+- [x] Bon Appetit
 - [ ] Blue Apron
 - [ ] Foodette
