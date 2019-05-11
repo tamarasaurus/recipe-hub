@@ -41,7 +41,7 @@ const json = {
   bonappetit: {
     parser: parseBonAppetit,
     itemProperty: 'items',
-    url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=2'
+    url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=500',
   },
 };
 
@@ -100,7 +100,6 @@ async function scrapeJSONResults() {
   const parsedResults: any[] = [];
 
   for (const [name, options] of Object.entries(json)) {
-    console.log(name, options);
     const results = await request.get({
       url: options.url,
       json: true,
@@ -114,6 +113,5 @@ async function scrapeJSONResults() {
   console.log(parsedResults);
 }
 
-// scrapeHTMLPages();
-
 scrapeJSONResults();
+scrapeHTMLPages();

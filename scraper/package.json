@@ -13,10 +13,12 @@
   "dependencies": {
     "bull": "^3.9.1",
     "contract-scraper": "^1.0.4",
+    "jsonpath": "^1.0.1",
     "request-promise": "^4.2.4"
   },
   "devDependencies": {
     "@types/bull": "^3.5.13",
+    "@types/jsonpath": "^0.2.0",
     "@types/node": "^12.0.0",
     "@types/request-promise": "^4.1.43",
     "bull-arena": "^2.6.2",
