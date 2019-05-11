@@ -12,7 +12,7 @@
   "license": "MIT",
   "dependencies": {
     "bull": "^3.9.1",
-    "contract-scraper": "github:tamarasaurus/contract-scraper#expose-api"
+    "contract-scraper": "^1.0.4"
   },
   "devDependencies": {
     "@types/bull": "^3.5.13",

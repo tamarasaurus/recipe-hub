@@ -34,10 +34,6 @@
         "calories": {
             "type": "digit",
             "selector": "#nutritionDetails .nutrition__detail:first-child .nutrition__value"
-        },
-        "difficulty": {
-            "type": "text",
-            "selector": ".difficulty"
         }
     }
 }

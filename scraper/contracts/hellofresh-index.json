@@ -1,10 +1,10 @@
 {
-    "itemSelector": ".container .product-list .recipe-container",
+    "itemSelector": "[data-test-id=\"search-result\"] + div div div div",
     "scrapeAfterLoading": true,
     "attributes": {
         "link": {
             "type": "link",
-            "selector": ".product__image-container > a",
+            "selector": "a",
             "attribute": "href"
         }
     }

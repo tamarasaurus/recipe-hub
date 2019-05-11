@@ -1,43 +1,39 @@
 {
-    "itemSelector": ".recipe",
-    "scrapeAfterLoading": false,
+    "itemSelector": "body > div",
+    "scrapeAfterLoading": true,
     "attributes": {
         "name": {
             "type": "text",
-            "selector": ".recipe__title"
+            "selector": "[data-test-id=\"recipeDetailFragment.recipe-name\"]"
         },
         "duration": {
             "type": "duration",
-            "selector": ".js-waitingTime"
+            "selector": "span:contains('minutes')"
         },
         "ingredients": {
-            "itemSelector": ".recipe__articles .article, .recipe__kitchen .article",
+            "itemSelector": "[data-test-id=\"recipeDetailFragment.ingredients\"] > div:nth-child(4) > div > div",
             "attributes": {
-                "label": { "type": "label", "selector": ".article__label" },
-                "quantity": { "type": "quantity", "selector": ".article__quantity" }
+                "label": { "type": "text", "selector": "div p:nth-child(2)" },
+                "quantity": { "type": "text", "selector": "div p:nth-child(1)" }
             }
         },
         "portions": {
             "type": "digit",
-            "selector": "[data-nbpersons]",
-            "attribute": "value"
+            "selector": "[data-test-id=\"recipeDetailFragment.ingredients\"] button[checked]"
         },
         "imageUrl": {
             "type": "link",
-            "selector": ".recipe__img--img",
+            "selector": "img[srcset]",
             "attribute": "src"
         },
         "categories": {
             "type": "csv",
-            "selector": ".recipe__tags"
+            "selector": "[data-id^=\"recipeDetailFragment.breadcrumbs\"]",
+            "attribute": "title"
         },
         "calories": {
             "type": "digit",
-            "selector": "#nutritionDetails .nutrition__detail:first-child .nutrition__value"
-        },
-        "difficulty": {
-            "type": "text",
-            "selector": ".difficulty"
+            "selector": "[data-test-id=\"recipeDetailFragment.nutrition-values\"] div:nth-child(3) div div:nth-child(3) span:nth-child(2)"
         }
     }
 }
