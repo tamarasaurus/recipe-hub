@@ -11,21 +11,16 @@
             "selector": ".js-waitingTime"
         },
         "ingredients": {
-            "type": "ingredient-list",
-            "selector": ".recipe__articles, .recipe__kitchen"
+            "itemSelector": ".recipe__articles .article",
+            "attributes": {
+                "label": { "type": "text", "selector": ".article__label" },
+                "quantity": { "type": "text", "selector": ".article__quantity" }
+            }
         },
         "portions": {
-            "type": "text",
+            "type": "digit",
             "selector": "[data-nbpersons]",
             "attribute": "value"
-        },
-        "url": {
-            "type": "link",
-            "selector": ".recipe__articles",
-            "data": {
-                "name": "recipe",
-                "key": "slug"
-            }
         },
         "imageUrl": {
             "type": "link",

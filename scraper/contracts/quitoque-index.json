@@ -1,0 +1,11 @@
+{
+    "itemSelector": ".container .product-list .recipe-container",
+    "scrapeAfterLoading": true,
+    "attributes": {
+        "link": {
+            "type": "link",
+            "selector": ".product__image-container > a",
+            "attribute": "href"
+        }
+    }
+}

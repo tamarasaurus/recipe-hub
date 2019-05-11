@@ -1,70 +1,68 @@
+import * as Queue from 'bull';
+
 import Scraper from 'contract-scraper';
 import csv from './attributes/csv';
-import ingredientList from './attributes/ingredient-list';
 import duration from './attributes/duration';
-import * as moment from 'moment';
-import * as flatten from 'array-flatten';
-import * as Queue from 'bull';
 
 const scrapingQueue = new Queue('scraping', process.env.REDIS_URL);
 
 scrapingQueue.process((job: any, done) => {
   const { url, contract } = job.data;
 
-  const scraper = new Scraper(url, contract, {
-    csv,
-    duration,
-    'ingredient-list': ingredientList,
-  });
+  const scraper = new Scraper(url, contract, { csv, duration });
 
   scraper.scrapePage().then((items: any[]) => {
-    // Pass the url here
-    done(null, items);
+    const mappedItems = items.map((item: any) => {
+      item.url = url;
+
+      return item;
+    })
+    done(null, mappedItems);
   }).catch((e: Error) => {
     done(e, []);
   });
 });
 
 scrapingQueue.on('completed', (job: any, result) => {
-  console.log('complete', job, result);
+  console.log('complete', job.data.url);
 }).on('error', (error: Error) => {
   console.log('error', error);
 });
 
-const weeks = [
-  moment().add(1, 'week').startOf('isoWeek').format('YYYY-MM-DD'),
-  moment().add(2, 'week').startOf('isoWeek').format('YYYY-MM-DD'),
-  moment().add(3, 'week').startOf('isoWeek').format('YYYY-MM-DD'),
-];
-
 const contracts = {
   quitoque: {
-    links: require('./contracts/quitoque-link.json'),
-    recipes: require('./contracts/quitoque.json'),
-    urls: [
-      `https://www.quitoque.fr/au-menu/2_personnes/${weeks[0]}`,
-      `https://www.quitoque.fr/au-menu/2_personnes/${weeks[1]}`,
-      `https://www.quitoque.fr/au-menu/2_personnes/${weeks[2]}`,
-    ],
+    indexContract: require('./contracts/quitoque-index.json'),
+    index: 'https://www.quitoque.fr/au-menu/2_personnes',
+    recipeContract: require('./contracts/quitoque.json'),
   },
 };
 
 function collectLinks(url: string, contract: any) {
   const scraper = new Scraper(url, contract);
-  return scraper.scrapePage();
+  console.log(url);
+
+  return scraper.scrapePage().then((results: any[]) => {
+    return results.map(result => result.link).filter(link => link !== null);
+  });
 }
 
 async function scrapeRecipes() {
-  const linkPromises = contracts.quitoque.urls.map((url: string) => {
-    return collectLinks(url, contracts.quitoque.links);
-  });
+  const linkPromises = [
+    collectLinks(contracts.quitoque.index, contracts.quitoque.indexContract)
+  ];
 
-  const links = await Promise.all(linkPromises).then((...values) => {
-    return flatten(values).map((url: any) => url.link).filter((url: string) => url !== null);
-  });
+  const links = [];
 
-  links.forEach((url: string) => scrapingQueue.add({
-    url, contract: contracts.quitoque.recipes,
+  for (const promise of linkPromises) {
+    const resolvedLinks = await promise;
+    links.push(...resolvedLinks);
+  }
+
+  const cleanedLinks = Array.from(new Set(links));
+
+  cleanedLinks.forEach((url: string) => scrapingQueue.add({
+    url, contract: contracts.quitoque.recipeContract,
+    name: url,
   }));
 }
 
