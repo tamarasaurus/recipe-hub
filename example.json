@@ -9,9 +9,8 @@
   ],
   "portions": 2,
   "url": "http://recipes.com/blah",
+  "imageUrl": "http://recipes.com/image.jpeg",
   "source": "http://recipes.com",
-  "category": "dessert",
-  "cuisine": "french",
-  "calories": 240,
-  "difficulty": 0.5
+  "categories": ["dessert"],
+  "calories": 240
 }

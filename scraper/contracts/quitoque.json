@@ -32,8 +32,8 @@
             "selector": ".recipe__tags"
         },
         "calories": {
-            "type": "text",
-            "selector": ".calories"
+            "type": "digit",
+            "selector": "#nutritionDetails .nutrition__detail:first-child .nutrition__value"
         },
         "difficulty": {
             "type": "text",
