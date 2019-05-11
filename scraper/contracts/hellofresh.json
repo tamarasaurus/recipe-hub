@@ -1,0 +1,43 @@
+{
+    "itemSelector": ".recipe",
+    "scrapeAfterLoading": false,
+    "attributes": {
+        "name": {
+            "type": "text",
+            "selector": ".recipe__title"
+        },
+        "duration": {
+            "type": "duration",
+            "selector": ".js-waitingTime"
+        },
+        "ingredients": {
+            "itemSelector": ".recipe__articles .article, .recipe__kitchen .article",
+            "attributes": {
+                "label": { "type": "label", "selector": ".article__label" },
+                "quantity": { "type": "quantity", "selector": ".article__quantity" }
+            }
+        },
+        "portions": {
+            "type": "digit",
+            "selector": "[data-nbpersons]",
+            "attribute": "value"
+        },
+        "imageUrl": {
+            "type": "link",
+            "selector": ".recipe__img--img",
+            "attribute": "src"
+        },
+        "categories": {
+            "type": "csv",
+            "selector": ".recipe__tags"
+        },
+        "calories": {
+            "type": "digit",
+            "selector": "#nutritionDetails .nutrition__detail:first-child .nutrition__value"
+        },
+        "difficulty": {
+            "type": "text",
+            "selector": ".difficulty"
+        }
+    }
+}
