@@ -1,15 +1,23 @@
 import * as Queue from 'bull';
-
 import Scraper from 'contract-scraper';
+
+// Custom attributes
 import csv from './attributes/csv';
 import duration from './attributes/duration';
+import quantity from './attributes/quantity';
+import label from './attributes/label';
 
 const scrapingQueue = new Queue('scraping', process.env.REDIS_URL);
 
 scrapingQueue.process((job: any, done) => {
   const { url, contract } = job.data;
 
-  const scraper = new Scraper(url, contract, { csv, duration });
+  const scraper = new Scraper(url, contract, {
+    csv,
+    duration,
+    quantity,
+    label,
+  });
 
   scraper.scrapePage().then((items: any[]) => {
     const mappedItems = items.map((item: any) => {

@@ -11,10 +11,10 @@
             "selector": ".js-waitingTime"
         },
         "ingredients": {
-            "itemSelector": ".recipe__articles .article",
+            "itemSelector": ".recipe__articles .article, .recipe__kitchen .article",
             "attributes": {
-                "label": { "type": "text", "selector": ".article__label" },
-                "quantity": { "type": "text", "selector": ".article__quantity" }
+                "label": { "type": "label", "selector": ".article__label" },
+                "quantity": { "type": "quantity", "selector": ".article__quantity" }
             }
         },
         "portions": {
