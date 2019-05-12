@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
+import uniq from 'lodash/uniq'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
@@ -29,11 +30,22 @@ const Content = styled.div`
   display: flex;
   flex-direction: column;
   width: 800px;
+  max-height: 75vh;
   padding: ${({ theme }) => theme.px(6, 0, 0, 6)};
   background: ${({ theme }) => theme.colors.white};
+  overflow-y: auto;
 `
 
-const Recipe = styled.div``
+const CopyList = styled.button`
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: ${({ theme }) => theme.px(3)};
+`
+
+const Recipe = styled.div`
+  padding-bottom: ${({ theme }) => theme.px(2)};
+`
 
 const RecipeName = styled.div`
   font-weight: bold;
@@ -44,26 +56,51 @@ const Ingredient = styled.div`
   border-bottom: ${({ theme }) => theme.border};
 `
 
+const copyToClipboard = (str) => {
+  const el = document.createElement('textarea')
+  el.value = str
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+}
+
 const ShoppingList = ({ recipes, closeShoppingList }) => {
   const elRef = useRef(document.createElement('div'))
-  const closeOnEscape = (e) => {
-    if (e.keyCode === 27) closeShoppingList()
-  }
   useEffect(() => {
     const el = elRef.current
     document.body.appendChild(el)
 
+    const closeOnEscape = (e) => {
+      if (e.keyCode === 27) closeShoppingList()
+    }
     window.addEventListener('keydown', closeOnEscape)
     return () => {
       el.remove()
       window.removeEventListener('keydown', closeOnEscape)
     }
-  }, [])
+  }, [closeShoppingList])
+
+  const copyIngredients = () => {
+    const ingredients = uniq(
+      recipes
+        .map((recipe) =>
+          recipe.ingredients.map((ingredient) =>
+            Object.values(ingredient).join(': '),
+          ),
+        )
+        .flat(),
+    ).join('\n')
+    copyToClipboard(ingredients)
+  }
 
   return createPortal(
     <Container>
       <Backdrop onClick={closeShoppingList} />
       <Content>
+        <CopyList onClick={copyIngredients}>
+          Copy ingredients to clipboard
+        </CopyList>
         {recipes.map((recipe) => (
           <Recipe key={recipe.id}>
             <RecipeName>{recipe.name}</RecipeName>

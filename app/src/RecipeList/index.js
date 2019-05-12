@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
-  padding: ${({ theme }) => theme.px(3, 0, 2)};
+  padding: ${({ theme }) => theme.px(3)};
   overflow-y: auto;
 `
 
@@ -46,7 +46,7 @@ const Star = styled.span`
   filter: grayscale(${(props) => (props.isSaved ? 0 : 1)});
 `
 
-const RecipeList = ({ recipes, savedRecipes, toggleRecipe }) => {
+const RecipeList = ({ isLoading, recipes, savedRecipes, toggleRecipe }) => {
   return (
     <Container>
       {recipes.length ? (
@@ -60,7 +60,7 @@ const RecipeList = ({ recipes, savedRecipes, toggleRecipe }) => {
                 isSaved={isRecipeSaved}
                 onClick={() => toggleRecipe(recipe)}
               >
-                <Image url={recipe.imageUrl} />
+                <Image url={recipe.imageurl} />
                 <Name>
                   {recipe.name}
                   <Star isSaved={isRecipeSaved}>⭐</Star>
@@ -68,6 +68,7 @@ const RecipeList = ({ recipes, savedRecipes, toggleRecipe }) => {
                 <Infos>
                   <span>🕒 {recipe.duration / 60} Min</span>
                   <a
+                    onClick={(e) => e.stopPropagation()}
                     href={recipe.url}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -79,6 +80,8 @@ const RecipeList = ({ recipes, savedRecipes, toggleRecipe }) => {
             )
           })}
         </List>
+      ) : isLoading ? (
+        <div>Loading...</div>
       ) : (
         <div>no results</div>
       )}
@@ -87,6 +90,7 @@ const RecipeList = ({ recipes, savedRecipes, toggleRecipe }) => {
 }
 
 RecipeList.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   recipes: PropTypes.array.isRequired,
   savedRecipes: PropTypes.array.isRequired,
   toggleRecipe: PropTypes.func.isRequired,

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
 import debounce from 'lodash/debounce'
 
@@ -6,16 +6,16 @@ import Filters from '../Filters'
 import RecipeList from '../RecipeList'
 import ShortList from '../ShortList'
 
-import data from '../data.json'
-
 const Layout = styled.div`
-  max-height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  height: 100%;
   background: ${({ theme }) => theme.colors.gray[100]};
 `
 
 const App = () => {
+  const [data, setData] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   const [filters, setFilters] = useState({
     query: '',
   })
@@ -25,18 +25,21 @@ const App = () => {
       [label]: value,
     }
     setFilters(newFilters)
-
-    debouncedUpdateRecipes(newFilters)
   }
 
-  const [recipes, setRecipes] = useState(data)
-  const updateRecipes = (filters) => {
-    // @TODO API call
-    setRecipes(
-      data.filter((recipe) => new RegExp(filters.query, 'i').test(recipe.name)),
-    )
-  }
-  const debouncedUpdateRecipes = useCallback(debounce(updateRecipes, 300), [])
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+
+      const res = await fetch('http://192.168.1.44:8000/recipes')
+      const data = await res.json()
+
+      setData(data)
+      setIsLoading(false)
+    }
+
+    fetchData()
+  }, [filters.query])
 
   const [savedRecipes, setSavedRecipes] = useState(
     JSON.parse(localStorage.getItem('savedRecipes')) || [],
@@ -54,7 +57,8 @@ const App = () => {
     <Layout>
       <Filters filters={filters} setFilter={setFilter} />
       <RecipeList
-        recipes={recipes}
+        isLoading={isLoading}
+        recipes={data}
         savedRecipes={savedRecipes}
         toggleRecipe={toggleRecipe}
       />
