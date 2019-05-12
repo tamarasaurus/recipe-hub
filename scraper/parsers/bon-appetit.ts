@@ -7,7 +7,7 @@ export default function (data: any) {
 
   return {
     name: data.hed,
-    duration: parseInt(duration.replace(/\D+/gm, '').trim(), 10) * 3600,
+    duration: duration ? parseInt(duration.replace(/\D+/gm, '').trim(), 10) * 3600 : 0,
     ingredients: data.ingredientGroups[0].ingredients.map((ingredient: any): any => {
       return {
         label: ingredient.name,
