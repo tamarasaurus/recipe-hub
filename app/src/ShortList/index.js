@@ -1,23 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
+import ShoppingList from '../ShoppingList'
+
 const Container = styled.div`
   display: flex;
-  padding: 16px;
-  background: #fff;
-  border-top: 1px solid #ccc;
+  justify-content: space-between;
+  padding: ${({ theme }) => theme.px(2)};
+  background: ${({ theme }) => theme.colors.white};
+  border-top: ${({ theme }) => theme.border};
+`
 
-  > * {
-    padding-right: 8px;
+const List = styled.div()
+
+const Item = styled.button`
+  padding: ${({ theme }) => theme.px(0.5)};
+  margin-right: ${({ theme }) => theme.px(1)};
+  border: ${({ theme }) => theme.border};
+  border-radius: ${({ theme }) => theme.radius};
+  &::after {
+    content: '×';
+    margin-left: ${({ theme }) => theme.px(0.5)};
   }
 `
 
-const ShortList = ({ savedRecipes }) => {
+const ShortList = ({ savedRecipes, toggleRecipe }) => {
+  const [isShowingShoppingList, toggleShowShoppingList] = useState(false)
+  const openShoppingList = () => toggleShowShoppingList(true)
+  const closeShoppingList = () => toggleShowShoppingList(false)
+
   return (
     <Container>
       {savedRecipes.length ? (
-        savedRecipes.map((recipe) => <div key={recipe.id}>{recipe.name}</div>)
+        <>
+          <List>
+            {savedRecipes.map((recipe) => (
+              <Item key={recipe.id} onClick={() => toggleRecipe(recipe)}>
+                {recipe.name}
+              </Item>
+            ))}
+          </List>
+          <button onClick={openShoppingList}>Show shopping list</button>
+          {isShowingShoppingList ? (
+            <ShoppingList
+              recipes={savedRecipes}
+              closeShoppingList={closeShoppingList}
+            />
+          ) : null}
+        </>
       ) : (
         <div>No saved recipes</div>
       )}
@@ -26,7 +57,8 @@ const ShortList = ({ savedRecipes }) => {
 }
 
 ShortList.propTypes = {
-  savedRecipes: PropTypes.array,
+  savedRecipes: PropTypes.array.isRequired,
+  toggleRecipe: PropTypes.func.isRequired,
 }
 
 export default ShortList

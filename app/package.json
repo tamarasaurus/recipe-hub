@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.11",
+    "emotion-theming": "^10.0.10",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
     "lodash": "^4.17.11",

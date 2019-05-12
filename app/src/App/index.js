@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import styled from '@emotion/styled'
 import debounce from 'lodash/debounce'
 
@@ -12,11 +12,13 @@ const Layout = styled.div`
   max-height: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background: #f3f3f3;
+  background: ${({ theme }) => theme.colors.gray[100]};
 `
 
 const App = () => {
-  const [filters, setFilters] = useState({})
+  const [filters, setFilters] = useState({
+    query: '',
+  })
   const setFilter = (label, value) => {
     const newFilters = {
       ...filters,
@@ -24,28 +26,28 @@ const App = () => {
     }
     setFilters(newFilters)
 
-    updateRecipes(newFilters)
+    debouncedUpdateRecipes(newFilters)
   }
 
   const [recipes, setRecipes] = useState(data)
-  const updateRecipes = debounce((filters) => {
-    console.log(filters)
+  const updateRecipes = (filters) => {
+    // @TODO API call
     setRecipes(
-      data.filter((recipe) => {
-        return Object.entries(filters).every(([label, value]) => {
-          return new RegExp(value, 'i').test(recipe[label])
-        })
-      }),
+      data.filter((recipe) => new RegExp(filters.query, 'i').test(recipe.name)),
     )
-  }, 3000)
+  }
+  const debouncedUpdateRecipes = useCallback(debounce(updateRecipes, 300), [])
 
-  const [savedRecipes, setSavedRecipes] = useState([])
+  const [savedRecipes, setSavedRecipes] = useState(
+    JSON.parse(localStorage.getItem('savedRecipes')) || [],
+  )
   const toggleRecipe = (recipe) => {
-    setSavedRecipes(
-      savedRecipes.includes(recipe)
-        ? savedRecipes.filter((r) => r !== recipe)
-        : [...savedRecipes, recipe],
-    )
+    const recipes = savedRecipes.includes(recipe)
+      ? savedRecipes.filter((r) => r !== recipe)
+      : [...savedRecipes, recipe]
+
+    setSavedRecipes(recipes)
+    localStorage.setItem('savedRecipes', JSON.stringify(recipes))
   }
 
   return (
@@ -56,7 +58,7 @@ const App = () => {
         savedRecipes={savedRecipes}
         toggleRecipe={toggleRecipe}
       />
-      <ShortList savedRecipes={savedRecipes} />
+      <ShortList savedRecipes={savedRecipes} toggleRecipe={toggleRecipe} />
     </Layout>
   )
 }

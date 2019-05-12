@@ -3,43 +3,43 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
-  padding: 48px 0;
+  padding: ${({ theme }) => theme.px(3, 0, 2)};
   overflow-y: auto;
 `
 
 const List = styled.div`
   display: grid;
   grid-template-columns: 33% 33% 33%;
-  grid-gap: 16px 8px;
+  grid-gap: ${({ theme }) => theme.px(2)};
   max-width: 1200px;
   margin: 0 auto;
 `
 
 const Item = styled.button`
-  background: #fff;
-  border: 1px solid ${(props) => (props.isSaved ? '#666' : '#ccc')};
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, ${(props) => (props.isSaved ? 0.5 : 0.1)});
+  background: ${({ theme }) => theme.colors.white};
+  border: 1px solid
+    ${({ isSaved, theme }) => theme.colors.gray[isSaved ? 700 : 400]};
+  border-bottom-left-radius: ${({ theme }) => theme.radius};
+  border-bottom-right-radius: ${({ theme }) => theme.radius};
 `
 
 const Image = styled.div`
   height: 230px;
-  background: url(${(props) => props.url}) center;
+  background: url(${({ url }) => url}) center;
   background-size: cover;
 `
 
 const Name = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 16px;
+  padding: ${({ theme }) => theme.px(2)};
 `
 
 const Infos = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 8px;
-  border-top: 1px solid #ccc;
+  padding: ${({ theme }) => theme.px(1)};
+  border-top: ${({ theme }) => theme.border};
 `
 
 const Star = styled.span`
@@ -66,7 +66,7 @@ const RecipeList = ({ recipes, savedRecipes, toggleRecipe }) => {
                   <Star isSaved={isRecipeSaved}>⭐</Star>
                 </Name>
                 <Infos>
-                  <span>{recipe.duration / 60} Min</span>
+                  <span>🕒 {recipe.duration / 60} Min</span>
                   <a
                     href={recipe.url}
                     target="_blank"

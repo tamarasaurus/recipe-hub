@@ -2,11 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
+import FoodEmoji from './FoodEmoji'
+
 const Form = styled.form`
   display: flex;
+  align-items: center;
   justify-content: space-around;
-  padding: 32px;
-  background: #fff;
+  padding: ${({ theme }) => theme.px(3)};
+  background: ${({ theme }) => theme.colors.white};
+  border-bottom: ${({ theme }) => theme.border};
+  font-size: ${({ theme }) => theme.px(3)};
+`
+
+const Input = styled.input`
+  width: 100%;
+  padding: ${({ theme }) => theme.px(1, 2)};
+  margin-left: ${({ theme }) => theme.px(2)};
+  border: ${({ theme }) => theme.border};
+  border-radius: ${({ theme }) => theme.radius};
 `
 
 const Filters = ({ filters, setFilter }) => {
@@ -16,42 +29,14 @@ const Filters = ({ filters, setFilter }) => {
 
   return (
     <Form>
-      <label>
-        Name
-        <input name="name" value={filters.name || ''} onChange={onChange} />
-      </label>
-      <label>
-        Duration
-        <input
-          name="duration"
-          value={filters.duration || ''}
-          onChange={onChange}
-        />
-      </label>
-      <label>
-        Ingredients
-        <input
-          name="ingredients"
-          value={filters.ingredients || ''}
-          onChange={onChange}
-        />
-      </label>
-      <label>
-        Categories
-        <input
-          name="categories"
-          value={filters.categories || ''}
-          onChange={onChange}
-        />
-      </label>
-      <label>
-        Calories
-        <input
-          name="calories"
-          value={filters.calories || ''}
-          onChange={onChange}
-        />
-      </label>
+      <FoodEmoji />
+      <Input
+        name="query"
+        autoFocus
+        placeholder="Search for a recipe name, ingredient or category"
+        value={filters.query}
+        onChange={onChange}
+      />
     </Form>
   )
 }

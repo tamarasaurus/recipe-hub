@@ -21,6 +21,9 @@ body {
 }
 
 button {
+  appearance: none;
+  border: none;
+  background: none;
   text-align: left;
   cursor: pointer;
 }
