@@ -4,8 +4,18 @@
   "description": "Database storage for recipe-hub",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "ts-node src/api.ts",
+    "setup": "ts-node src/setup.ts"
   },
   "author": "Tamara Robichet",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "pg": "^7.11.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^7.4.14",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
+  }
 }

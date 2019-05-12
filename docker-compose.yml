@@ -22,5 +22,14 @@ services:
     image: redis
     container_name: cache
 
+  api:
+    # restart: always
+    build:
+      context: .
+      dockerfile: storage/Dockerfile
+    environment:
+      POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
+    depends_on:
+      - postgres
 volumes:
   postgres: ~

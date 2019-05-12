@@ -10,6 +10,11 @@ services:
       - scraper
       - postgres
       - redis
+  api:
+    ports:
+      - 8000:8000
+    volumes:
+      - ./storage:/usr/src/app
 
   redis:
     ports:

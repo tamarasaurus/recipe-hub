@@ -4,7 +4,7 @@
   "description": "Scraper for recipe-hub",
   "main": "index.js",
   "scripts": {
-    "scrape": "ts-node index.ts",
+    "start": "ts-node index.ts",
     "lint-fix": "tslint --fix --project tslint.json",
     "monitor": "./node_modules/.bin/ts-node monitor.js"
   },
