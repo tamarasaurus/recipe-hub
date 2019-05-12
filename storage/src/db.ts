@@ -52,7 +52,7 @@ export default class Database {
   }
 
   searchRecipes() {
-    return query('select * from recipes limit 100', []).then((result) => result.rows);
+    return query('select * from recipes limit 1000', []).then((result) => result.rows);
   }
 
   getRecipesByIds(ids: string[]) {
