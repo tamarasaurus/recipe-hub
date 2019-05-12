@@ -10,6 +10,12 @@ const arena = Arena({
         "host": "cache",
         "port": 6379
     },
+    {
+        "name": "storage",
+        "hostId": "storage",
+        "host": "cache",
+        "port": 6379
+    }
   ]
 });
 

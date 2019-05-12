@@ -10,7 +10,9 @@ services:
       - scraper
       - postgres
       - redis
+
   api:
+    command: 'npm start'
     ports:
       - 8000:8000
     volumes:

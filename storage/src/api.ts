@@ -1,65 +1,25 @@
 import Database from './db'
+import * as express from 'express'
+import * as bodyParser from 'body-parser'
+import * as cors from 'cors'
 
 const db = new Database();
+const app = express()
 
-const store = db.insertOrUpdateRecipe({
-  name: "Salade césar gourmet",
-  duration: 1800,
-  ingredients: [
-    {
-      label: "Filet de poulet",
-      quantity: "2 unité(s)"
-    },
-    {
-      label: "Lard",
-      quantity: "6 tranche(s)"
-    },
-    {
-      label: "Haricots verts",
-      quantity: "200 g"
-    },
-    {
-      label: "Œuf de poule élevée en plein air",
-      quantity: "2 unité(s)"
-    },
-    {
-      label: "Gousse d'ail",
-      quantity: "1 unité(s)"
-    },
-    {
-      label: "Anchois",
-      quantity: "1 boîte(s)"
-    },
-    {
-      label: "Citron jaune",
-      quantity: "1 unité(s)"
-    },
-    {
-      label: "Mayonnaise",
-      quantity: "100 g"
-    },
-    {
-      label: "Ciabatta blanche",
-      quantity: "1 unité(s)"
-    },
-    {
-      label: "Salade romaine",
-      quantity: "1 unité(s)"
-    },
-    {
-      label: "Parmigiano reggiano",
-      quantity: "20 g"
-    }
-  ],
-  portions: 22,
-  imageUrl: "https://res.cloudinary.com/hellofresh/image/upload/f_auto,fl_lossy,q_auto,w_1200/v1/hellofresh_s3/image/5ccc39a59183cd001420fb8b-113ffe79.jpg",
-  categories: [
-    "Archive de recettes"
-  ],
-  calories: 1012,
-  url: "https://www.hellofresh.fr/recipes/luxe-caesarsalade-met-kip-5ccc39a59183cd001420fb8b?locale=fr-FR"
+app.options('*', cors())
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+app.use(function(req, res, next) {
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  next()
 })
 
-store.then((data) => {
-  console.log('Finished', data.rows);
+app.post('/recipes', cors(), (req, res) => {
+  db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
+});
+
+app.get('/recipes', cors(), (req, res) => {
+  db.searchRecipes().then((data => res.json(data)))
 })
+
+app.listen('8000', () => console.log(`Example app listening on port 8000`))

@@ -15,6 +15,7 @@ services:
     environment:
       REDIS_URL: 'redis://cache:6379'
       POSTGRES_HOST: 'postgres'
+      API_URL: 'http://api:8000'
     depends_on:
       - redis
 
@@ -23,7 +24,7 @@ services:
     container_name: cache
 
   api:
-    # restart: always
+    restart: always
     build:
       context: .
       dockerfile: storage/Dockerfile

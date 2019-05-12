@@ -17,8 +17,6 @@ export default class Database {
       calories
     } = data;
 
-    console.log(data);
-
     return query(
       `
     INSERT INTO recipes(name, duration, ingredients, portions, url, imageUrl, categories, calories)
@@ -36,11 +34,25 @@ export default class Database {
             calories = COALESCE($8, recipes.calories),
             updated = now()
     RETURNING *
-    `, [ name, duration, JSON.stringify(ingredients), portions, url, imageUrl, categories.join(','), calories ])
+    `,
+      [
+        name,
+        duration,
+        JSON.stringify(ingredients),
+        portions,
+        url,
+        imageUrl,
+        categories ? categories.join(','): '',
+        calories
+      ])
+      .then((storedResult) => storedResult.rows)
+      .catch((error: Error) => {
+        console.log('\n', error);
+      })
   }
 
-  searchRecipes(query: SearchQuery) {
-
+  searchRecipes() {
+    return query('select * from recipes limit 100', []).then((result) => result.rows);
   }
 
   getRecipesByIds(ids: string[]) {
