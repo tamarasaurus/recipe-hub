@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/core": "^10.0.10",
+    "@emotion/styled": "^10.0.11",
     "husky": "^2.2.0",
     "lint-staged": "^8.1.6",
+    "lodash": "^4.17.11",
     "prettier": "^1.17.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
@@ -23,7 +26,7 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --single-quote --write",
+      "prettier --single-quote --trailing-comma all --no-semi --arrow-parens always --write",
       "git add"
     ]
   },
