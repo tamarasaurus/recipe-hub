@@ -19,7 +19,10 @@ app.post('/recipes', cors(), (req, res) => {
 });
 
 app.get('/recipes', cors(), (req, res) => {
-  db.searchRecipes().then((data => res.json(data)))
+  const ids = req.query.ids
+  const keywords = req.query.keywords;
+
+  db.searchRecipes({ids, keywords}).then((data => res.json(data)))
 })
 
 app.listen('8000', () => console.log(`Example app listening on port 8000`))

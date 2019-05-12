@@ -1,7 +1,8 @@
 import query from './query';
 
 interface SearchQuery {
-  keywords: string;
+  keywords?: string;
+  ids?: string[];
 }
 
 export default class Database {
@@ -51,11 +52,16 @@ export default class Database {
       })
   }
 
-  searchRecipes() {
-    return query('select * from recipes limit 1000', []).then((result) => result.rows);
-  }
+  searchRecipes(searchQuery: SearchQuery) {
+    let filters = ``;
+    const { ids } = searchQuery
 
-  getRecipesByIds(ids: string[]) {
+    if (ids !== undefined) {
+      filters = `where id IN (${ids})`;
+    }
 
+    return query(`
+      select * from recipes ${filters} limit 1000
+    `, []).then((result) => result.rows);
   }
 }
