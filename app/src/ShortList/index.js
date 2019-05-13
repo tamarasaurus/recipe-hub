@@ -9,7 +9,7 @@ const Container = styled.div`
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(2)};
   background: ${({ theme }) => theme.colors.white};
-  border-top: ${({ theme }) => theme.border.m};
+  border-top: ${({ theme }) => theme.border.s};
 `
 
 const List = styled.div()
@@ -17,7 +17,7 @@ const List = styled.div()
 const Item = styled.button`
   padding: ${({ theme }) => theme.px(0.5, 1)};
   margin-right: ${({ theme }) => theme.px(1)};
-  border: ${({ theme }) => theme.border.m};
+  border: ${({ theme }) => theme.border.s};
   border-radius: ${({ theme }) => theme.radius};
   &::after {
     content: '×';
@@ -27,7 +27,7 @@ const Item = styled.button`
 
 const ShowShoppingList = styled.button`
   padding: ${({ theme }) => theme.px(0.5, 1)};
-  border: ${({ theme }) => theme.border.l};
+  border: ${({ theme }) => theme.border.m};
   border-radius: ${({ theme }) => theme.radius};
 `
 

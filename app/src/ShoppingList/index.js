@@ -61,7 +61,7 @@ const RecipeName = styled.div`
 
 const Ingredient = styled.div`
   padding: ${({ theme }) => theme.px(1)};
-  border-bottom: ${({ theme }) => theme.border.m};
+  border-bottom: ${({ theme }) => theme.border.s};
 `
 
 const copyToClipboard = (str) => {

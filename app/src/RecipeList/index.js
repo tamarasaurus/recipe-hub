@@ -10,20 +10,23 @@ const Container = styled.div`
 
 const List = styled.div`
   display: grid;
-  grid-template-columns: 33% 33% 33%;
+  grid-template-columns: 100%;
   grid-gap: ${({ theme }) => theme.px(2)};
-  max-width: 1200px;
+  max-width: ${({ theme }) => theme.breakpoints.l};
   margin: 0 auto;
+  ${({ theme }) => theme.mediaQueries.m} {
+    grid-template-columns: 50% 50%;
+  }
+  ${({ theme }) => theme.mediaQueries.l} {
+    grid-template-columns: 33% 33% 33%;
+  }
 `
 
 const Item = styled.button`
   background: ${({ theme }) => theme.colors.white};
-  border: ${({ theme }) => theme.border.m};
-  border-color: ${({ isSaved, theme }) =>
-    isSaved ? theme.colors.accent : theme.colors.gray.l};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ isSaved, theme }) =>
-    !isSaved ? null : theme.px(0, 0, 0, 0.5) + ' ' + theme.colors.accent};
+    !isSaved ? null : theme.px(0, 0, 0, 0.75) + ' ' + theme.colors.accent};
   transition: ${({ theme }) => theme.transition};
   overflow: hidden;
   &:focus {
@@ -47,7 +50,8 @@ const Infos = styled.div`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
-  border-top: ${({ theme }) => theme.border.m};
+  border-top: ${({ theme }) => theme.border.s};
+  border-color: ${({ theme }) => theme.colors.gray.m};
   font-size: 14px;
 `
 

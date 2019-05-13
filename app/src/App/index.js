@@ -33,7 +33,7 @@ const App = () => {
       const res = await fetch('http://192.168.1.44:8000/recipes')
       const data = await res.json()
 
-      setData(data)
+      setData(data.slice(0, 20))
       setIsLoading(false)
     }
 

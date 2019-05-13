@@ -92,7 +92,7 @@ const foodEmojis = [
 ]
 
 const Emoji = styled.span`
-  width: ${({ theme }) => theme.px(4)};
+  width: ${({ theme }) => theme.px(5)};
   cursor: cell;
 `
 

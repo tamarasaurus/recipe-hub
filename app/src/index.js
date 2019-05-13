@@ -13,18 +13,28 @@ const colors = {
   white: '#fff',
   gray: {
     s: '#f5f5f5',
-    m: '#bdbdbd',
-    l: '#212121',
+    m: '#ddd',
+    l: '#222',
   },
   accent: '#0bad72',
+}
+const breakpoints = {
+  m: '800px',
+  l: '1200px',
 }
 const theme = {
   colors,
   px: (...values) => values.map((value) => 8 * value + 'px').join(' '),
   radius: '5px',
   border: {
-    m: `2px solid ${colors.gray.l}`,
-    l: `4px solid ${colors.gray.l}`,
+    s: `2px solid ${colors.gray.l}`,
+    m: `4px solid ${colors.gray.l}`,
+    l: `6px solid ${colors.gray.l}`,
+  },
+  breakpoints,
+  mediaQueries: {
+    m: `@media (min-width: ${breakpoints.m})`,
+    l: `@media (min-width: ${breakpoints.l})`,
   },
   transition: '200ms',
 }
