@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
+  position: relative;
   padding: ${({ theme }) => theme.px(3)};
   overflow-y: auto;
 `
@@ -17,10 +18,14 @@ const List = styled.div`
 
 const Item = styled.button`
   background: ${({ theme }) => theme.colors.white};
-  border: 1px solid
-    ${({ isSaved, theme }) => theme.colors.gray[isSaved ? 700 : 400]};
-  border-bottom-left-radius: ${({ theme }) => theme.radius};
-  border-bottom-right-radius: ${({ theme }) => theme.radius};
+  border: 4px solid
+    ${({ isSaved, theme }) =>
+      isSaved ? theme.colors.accent : theme.colors.gray.l};
+  border-radius: ${({ theme }) => theme.radius};
+  overflow: hidden;
+  &:focus {
+    outline: none;
+  }
 `
 
 const Image = styled.div`
@@ -39,7 +44,7 @@ const Infos = styled.div`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
-  border-top: ${({ theme }) => theme.border};
+  border-top: ${({ theme }) => theme.border.m};
 `
 
 const Star = styled.span`
@@ -52,7 +57,9 @@ const RecipeList = ({ isLoading, recipes, savedRecipes, toggleRecipe }) => {
       {recipes.length ? (
         <List>
           {recipes.map((recipe) => {
-            const isRecipeSaved = savedRecipes.includes(recipe)
+            const isRecipeSaved = savedRecipes.some(
+              ({ id }) => id === recipe.id,
+            )
 
             return (
               <Item

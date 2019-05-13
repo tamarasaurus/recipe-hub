@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
-import debounce from 'lodash/debounce'
 
 import Filters from '../Filters'
 import RecipeList from '../RecipeList'
@@ -10,7 +9,7 @@ const Layout = styled.div`
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100%;
-  background: ${({ theme }) => theme.colors.gray[100]};
+  background: ${({ theme }) => theme.colors.gray.s};
 `
 
 const App = () => {
@@ -34,19 +33,20 @@ const App = () => {
       const res = await fetch('http://192.168.1.44:8000/recipes')
       const data = await res.json()
 
-      setData(data)
+      setData(data.slice(0, 20))
       setIsLoading(false)
     }
 
-    fetchData()
+    const timeout = setTimeout(fetchData, 300)
+    return () => clearTimeout(timeout)
   }, [filters.query])
 
   const [savedRecipes, setSavedRecipes] = useState(
     JSON.parse(localStorage.getItem('savedRecipes')) || [],
   )
   const toggleRecipe = (recipe) => {
-    const recipes = savedRecipes.includes(recipe)
-      ? savedRecipes.filter((r) => r !== recipe)
+    const recipes = savedRecipes.some(({ id }) => id === recipe.id)
+      ? savedRecipes.filter(({ id }) => id !== recipe.id)
       : [...savedRecipes, recipe]
 
     setSavedRecipes(recipes)

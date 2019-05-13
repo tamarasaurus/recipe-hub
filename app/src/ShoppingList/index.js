@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
-import uniq from 'lodash/uniq'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
@@ -53,7 +52,7 @@ const RecipeName = styled.div`
 
 const Ingredient = styled.div`
   padding: ${({ theme }) => theme.px(1)};
-  border-bottom: ${({ theme }) => theme.border};
+  border-bottom: ${({ theme }) => theme.border.m};
 `
 
 const copyToClipboard = (str) => {
@@ -67,6 +66,7 @@ const copyToClipboard = (str) => {
 
 const ShoppingList = ({ recipes, closeShoppingList }) => {
   const elRef = useRef(document.createElement('div'))
+
   useEffect(() => {
     const el = elRef.current
     document.body.appendChild(el)
@@ -82,15 +82,15 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
   }, [closeShoppingList])
 
   const copyIngredients = () => {
-    const ingredients = uniq(
-      recipes
-        .map((recipe) =>
-          recipe.ingredients.map((ingredient) =>
-            Object.values(ingredient).join(': '),
-          ),
-        )
-        .flat(),
-    ).join('\n')
+    const ingredients = recipes
+      .map((recipe) =>
+        recipe.ingredients.map((ingredient) =>
+          Object.values(ingredient).join(': '),
+        ),
+      )
+      .flat()
+      .sort()
+      .join('\n')
     copyToClipboard(ingredients)
   }
 

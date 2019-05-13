@@ -12,23 +12,21 @@ const colors = {
   black: '#000',
   white: '#fff',
   gray: {
-    50: '#fafafa',
-    100: '#f5f5f5',
-    200: '#eeeeee',
-    300: '#e0e0e0',
-    400: '#bdbdbd',
-    500: '#9e9e9e',
-    600: '#757575',
-    700: '#616161',
-    800: '#424242',
-    900: '#212121',
+    s: '#f5f5f5',
+    m: '#bdbdbd',
+    l: '#212121',
   },
+  accent: '#0bad72',
 }
 const theme = {
   colors,
   px: (...values) => values.map((value) => 8 * value + 'px').join(' '),
-  radius: '3px',
-  border: `1px solid ${colors.gray[400]}`,
+  radius: '5px',
+  border: {
+    m: `2px solid ${colors.gray.l}`,
+    l: `4px solid ${colors.gray.l}`,
+  },
+  transition: '200ms',
 }
 
 ReactDOM.render(

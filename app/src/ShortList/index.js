@@ -9,20 +9,26 @@ const Container = styled.div`
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(2)};
   background: ${({ theme }) => theme.colors.white};
-  border-top: ${({ theme }) => theme.border};
+  border-top: ${({ theme }) => theme.border.m};
 `
 
 const List = styled.div()
 
 const Item = styled.button`
-  padding: ${({ theme }) => theme.px(0.5)};
+  padding: ${({ theme }) => theme.px(0.5, 1)};
   margin-right: ${({ theme }) => theme.px(1)};
-  border: ${({ theme }) => theme.border};
+  border: ${({ theme }) => theme.border.m};
   border-radius: ${({ theme }) => theme.radius};
   &::after {
     content: '×';
     margin-left: ${({ theme }) => theme.px(0.5)};
   }
+`
+
+const ShowShoppingList = styled.button`
+  padding: ${({ theme }) => theme.px(0.5, 1)};
+  border: ${({ theme }) => theme.border.l};
+  border-radius: ${({ theme }) => theme.radius};
 `
 
 const ShortList = ({ savedRecipes, toggleRecipe }) => {
@@ -41,7 +47,9 @@ const ShortList = ({ savedRecipes, toggleRecipe }) => {
               </Item>
             ))}
           </List>
-          <button onClick={openShoppingList}>Show shopping list</button>
+          <ShowShoppingList onClick={openShoppingList}>
+            Show shopping list
+          </ShowShoppingList>
           {isShowingShoppingList ? (
             <ShoppingList
               recipes={savedRecipes}
