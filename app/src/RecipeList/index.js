@@ -18,10 +18,13 @@ const List = styled.div`
 
 const Item = styled.button`
   background: ${({ theme }) => theme.colors.white};
-  border: 4px solid
-    ${({ isSaved, theme }) =>
-      isSaved ? theme.colors.accent : theme.colors.gray.l};
+  border: ${({ theme }) => theme.border.m};
+  border-color: ${({ isSaved, theme }) =>
+    isSaved ? theme.colors.accent : theme.colors.gray.l};
   border-radius: ${({ theme }) => theme.radius};
+  box-shadow: ${({ isSaved, theme }) =>
+    !isSaved ? null : theme.px(0, 0, 0, 0.5) + ' ' + theme.colors.accent};
+  transition: ${({ theme }) => theme.transition};
   overflow: hidden;
   &:focus {
     outline: none;
@@ -45,6 +48,11 @@ const Infos = styled.div`
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
   border-top: ${({ theme }) => theme.border.m};
+  font-size: 14px;
+`
+
+const RecipeLink = styled.a`
+  color: ${({ theme }) => theme.colors.accent};
 `
 
 const Star = styled.span`
@@ -74,14 +82,14 @@ const RecipeList = ({ isLoading, recipes, savedRecipes, toggleRecipe }) => {
                 </Name>
                 <Infos>
                   <span>🕒 {recipe.duration / 60} Min</span>
-                  <a
+                  <RecipeLink
                     onClick={(e) => e.stopPropagation()}
                     href={recipe.url}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Recipe
-                  </a>
+                    See recipe
+                  </RecipeLink>
                 </Infos>
               </Item>
             )

@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
+import { useSpring, animated } from 'react-spring'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
@@ -11,7 +12,7 @@ const Container = styled.div`
   left: 0;
 `
 
-const Backdrop = styled.div`
+const Backdrop = styled(animated.div)`
   position: absolute;
   top: 0;
   right: 0;
@@ -21,7 +22,7 @@ const Backdrop = styled.div`
   cursor: pointer;
 `
 
-const Content = styled.div`
+const Content = styled(animated.div)`
   position: absolute;
   bottom: 0;
   left: 50%;
@@ -30,20 +31,28 @@ const Content = styled.div`
   flex-direction: column;
   width: 800px;
   max-height: 75vh;
-  padding: ${({ theme }) => theme.px(6, 0, 0, 6)};
+  padding: ${({ theme }) => theme.px(8, 0, 0, 8)};
   background: ${({ theme }) => theme.colors.white};
   overflow-y: auto;
 `
 
-const CopyList = styled.button`
+const CopyButton = styled.button`
   position: absolute;
   top: 0;
   right: 0;
-  padding: ${({ theme }) => theme.px(3)};
+  padding: ${({ theme }) => theme.px(2)};
+`
+
+const CopyRecipes = styled(CopyButton)`
+  left: 0;
+`
+
+const CopyIngredients = styled(CopyButton)`
+  right: 0;
 `
 
 const Recipe = styled.div`
-  padding-bottom: ${({ theme }) => theme.px(2)};
+  padding-bottom: ${({ theme }) => theme.px(4)};
 `
 
 const RecipeName = styled.div`
@@ -70,6 +79,7 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
   useEffect(() => {
     const el = elRef.current
     document.body.appendChild(el)
+    document.body.style.overflow = 'hidden'
 
     const closeOnEscape = (e) => {
       if (e.keyCode === 27) closeShoppingList()
@@ -77,30 +87,47 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
     window.addEventListener('keydown', closeOnEscape)
     return () => {
       el.remove()
+      document.body.style.overflow = 'auto'
       window.removeEventListener('keydown', closeOnEscape)
     }
   }, [closeShoppingList])
 
-  const copyIngredients = () => {
-    const ingredients = recipes
-      .map((recipe) =>
-        recipe.ingredients.map((ingredient) =>
-          Object.values(ingredient).join(': '),
-        ),
-      )
-      .flat()
-      .sort()
-      .join('\n')
-    copyToClipboard(ingredients)
+  const copyRecipes = () => {
+    copyToClipboard(
+      recipes.map((recipe) => `# ${recipe.name}\n${recipe.url}`).join('\n\n'),
+    )
   }
+
+  const copyIngredients = () => {
+    copyToClipboard(
+      recipes
+        .map((recipe) =>
+          recipe.ingredients.map((ingredient) =>
+            Object.values(ingredient).join(': '),
+          ),
+        )
+        .flat()
+        .sort()
+        .join('\n'),
+    )
+  }
+
+  const backdropStyle = useSpring({ opacity: 1, from: { opacity: 0 } })
+  const contentStyle = useSpring({
+    transform: 'translate(-50%, 0)',
+    from: { transform: 'translate(-50%, 100%)' },
+  })
 
   return createPortal(
     <Container>
-      <Backdrop onClick={closeShoppingList} />
-      <Content>
-        <CopyList onClick={copyIngredients}>
+      <Backdrop style={backdropStyle} onClick={closeShoppingList} />
+      <Content style={contentStyle}>
+        <CopyRecipes onClick={copyRecipes}>
+          Copy recipes to clipboard
+        </CopyRecipes>
+        <CopyIngredients onClick={copyIngredients}>
           Copy ingredients to clipboard
-        </CopyList>
+        </CopyIngredients>
         {recipes.map((recipe) => (
           <Recipe key={recipe.id}>
             <RecipeName>{recipe.name}</RecipeName>
