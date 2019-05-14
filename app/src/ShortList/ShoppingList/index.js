@@ -4,6 +4,23 @@ import PropTypes from 'prop-types'
 import { useSpring, animated } from 'react-spring'
 import styled from '@emotion/styled'
 
+import Button from '../../Button'
+
+const copyToClipboard = (str) => {
+  const el = document.createElement('textarea')
+  el.value = str
+  document.body.appendChild(el)
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+}
+
+const formatIngredient = (ingredient) => {
+  return ingredient.quantity
+    ? `${ingredient.label}: ${ingredient.quantity}`
+    : ingredient.label
+}
+
 const Container = styled.div`
   position: absolute;
   top: 0;
@@ -26,52 +43,61 @@ const Content = styled(animated.div)`
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  width: 800px;
+  width: 100%;
   max-height: 75vh;
-  padding: ${({ theme }) => theme.px(8, 0, 0, 8)};
+  padding: ${({ theme }) => theme.px(2)};
   background: ${({ theme }) => theme.colors.white};
   overflow-y: auto;
+  ${({ theme }) => theme.mediaQueries.m} {
+    width: 75vw;
+    max-width: 600px;
+  }
 `
 
-const CopyButton = styled.button`
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: ${({ theme }) => theme.px(2)};
-`
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  margin-bottom: ${({ theme }) => theme.px(4)};
 
-const CopyRecipes = styled(CopyButton)`
-  left: 0;
-`
+  > :first-child {
+    margin-bottom: ${({ theme }) => theme.px(1)};
+  }
 
-const CopyIngredients = styled(CopyButton)`
-  right: 0;
+  ${({ theme }) => theme.mediaQueries.m} {
+    flex-direction: row;
+
+    > :first-child {
+      margin-bottom: 0;
+    }
+  }
 `
 
 const Recipe = styled.div`
-  padding-bottom: ${({ theme }) => theme.px(4)};
+  margin-bottom: ${({ theme }) => theme.px(4)};
 `
 
 const RecipeName = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  align-items: baseline;
   font-weight: bold;
+  margin-bottom: ${({ theme }) => theme.px(1)};
+`
+
+const CopyRecipe = styled(Button)`
+  flex-shrink: 0;
 `
 
 const Ingredient = styled.div`
+  display: flex;
+  justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
   border-bottom: ${({ theme }) => theme.border.s};
 `
-
-const copyToClipboard = (str) => {
-  const el = document.createElement('textarea')
-  el.value = str
-  document.body.appendChild(el)
-  el.select()
-  document.execCommand('copy')
-  document.body.removeChild(el)
-}
 
 const ShoppingList = ({ recipes, closeShoppingList }) => {
   const elRef = useRef(document.createElement('div'))
@@ -93,28 +119,36 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
   }, [closeShoppingList])
 
   const copyRecipes = () => {
-    copyToClipboard(
-      recipes.map((recipe) => `# ${recipe.name}\n${recipe.url}`).join('\n\n'),
-    )
+    const str = recipes
+      .map((recipe) => `# ${recipe.name}\n${recipe.url}`)
+      .join('\n\n')
+
+    copyToClipboard(str)
   }
 
   const copyIngredients = () => {
-    copyToClipboard(
-      recipes
-        .map((recipe) =>
-          recipe.ingredients.map((ingredient) =>
-            Object.values(ingredient).join(': '),
-          ),
-        )
-        .flat()
-        .sort()
-        .join('\n'),
-    )
+    const str = recipes
+      .map((recipe) => recipe.ingredients.map(formatIngredient))
+      .flat()
+      .sort()
+      .join('\n')
+
+    copyToClipboard(str)
+  }
+
+  const copyRecipe = (recipe) => {
+    const str = [
+      `# ${recipe.name}`,
+      `${recipe.url}\n`,
+      recipe.ingredients.map(formatIngredient).join('\n'),
+    ].join('\n')
+
+    copyToClipboard(str)
   }
 
   const backdropStyle = useSpring({ opacity: 1, from: { opacity: 0 } })
   const contentStyle = useSpring({
-    transform: 'translate(-50%, 0)',
+    to: { transform: 'translate(-50%, 0)' },
     from: { transform: 'translate(-50%, 100%)' },
   })
 
@@ -122,18 +156,24 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
     <Container>
       <Backdrop style={backdropStyle} onClick={closeShoppingList} />
       <Content style={contentStyle}>
-        <CopyRecipes onClick={copyRecipes}>
-          Copy recipes to clipboard
-        </CopyRecipes>
-        <CopyIngredients onClick={copyIngredients}>
-          Copy ingredients to clipboard
-        </CopyIngredients>
+        <Header>
+          <Button onClick={copyRecipes}>Copy all recipes to clipboard</Button>
+          <Button onClick={copyIngredients}>
+            Copy all ingredients to clipboard
+          </Button>
+        </Header>
         {recipes.map((recipe) => (
           <Recipe key={recipe.id}>
-            <RecipeName>{recipe.name}</RecipeName>
+            <RecipeName>
+              {recipe.name}
+              <CopyRecipe onClick={() => copyRecipe(recipe)}>
+                Copy recipe
+              </CopyRecipe>
+            </RecipeName>
             {recipe.ingredients.map((ingredient, i) => (
               <Ingredient key={i}>
-                {ingredient.label} {ingredient.quantity}
+                <span>{ingredient.label}</span>
+                {ingredient.quantity && <span>{ingredient.quantity}</span>}
               </Ingredient>
             ))}
           </Recipe>

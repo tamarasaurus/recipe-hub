@@ -5,15 +5,26 @@ import Filters from '../Filters'
 import RecipeList from '../RecipeList'
 import ShortList from '../ShortList'
 
+import exampleData from '../data.json'
+
 const Layout = styled.div`
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+    'Filters Filters'
+    'RecipeList ShortList';
   height: 100%;
   background: ${({ theme }) => theme.colors.gray.s};
 `
 
 const App = () => {
-  const [data, setData] = useState([])
+  const [data, setData] = useState(
+    Array.from(new Array(30), (_, i) => ({
+      ...exampleData[0],
+      id: i,
+    })),
+  )
   const [isLoading, setIsLoading] = useState(false)
   const [filters, setFilters] = useState({
     query: '',

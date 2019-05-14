@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const Container = styled.div`
+  grid-area: RecipeList;
   position: relative;
-  padding: ${({ theme }) => theme.px(3)};
+  padding: ${({ theme }) => theme.px(3, 4)};
   overflow-y: auto;
 `
 
@@ -30,6 +31,8 @@ const Item = styled.button`
   transition: ${({ theme }) => theme.transition};
   overflow: hidden;
   &:focus {
+    box-shadow: ${({ isSaved, theme }) =>
+      theme.px(0, 0, 0, 1) + ' ' + theme.colors.accent};
     outline: none;
   }
 `
@@ -50,13 +53,14 @@ const Infos = styled.div`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
-  border-top: ${({ theme }) => theme.border.s};
+  border-top: ${({ theme }) => theme.border.m};
   border-color: ${({ theme }) => theme.colors.gray.m};
   font-size: 14px;
 `
 
 const RecipeLink = styled.a`
   color: ${({ theme }) => theme.colors.accent};
+  transition: ${({ theme }) => theme.transition};
 `
 
 const Star = styled.span`
@@ -79,7 +83,7 @@ const RecipeList = ({ isLoading, recipes, savedRecipes, toggleRecipe }) => {
                 isSaved={isRecipeSaved}
                 onClick={() => toggleRecipe(recipe)}
               >
-                <Image url={recipe.imageurl} />
+                <Image url={recipe.imageUrl || recipe.imageurl} />
                 <Name>
                   {recipe.name}
                   <Star isSaved={isRecipeSaved}>⭐</Star>

@@ -1,12 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Global, css } from '@emotion/core'
 
 import { ThemeProvider } from 'emotion-theming'
 import App from './App'
 
 import * as serviceWorker from './serviceWorker'
-
-import './index.css'
 
 const colors = {
   black: '#000',
@@ -27,9 +26,9 @@ const theme = {
   px: (...values) => values.map((value) => 8 * value + 'px').join(' '),
   radius: '5px',
   border: {
-    s: `2px solid ${colors.gray.l}`,
-    m: `4px solid ${colors.gray.l}`,
-    l: `6px solid ${colors.gray.l}`,
+    s: `1px solid ${colors.gray.l}`,
+    m: `2px solid ${colors.gray.l}`,
+    l: `4px solid ${colors.gray.l}`,
   },
   breakpoints,
   mediaQueries: {
@@ -39,8 +38,45 @@ const theme = {
   transition: '200ms',
 }
 
+const globalStyle = css`
+  html {
+    box-sizing: border-box;
+  }
+
+  *,
+  ::before,
+  ::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: sans-serif;
+  }
+
+  button {
+    appearance: none;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  :focus {
+    outline: ${colors.accent} auto 5px;
+  }
+`
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
+    <Global styles={globalStyle} />
     <App />
   </ThemeProvider>,
   document.getElementById('root'),
