@@ -5,7 +5,47 @@ interface SearchQuery {
   ids?: string[];
 }
 
+interface UserPreferences {
+  liked: string[]
+  excluded: string[]
+  saved: string[]
+}
+
 export default class Database {
+  createUser(auth_id: string) {
+
+  }
+
+  savePreferencesForUser(userId: string, preferences: UserPreferences) {
+    const { liked, excluded, saved } = preferences
+    const recipeIds = Array.from(new Set([...liked, ...excluded, ...saved]))
+    const rowQueries = recipeIds.map((recipeId) => {
+      return query(`
+        INSERT INTO auth_user_recipe (user_id, recipe_id, liked, excluded, saved) 
+        VALUES ($1, $2, $3, $3, $5)
+        ON CONFLICT(user_id, recipe_id)
+        DO 
+          UPDATE
+            liked = COALESCE($3, auth_user_recipe.liked),
+            excluded = COALESCE($4, auth_user_recipe.excluded),
+            saved = COALESCE($5, auth_user_recipe.saved)
+            RETURNING *
+      `, [
+        userId,
+        recipeId,
+        liked.includes(recipeId) === true,
+        excluded.includes(recipeId) === true,
+        saved.includes(recipeId) === true
+      ])
+    })
+
+    return Promise.all(rowQueries).then((storedResult) => {
+      console.log(storedResult)
+    }).catch((e: Error) => {
+      console.log('Error storing user preferences')
+    });
+  }
+
   insertOrUpdateRecipe(data: any) {
     const {
       name,
@@ -20,7 +60,7 @@ export default class Database {
 
     return query(
       `
-    INSERT INTO recipes(name, duration, ingredients, portions, url, imageUrl, categories, calories)
+    INSERT INTO recipe(name, duration, ingredients, portions, url, imageUrl, categories, calories)
     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
     ON CONFLICT (url)
     DO
@@ -61,7 +101,7 @@ export default class Database {
     }
 
     return query(`
-      select * from recipes ${filters} limit 1000
+      select * from recipe ${filters} limit 1000
     `, []).then((result) => result.rows);
   }
 }
