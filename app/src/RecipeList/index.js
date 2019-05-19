@@ -110,56 +110,58 @@ const RecipeList = ({
   return (
     <Container>
       {recipes.length ? (
-        <List>
-          {recipes.map((recipe) => (
-            <Item
-              key={recipe.id}
-              role="button"
-              tabIndex="0"
-              isSaved={recipe.saved}
-              onClick={() => toggleSaveRecipe(recipe)}
-            >
-              <Exclude
-                title="Exclude recipe"
-                tabIndex="-1"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  excludeRecipe(recipe)
-                }}
+        <>
+          <List>
+            {recipes.map((recipe) => (
+              <Item
+                key={recipe.id}
+                role="button"
+                tabIndex="0"
+                isSaved={recipe.saved}
+                onClick={() => toggleSaveRecipe(recipe)}
               >
-                ❌
-              </Exclude>
-              <Image url={recipe.imageurl} />
-              <Header>
-                {recipe.name}
-                <Like
-                  title={recipe.liked ? 'Unlink recipe' : 'Like recipe'}
-                  isLiked={recipe.liked}
+                <Exclude
+                  title="Exclude recipe"
+                  tabIndex="-1"
                   onClick={(e) => {
                     e.stopPropagation()
-                    toggleLikeRecipe(recipe)
+                    excludeRecipe(recipe)
                   }}
                 >
-                  ⭐
-                </Like>
-              </Header>
-              <Infos>
-                <span>
-                  {recipe.duration > 0 && <>🕒 {recipe.duration / 60} Min</>}
-                </span>
-                <RecipeLink
-                  onClick={(e) => e.stopPropagation()}
-                  href={recipe.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  See recipe
-                </RecipeLink>
-              </Infos>
-            </Item>
-          ))}
+                  ❌
+                </Exclude>
+                <Image url={recipe.imageurl} />
+                <Header>
+                  {recipe.name}
+                  <Like
+                    title={recipe.liked ? 'Unlink recipe' : 'Like recipe'}
+                    isLiked={recipe.liked}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      toggleLikeRecipe(recipe)
+                    }}
+                  >
+                    ⭐
+                  </Like>
+                </Header>
+                <Infos>
+                  <span>
+                    {recipe.duration > 0 && <>🕒 {recipe.duration / 60} Min</>}
+                  </span>
+                  <RecipeLink
+                    onClick={(e) => e.stopPropagation()}
+                    href={recipe.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    See recipe
+                  </RecipeLink>
+                </Infos>
+              </Item>
+            ))}
+          </List>
           <LoadMore>Load more</LoadMore>
-        </List>
+        </>
       ) : !hasLoaded || isLoading ? (
         <div>Loading...</div>
       ) : (
