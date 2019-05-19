@@ -1,5 +1,4 @@
 import query from './query';
-import { QueryResult } from 'pg';
 
 interface SearchQuery {
   keywords?: string;
@@ -80,7 +79,6 @@ export default class Database {
       })
   }
 
-  // Join with user preference table
   searchRecipes(searchQuery: SearchQuery) {
     let filters = ``;
     const { ids } = searchQuery

@@ -9,16 +9,15 @@ const app = express()
 app.options('*', cors())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
   next()
 })
 
-
 function setRecipePreference(recipeId: string, userId: string, preference: any, res) {
   db.setRecipePreference(recipeId, userId, preference)
-  .then(() => res.sendStatus(200))
-  .catch(() => res.sendStatus(404));
+    .then(() => res.sendStatus(200))
+    .catch(() => res.sendStatus(404));
 }
 
 app.post('/recipes', cors(), (req, res) => {
@@ -26,10 +25,8 @@ app.post('/recipes', cors(), (req, res) => {
 });
 
 app.get('/recipes', cors(), (req, res) => {
-  const ids = req.query.ids
-  const keywords = req.query.keywords;
-
-  db.searchRecipes({ids, keywords}).then((data => res.json(data)))
+  const { ids, keywords } = req.query;
+  db.searchRecipes({ ids, keywords }).then((data => res.json(data)))
 })
 
 app.post('/recipes/:id/like', cors(), (req, res) => {
@@ -52,10 +49,10 @@ app.post('/recipes/:id/exclude', cors(), (req, res) => {
   setRecipePreference(req.params.id, '1', { excluded: true }, res)
 })
 
-app.get('/recipes/saved', cors() , (req, res) => {
-  db.getSavedRecipeIdsForUser('1').then((recipeIds: string[]) => {
-    res.json(recipeIds);
-  }).catch((e: Error) => res.sendStatus(404));
+app.get('/recipes/saved', cors(), (req, res) => {
+  db.getSavedRecipeIdsForUser('1')
+    .then((recipeIds: string[]) => res.json(recipeIds))
+    .catch((e: Error) => res.sendStatus(404));
 })
 
 app.use('/account/create', cors(), (req, res) => {
