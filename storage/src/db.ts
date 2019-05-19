@@ -81,11 +81,22 @@ export default class Database {
 
   searchRecipes(searchQuery: SearchQuery) {
     let filters = ``;
+    let searchFilters = ``;
 
     const { ids, keywords } = searchQuery
 
     if (ids !== undefined) {
-      filters = `where id IN (${ids})`;
+      filters = `AND id IN (${ids})`;
+    }
+
+    if (keywords !== undefined && keywords.trim().length > 0) {
+      searchFilters = `AND (
+        to_tsvector('english', COALESCE(name, ''))      ||
+        to_tsvector('english', ingredients::json)       ||
+        to_tsvector('english', COALESCE(categories, ''))
+      ) @@ phraseto_tsquery('english', '%${keywords}%')
+        OR name LIKE '${keywords}'
+      `
     }
 
     return query(`
@@ -109,6 +120,7 @@ export default class Database {
         AND auth_user_recipe.recipe_id = recipe.id) as recipes
       WHERE recipes.excluded = FALSE
       ${filters}
+      ${searchFilters}
     `, []).then((result) => result.rows);
   }
 
