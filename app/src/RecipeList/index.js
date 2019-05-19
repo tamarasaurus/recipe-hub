@@ -17,6 +17,7 @@ const List = styled.div`
   margin: 0 auto;
   ${({ theme }) => theme.mediaQueries.m} {
     grid-template-columns: 50% 50%;
+    grid-template-columns: 50% 50%;
   }
   ${({ theme }) => theme.mediaQueries.l} {
     grid-template-columns: 33% 33% 33%;
@@ -30,11 +31,6 @@ const Item = styled.button`
     !isSaved ? null : theme.px(0, 0, 0, 0.75) + ' ' + theme.colors.accent};
   transition: ${({ theme }) => theme.transition};
   overflow: hidden;
-  &:focus {
-    box-shadow: ${({ isSaved, theme }) =>
-      theme.px(0, 0, 0, 1) + ' ' + theme.colors.accent};
-    outline: none;
-  }
 `
 
 const Image = styled.div`

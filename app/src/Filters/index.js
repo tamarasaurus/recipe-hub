@@ -24,12 +24,6 @@ const Input = styled.input`
   box-shadow: ${({ theme }) =>
     theme.px(0.5, 0.5, 0) + ' ' + theme.colors.gray.l};
   transition: ${({ theme }) => theme.transition};
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.accent};
-    box-shadow: ${({ theme }) =>
-      theme.px(0.5, 0.5, 0) + ' ' + theme.colors.accent};
-  }
 `
 
 const Filters = ({ filters, setFilter }) => {
@@ -42,7 +36,6 @@ const Filters = ({ filters, setFilter }) => {
       <FoodEmoji />
       <Input
         name="query"
-        autoFocus
         placeholder="Search for a recipe name, ingredient or category"
         value={filters.query}
         onChange={onChange}

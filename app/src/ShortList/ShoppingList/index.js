@@ -62,14 +62,14 @@ const Header = styled.div`
   flex-direction: column;
   margin-bottom: ${({ theme }) => theme.px(4)};
 
-  > :first-child {
+  > :first-of-type {
     margin-bottom: ${({ theme }) => theme.px(1)};
   }
 
   ${({ theme }) => theme.mediaQueries.m} {
     flex-direction: row;
 
-    > :first-child {
+    > :first-of-type {
       margin-bottom: 0;
     }
   }

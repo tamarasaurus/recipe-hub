@@ -43,13 +43,18 @@ const Item = styled(Button)`
 `
 
 const ShowShoppingList = {
-  s: styled(Button)`
-    width: ${({ theme }) => theme.px(6)};
-    height: ${({ theme }) => theme.px(6)};
-    border: ${({ theme }) => theme.border.l};
+  s: styled.button`
+    width: ${({ theme }) => theme.px(7)};
+    height: ${({ theme }) => theme.px(7)};
     border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.accent};
     border-radius: 50%;
     text-align: center;
+    box-shadow: ${({ theme }) =>
+      theme.px(0, 0.5, 1) +
+      ' rgba(0, 0, 0, 0.16), ' +
+      theme.px(0, 0.5, 1) +
+      ' rgba(0, 0, 0, 0.22)'};
     ${({ theme }) => theme.mediaQueries.m} {
       display: none;
     }

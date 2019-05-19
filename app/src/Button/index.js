@@ -9,12 +9,6 @@ const Button = styled.button`
   &:hover {
     background: ${({ theme }) => theme.colors.gray.s};
   }
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.accent};
-    box-shadow: ${({ theme }) =>
-      theme.px(0, 0, 0, 0.25) + ' ' + theme.colors.accent};
-  }
 `
 
 export default Button
