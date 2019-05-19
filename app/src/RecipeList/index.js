@@ -67,7 +67,7 @@ const Placeholder = styled.div`
 
 const Image = styled.div`
   height: 230px;
-  background: url(${({ url }) => url}) center;
+  background: url('${({ url }) => url}') center;
   background-size: cover;
 `
 
