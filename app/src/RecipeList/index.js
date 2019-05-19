@@ -24,13 +24,24 @@ const List = styled.div`
   }
 `
 
-const Item = styled.button`
+const Item = styled.div`
+  position: relative;
   background: ${({ theme }) => theme.colors.white};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ isSaved, theme }) =>
     !isSaved ? null : theme.px(0, 0, 0, 0.75) + ' ' + theme.colors.accent};
   transition: ${({ theme }) => theme.transition};
   overflow: hidden;
+  &:hover {
+    box-shadow: ${({ theme }) =>
+      theme.px(0, 0, 0, 0.5) + ' ' + theme.colors.accent};
+
+    /* It's the Exclude button but using it directly breaks the syntax highlighting of the file */
+    > :first-child {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
 `
 
 const Image = styled.div`
@@ -39,10 +50,35 @@ const Image = styled.div`
   background-size: cover;
 `
 
-const Name = styled.div`
+const Header = styled.div`
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(2)};
+`
+
+const Actions = styled.div`
+  display: flex;
+`
+
+const Action = styled.button`
+  display: flex;
+  justify-content: center;
+  width: ${({ theme }) => theme.px(4)};
+  height: ${({ theme }) => theme.px(4)};
+`
+
+const Like = styled(Action)`
+  filter: grayscale(${(props) => (props.isLiked ? 0 : 1)});
+`
+
+const Exclude = styled(Action)`
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: ${({ theme }) => theme.transition};
 `
 
 const Infos = styled.div`
@@ -59,47 +95,67 @@ const RecipeLink = styled.a`
   transition: ${({ theme }) => theme.transition};
 `
 
-const Star = styled.span`
-  filter: grayscale(${(props) => (props.isSaved ? 0 : 1)});
-`
-
-const RecipeList = ({ isLoading, recipes, savedRecipes, toggleRecipe }) => {
+const RecipeList = ({
+  hasLoaded,
+  isLoading,
+  recipes,
+  toggleSaveRecipe,
+  toggleLikeRecipe,
+  excludeRecipe,
+}) => {
   return (
     <Container>
       {recipes.length ? (
         <List>
-          {recipes.map((recipe) => {
-            const isRecipeSaved = savedRecipes.some(
-              ({ id }) => id === recipe.id,
-            )
-
-            return (
-              <Item
-                key={recipe.id}
-                isSaved={isRecipeSaved}
-                onClick={() => toggleRecipe(recipe)}
+          {recipes.map((recipe) => (
+            <Item
+              key={recipe.id}
+              role="button"
+              tabIndex="0"
+              isSaved={recipe.saved}
+              onClick={() => toggleSaveRecipe(recipe)}
+            >
+              <Exclude
+                title="Exclude recipe"
+                tabIndex="-1"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  excludeRecipe(recipe)
+                }}
               >
-                <Image url={recipe.imageUrl || recipe.imageurl} />
-                <Name>
-                  {recipe.name}
-                  <Star isSaved={isRecipeSaved}>⭐</Star>
-                </Name>
-                <Infos>
-                  <span>🕒 {recipe.duration / 60} Min</span>
-                  <RecipeLink
-                    onClick={(e) => e.stopPropagation()}
-                    href={recipe.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    See recipe
-                  </RecipeLink>
-                </Infos>
-              </Item>
-            )
-          })}
+                ❌
+              </Exclude>
+              <Image url={recipe.imageurl} />
+              <Header>
+                {recipe.name}
+                <Like
+                  title={recipe.liked ? 'Unlink recipe' : 'Like recipe'}
+                  isLiked={recipe.liked}
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    toggleLikeRecipe(recipe)
+                  }}
+                >
+                  ⭐
+                </Like>
+              </Header>
+              <Infos>
+                <span>
+                  {recipe.duration > 0 && <>🕒 {recipe.duration / 60} Min</>}
+                </span>
+                <RecipeLink
+                  onClick={(e) => e.stopPropagation()}
+                  href={recipe.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  See recipe
+                </RecipeLink>
+              </Infos>
+            </Item>
+          ))}
         </List>
-      ) : isLoading ? (
+      ) : !hasLoaded || isLoading ? (
         <div>Loading...</div>
       ) : (
         <div>no results</div>
@@ -109,10 +165,12 @@ const RecipeList = ({ isLoading, recipes, savedRecipes, toggleRecipe }) => {
 }
 
 RecipeList.propTypes = {
+  hasLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   recipes: PropTypes.array.isRequired,
-  savedRecipes: PropTypes.array.isRequired,
-  toggleRecipe: PropTypes.func.isRequired,
+  toggleSaveRecipe: PropTypes.func.isRequired,
+  toggleLikeRecipe: PropTypes.func.isRequired,
+  excludeRecipe: PropTypes.func.isRequired,
 }
 
 export default RecipeList

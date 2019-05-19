@@ -51,6 +51,12 @@ const globalStyle = css`
     box-sizing: inherit;
   }
 
+  ::selection {
+    background: ${colors.accent};
+    color: ${colors.white};
+    text-shadow: none;
+  }
+
   html,
   body,
   #root {
@@ -59,9 +65,11 @@ const globalStyle = css`
 
   body {
     font-family: sans-serif;
+    color: ${colors.gray.l};
   }
 
-  button {
+  button,
+  [role='button'] {
     appearance: none;
     border: none;
     background: none;

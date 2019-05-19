@@ -69,7 +69,12 @@ const ShowShoppingList = {
   `,
 }
 
-const ShortList = ({ savedRecipes, toggleRecipe }) => {
+const ShortList = ({
+  hasLoaded,
+  isLoading,
+  savedRecipes,
+  toggleSaveRecipe,
+}) => {
   const [isShowingShoppingList, toggleShowShoppingList] = useState(false)
   const openShoppingList = () => toggleShowShoppingList(true)
   const closeShoppingList = () => toggleShowShoppingList(false)
@@ -80,7 +85,7 @@ const ShortList = ({ savedRecipes, toggleRecipe }) => {
         <>
           <List>
             {savedRecipes.map((recipe) => (
-              <Item key={recipe.id} onClick={() => toggleRecipe(recipe)}>
+              <Item key={recipe.id} onClick={() => toggleSaveRecipe(recipe)}>
                 {recipe.name}
               </Item>
             ))}
@@ -96,16 +101,20 @@ const ShortList = ({ savedRecipes, toggleRecipe }) => {
             />
           ) : null}
         </>
+      ) : !hasLoaded || isLoading ? (
+        <div>Loading...</div>
       ) : (
-        <div>No saved recipes</div>
+        <div>no results</div>
       )}
     </Container>
   )
 }
 
 ShortList.propTypes = {
+  hasLoaded: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
-  toggleRecipe: PropTypes.func.isRequired,
+  toggleSaveRecipe: PropTypes.func.isRequired,
 }
 
 export default ShortList

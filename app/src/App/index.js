@@ -5,7 +5,7 @@ import Filters from '../Filters'
 import RecipeList from '../RecipeList'
 import ShortList from '../ShortList'
 
-import exampleData from '../data.json'
+import * as api from '../api'
 
 const Layout = styled.div`
   display: grid;
@@ -19,13 +19,6 @@ const Layout = styled.div`
 `
 
 const App = () => {
-  const [data, setData] = useState(
-    Array.from(new Array(30), (_, i) => ({
-      ...exampleData[0],
-      id: i,
-    })),
-  )
-  const [isLoading, setIsLoading] = useState(false)
   const [filters, setFilters] = useState({
     query: '',
   })
@@ -37,43 +30,100 @@ const App = () => {
     setFilters(newFilters)
   }
 
+  const [recipes, setRecipes] = useState([])
+  const [hasLoadedRecipes, setHasLoadedRecipes] = useState(false)
+  const [isLoadingRecipes, setIsLoadingRecipes] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true)
-
-      const res = await fetch('http://localhost:8000/recipes')
-      const data = await res.json()
-
-      setData(data)
-      setIsLoading(false)
+      setIsLoadingRecipes(true)
+      setRecipes(await api.getRecipes())
+      setIsLoadingRecipes(false)
+      setHasLoadedRecipes(true)
     }
 
     const timeout = setTimeout(fetchData, 300)
     return () => clearTimeout(timeout)
   }, [filters.query])
 
-  const [savedRecipes, setSavedRecipes] = useState(
-    JSON.parse(localStorage.getItem('savedRecipes')) || [],
-  )
-  const toggleRecipe = (recipe) => {
-    const recipes = savedRecipes.some(({ id }) => id === recipe.id)
-      ? savedRecipes.filter(({ id }) => id !== recipe.id)
-      : [...savedRecipes, recipe]
+  const [savedRecipes, setSavedRecipes] = useState([])
+  const [hasLoadedSavecRecipes, setHasLoadedSavecRecipes] = useState(false)
+  const [isLoadingSavecRecipes, setIsLoadingSavecRecipes] = useState(false)
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoadingSavecRecipes(true)
+      setSavedRecipes(await api.getSavedRecipes())
+      setIsLoadingSavecRecipes(false)
+      setHasLoadedSavecRecipes(true)
+    }
 
-    setSavedRecipes(recipes)
-    localStorage.setItem('savedRecipes', JSON.stringify(recipes))
+    fetchData()
+  }, [])
+  const toggleSaveRecipe = (recipe) => {
+    if (recipe.saved) {
+      api.unsaveRecipe(recipe.id)
+      setSavedRecipes(savedRecipes.filter(({ id }) => id !== recipe.id))
+    } else {
+      api.saveRecipe(recipe.id)
+      setSavedRecipes([...savedRecipes, recipe])
+    }
+
+    setRecipes(
+      recipes.map((r) => {
+        if (r.id !== recipe.id) return r
+        return {
+          ...recipe,
+          saved: !recipe.saved,
+        }
+      }),
+    )
+  }
+
+  const toggleLikeRecipe = (recipe) => {
+    if (recipe.liked) {
+      api.unlikeRecipe(recipe.id)
+    } else {
+      api.likeRecipe(recipe.id)
+    }
+
+    setRecipes(
+      recipes.map((r) => {
+        if (r.id !== recipe.id) return r
+        return {
+          ...recipe,
+          liked: !recipe.liked,
+        }
+      }),
+    )
+  }
+
+  const excludeRecipe = (recipe) => {
+    if (
+      window.confirm(
+        'Do you really want to exclude this recipe? It will be hidden for ever ever',
+      )
+    ) {
+      api.excludeRecipe(recipe.id)
+      setRecipes(recipes.filter((r) => r.id !== recipe.id))
+    }
   }
 
   return (
     <Layout>
       <Filters filters={filters} setFilter={setFilter} />
       <RecipeList
-        isLoading={isLoading}
-        recipes={data}
-        savedRecipes={savedRecipes}
-        toggleRecipe={toggleRecipe}
+        hasLoaded={hasLoadedRecipes}
+        isLoading={isLoadingRecipes}
+        recipes={recipes}
+        toggleSaveRecipe={toggleSaveRecipe}
+        toggleLikeRecipe={toggleLikeRecipe}
+        excludeRecipe={excludeRecipe}
       />
-      <ShortList savedRecipes={savedRecipes} toggleRecipe={toggleRecipe} />
+      <ShortList
+        hasLoaded={hasLoadedSavecRecipes}
+        isLoading={isLoadingSavecRecipes}
+        savedRecipes={savedRecipes}
+        toggleSaveRecipe={toggleSaveRecipe}
+      />
     </Layout>
   )
 }
