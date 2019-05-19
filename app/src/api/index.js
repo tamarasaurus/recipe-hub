@@ -12,7 +12,7 @@ const post = (query, options) =>
     method: 'POST',
   })
 
-export const getRecipes = () => get('/recipes')
+export const getRecipes = (query) => get(`/recipes?keywords=${query}`)
 export const getSavedRecipes = () => get('/recipes/saved')
 export const saveRecipe = (id) => post(`/recipes/${id}/save`)
 export const unsaveRecipe = (id) => post(`/recipes/${id}/unsave`)

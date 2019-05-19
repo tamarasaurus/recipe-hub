@@ -104,7 +104,7 @@ const ShortList = ({
       ) : !hasLoaded || isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div>no results</div>
+        <div>no saved recipes</div>
       )}
     </Container>
   )

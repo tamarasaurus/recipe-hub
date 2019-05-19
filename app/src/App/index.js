@@ -36,7 +36,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingRecipes(true)
-      setRecipes(await api.getRecipes())
+      setRecipes(await api.getRecipes(filters.query))
       setIsLoadingRecipes(false)
       setHasLoadedRecipes(true)
     }
@@ -59,7 +59,8 @@ const App = () => {
     fetchData()
   }, [])
   const toggleSaveRecipe = (recipe) => {
-    if (recipe.saved) {
+    const isRecipeSaved = savedRecipes.some((r) => r.id === recipe.id)
+    if (isRecipeSaved) {
       api.unsaveRecipe(recipe.id)
       setSavedRecipes(savedRecipes.filter(({ id }) => id !== recipe.id))
     } else {
@@ -72,7 +73,7 @@ const App = () => {
         if (r.id !== recipe.id) return r
         return {
           ...recipe,
-          saved: !recipe.saved,
+          saved: !isRecipeSaved,
         }
       }),
     )
