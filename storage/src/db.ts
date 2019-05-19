@@ -81,41 +81,44 @@ export default class Database {
 
   searchRecipes(searchQuery: SearchQuery) {
     let filters = ``;
-    const { ids } = searchQuery
+
+    const { ids, keywords } = searchQuery
 
     if (ids !== undefined) {
       filters = `where id IN (${ids})`;
     }
 
     return query(`
-      SELECT
-        recipe.id,
-        recipe.name,
-        recipe.duration,
-        recipe.ingredients,
-        recipe.portions,
-        recipe.imageUrl,
-        recipe.url,
-        recipe.created,
-        recipe.updated,
-        recipe.categories,
-        COALESCE(auth_user_recipe.liked, false) as liked,
-        COALESCE(auth_user_recipe.excluded, false) as excluded,
-        COALESCE(auth_user_recipe.saved, false) as saved
-      FROM recipe
-      LEFT JOIN auth_user_recipe on auth_user_recipe.user_id = '1'
-      AND auth_user_recipe.recipe_id = recipe.id
+      SELECT * from
+        (SELECT
+          recipe.id,
+          recipe.name,
+          recipe.duration,
+          recipe.ingredients,
+          recipe.portions,
+          recipe.imageUrl,
+          recipe.url,
+          recipe.created,
+          recipe.updated,
+          recipe.categories,
+          COALESCE(auth_user_recipe.liked, false) as liked,
+          COALESCE(auth_user_recipe.excluded, false) as excluded,
+          COALESCE(auth_user_recipe.saved, false) as saved
+        FROM recipe
+        LEFT JOIN auth_user_recipe on auth_user_recipe.user_id = '1'
+        AND auth_user_recipe.recipe_id = recipe.id) as recipes
+      WHERE recipes.excluded = FALSE
       ${filters}
     `, []).then((result) => result.rows);
   }
 
   getSavedRecipeIdsForUser(userId: string): Promise<string[]> {
     return query(`
-      select recipe_id from auth_user_recipe
-      where user_id = $1
-      and auth_user_recipe.saved = TRUE
-    `, [ userId ]).then((result) => {
-      return result.rows.map(row => row.recipe_id);
-    })
+      SELECT *
+      FROM auth_user_recipe
+      RIGHT JOIN recipe on auth_user_recipe.recipe_id = recipe.id
+      WHERE auth_user_recipe.user_id = $1
+      AND auth_user_recipe.saved = TRUE
+    `, [ userId ]).then((result) => result.rows)
   }
 }

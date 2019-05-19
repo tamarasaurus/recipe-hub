@@ -16,7 +16,9 @@ app.use(function (req, res, next) {
 
 function setRecipePreference(recipeId: string, userId: string, preference: any, res) {
   db.setRecipePreference(recipeId, userId, preference)
-    .then(() => res.sendStatus(200))
+    .then(() => res.json({
+      message: `Saved preferences for recipe ${recipeId}`
+    }))
     .catch(() => res.sendStatus(404));
 }
 
@@ -55,7 +57,7 @@ app.get('/recipes/saved', cors(), (req, res) => {
     .catch((e: Error) => res.sendStatus(404));
 })
 
-app.use('/account/create', cors(), (req, res) => {
+app.post('/account/create', cors(), (req, res) => {
   const token = req.body.token;
   db.createUser(token).then(() => res.sendStatus(200)).catch(() => res.sendStatus(400));
 })
