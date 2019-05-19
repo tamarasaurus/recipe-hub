@@ -5,11 +5,8 @@ import Filters from '../Filters'
 import RecipeList from '../RecipeList'
 import ShortList from '../ShortList'
 
-<<<<<<< HEAD
 import * as api from '../api'
 
-=======
->>>>>>> Save user preferences
 const Layout = styled.div`
   display: grid;
   grid-template-columns: 1fr auto;
@@ -22,11 +19,6 @@ const Layout = styled.div`
 `
 
 const App = () => {
-<<<<<<< HEAD
-=======
-  const [data, setData] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
->>>>>>> Save user preferences
   const [filters, setFilters] = useState({
     query: '',
   })
