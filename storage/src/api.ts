@@ -28,7 +28,11 @@ app.post('/recipes', cors(), (req, res) => {
 
 app.get('/recipes', cors(), (req, res) => {
   const { ids, keywords } = req.query;
-  db.searchRecipes({ ids, keywords }).then((data => res.json(data)))
+  db.searchRecipes({ ids, keywords })
+  .then((data => res.json(data)))
+  .catch((e: Error) => res.status(500).json({
+    message: 'Error fetching recipes'
+  }))
 })
 
 app.post('/recipes/:id/like', cors(), (req, res) => {
