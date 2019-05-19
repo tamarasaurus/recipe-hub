@@ -90,7 +90,24 @@ export default class Database {
     }
 
     return query(`
-      select * from recipe ${filters} limit 1000
+      SELECT
+        recipe.id,
+        recipe.name,
+        recipe.duration,
+        recipe.ingredients,
+        recipe.portions,
+        recipe.imageUrl,
+        recipe.url,
+        recipe.created,
+        recipe.updated,
+        recipe.categories,
+        COALESCE(auth_user_recipe.liked, false) as liked,
+        COALESCE(auth_user_recipe.excluded, false) as excluded,
+        COALESCE(auth_user_recipe.saved, false) as saved
+      FROM recipe
+      LEFT JOIN auth_user_recipe on auth_user_recipe.user_id = '1'
+      AND auth_user_recipe.recipe_id = recipe.id
+      ${filters}
     `, []).then((result) => result.rows);
   }
 
