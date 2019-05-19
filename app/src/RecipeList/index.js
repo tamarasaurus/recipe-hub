@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core'
 
 import Button from '../Button'
 
@@ -44,6 +45,24 @@ const Item = styled.div`
       pointer-events: all;
     }
   }
+`
+
+const placeholder = keyframes`
+  0% {
+    background-position: -500px 0
+  }
+  100% {
+    background-position: 500px 0
+  }
+`
+const Placeholder = styled.div`
+  height: 330px;
+  animation: ${placeholder} 1s infinite linear forwards;
+  background: ${({ theme }) =>
+    `linear-gradient(to right, ${theme.colors.white} 10%, ${
+      theme.colors.gray.s
+    } 20%, ${theme.colors.white} 30%)`};
+  background-size: 1000px 100px;
 `
 
 const Image = styled.div`
@@ -97,7 +116,10 @@ const RecipeLink = styled.a`
   transition: ${({ theme }) => theme.transition};
 `
 
-const LoadMore = styled(Button)()
+const LoadMore = styled(Button)`
+  display: block;
+  margin: ${({ theme }) => theme.px(3)} auto 0;
+`
 
 const RecipeList = ({
   hasLoaded,
@@ -106,6 +128,7 @@ const RecipeList = ({
   toggleSaveRecipe,
   toggleLikeRecipe,
   excludeRecipe,
+  loadMore,
 }) => {
   return (
     <Container>
@@ -160,10 +183,14 @@ const RecipeList = ({
               </Item>
             ))}
           </List>
-          <LoadMore>Load more</LoadMore>
+          <LoadMore onClick={loadMore}>Load more</LoadMore>
         </>
       ) : !hasLoaded || isLoading ? (
-        <div>Loading...</div>
+        <List>
+          {Array.from(new Array(9), (_, i) => (
+            <Placeholder key={i} />
+          ))}
+        </List>
       ) : (
         <div>no results</div>
       )}

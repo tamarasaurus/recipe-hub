@@ -4,7 +4,7 @@ import styled from '@emotion/styled'
 
 import FoodEmoji from './FoodEmoji'
 
-const Form = styled.form`
+const Form = styled.div`
   grid-area: Filters;
   display: flex;
   align-items: center;
@@ -24,6 +24,12 @@ const Input = styled.input`
   box-shadow: ${({ theme }) =>
     theme.px(0.5, 0.5, 0) + ' ' + theme.colors.gray.l};
   transition: ${({ theme }) => theme.transition};
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.accent};
+    box-shadow: ${({ theme }) =>
+      theme.px(0.5, 0.5, 0) + ' ' + theme.colors.accent};
+  }
 `
 
 const Filters = ({ filters, setFilter }) => {

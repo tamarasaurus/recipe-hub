@@ -28,9 +28,11 @@ const App = () => {
       [label]: value,
     }
     setFilters(newFilters)
+    setOffset(0)
   }
 
   const [recipes, setRecipes] = useState([])
+  const [offset, setOffset] = useState(0)
   const [hasLoadedRecipes, setHasLoadedRecipes] = useState(false)
   const [isLoadingRecipes, setIsLoadingRecipes] = useState(false)
   useEffect(() => {
@@ -44,6 +46,17 @@ const App = () => {
     const timeout = setTimeout(fetchData, 300)
     return () => clearTimeout(timeout)
   }, [filters.query])
+
+  const loadMore = () => setOffset(offset + api.OFFSET)
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoadingRecipes(true)
+      setRecipes(recipes.concat(await api.getRecipes(filters.query, offset)))
+      setIsLoadingRecipes(false)
+    }
+
+    fetchData()
+  }, [offset])
 
   const [savedRecipes, setSavedRecipes] = useState([])
   const [hasLoadedSavecRecipes, setHasLoadedSavecRecipes] = useState(false)
@@ -118,6 +131,7 @@ const App = () => {
         toggleSaveRecipe={toggleSaveRecipe}
         toggleLikeRecipe={toggleLikeRecipe}
         excludeRecipe={excludeRecipe}
+        loadMore={loadMore}
       />
       <ShortList
         hasLoaded={hasLoadedSavecRecipes}
