@@ -14,6 +14,13 @@ app.use(function(req, res, next) {
   next()
 })
 
+
+function setRecipePreference(recipeId: string, userId: string, preference: any, res) {
+  db.setRecipePreference(recipeId, userId, preference)
+  .then(() => res.sendStatus(200))
+  .catch(() => res.sendStatus(404));
+}
+
 app.post('/recipes', cors(), (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
@@ -24,12 +31,6 @@ app.get('/recipes', cors(), (req, res) => {
 
   db.searchRecipes({ids, keywords}).then((data => res.json(data)))
 })
-
-function setRecipePreference(recipeId: string, userId: string, preference: any, res) {
-  db.setRecipePreference(recipeId, userId, { liked: true })
-  .then(() => res.sendStatus(200))
-  .catch(() => res.sendStatus(404));
-}
 
 app.post('/recipes/:id/like', cors(), (req, res) => {
   setRecipePreference(req.params.id, '1', { liked: true }, res)
@@ -49,6 +50,12 @@ app.post('/recipes/:id/unsave', cors(), (req, res) => {
 
 app.post('/recipes/:id/exclude', cors(), (req, res) => {
   setRecipePreference(req.params.id, '1', { excluded: true }, res)
+})
+
+app.get('/recipes/saved', cors() , (req, res) => {
+  db.getSavedRecipeIdsForUser('1').then((recipeIds: string[]) => {
+    res.json(recipeIds);
+  }).catch((e: Error) => res.sendStatus(404));
 })
 
 app.use('/account/create', cors(), (req, res) => {

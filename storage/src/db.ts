@@ -93,4 +93,14 @@ export default class Database {
       select * from recipe ${filters} limit 1000
     `, []).then((result) => result.rows);
   }
+
+  getSavedRecipeIdsForUser(userId: string): Promise<string[]> {
+    return query(`
+      select recipe_id from auth_user_recipe
+      where user_id = $1
+      and auth_user_recipe.saved = TRUE
+    `, [ userId ]).then((result) => {
+      return result.rows.map(row => row.recipe_id);
+    })
+  }
 }
