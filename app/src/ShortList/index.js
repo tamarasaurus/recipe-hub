@@ -114,7 +114,6 @@ ShortList.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
-  toggleSaveRecipe: PropTypes.func.isRequired,
 }
 
 export default ShortList

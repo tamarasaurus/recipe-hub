@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
+import Button from '../Button'
+
 const Container = styled.div`
   grid-area: RecipeList;
   position: relative;
@@ -95,6 +97,8 @@ const RecipeLink = styled.a`
   transition: ${({ theme }) => theme.transition};
 `
 
+const LoadMore = styled(Button)()
+
 const RecipeList = ({
   hasLoaded,
   isLoading,
@@ -154,6 +158,7 @@ const RecipeList = ({
               </Infos>
             </Item>
           ))}
+          <LoadMore>Load more</LoadMore>
         </List>
       ) : !hasLoaded || isLoading ? (
         <div>Loading...</div>
@@ -171,6 +176,7 @@ RecipeList.propTypes = {
   toggleSaveRecipe: PropTypes.func.isRequired,
   toggleLikeRecipe: PropTypes.func.isRequired,
   excludeRecipe: PropTypes.func.isRequired,
+  loadMore: PropTypes.func.isRequired,
 }
 
 export default RecipeList
