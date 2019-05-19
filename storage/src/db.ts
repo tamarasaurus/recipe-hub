@@ -3,18 +3,18 @@ import query from './query';
 interface SearchQuery {
   keywords?: string;
   ids?: string[];
-  offset?: number
+  offset?: number;
 }
 
 interface RecipeUserPreference {
-  liked?: boolean
-  excluded?: boolean
-  saved?: boolean
+  liked?: boolean;
+  excluded?: boolean;
+  saved?: boolean;
 }
 
 export default class Database {
-  createUser(auth_id: string) {
-    return query(`INSERT INTO auth_user (auth_id) VALUES ($1)`, [auth_id])
+  createUser(authId: string) {
+    return query('INSERT INTO auth_user (auth_id) VALUES ($1)', [authId]);
   }
 
   setRecipePreference(recipeId: string, userId: string, preference: RecipeUserPreference) {
@@ -25,13 +25,13 @@ export default class Database {
       VALUES ($1, $2, $3, $4, $5) ON CONFLICT(user_id, recipe_id)
       DO UPDATE SET liked = $3, excluded = $4, saved = $5
     `,
-    [
-      userId,
-      recipeId,
-      (liked || false),
-      (excluded || false),
-      (saved || false)
-    ])
+      [
+        userId,
+        recipeId,
+        (liked || false),
+        (excluded || false),
+        (saved || false),
+      ]);
   }
 
   insertOrUpdateRecipe(data: any) {
@@ -43,7 +43,7 @@ export default class Database {
       url,
       imageUrl,
       categories,
-      calories
+      calories,
     } = data;
 
     return query(
@@ -72,23 +72,23 @@ export default class Database {
         url,
         imageUrl,
         categories ? categories.join(',') : '',
-        calories
+        calories,
       ])
-      .then((storedResult) => storedResult.rows)
+      .then(storedResult => storedResult.rows)
       .catch((error: Error) => {
         console.log('\n', error);
-      })
+      });
   }
 
   searchRecipes(searchQuery: SearchQuery) {
-    const { ids, keywords, offset } = searchQuery
+    const { ids, keywords, offset } = searchQuery;
 
-    let filters = ``;
+    let filters = '';
     if (ids !== undefined) {
       filters = `AND id IN (${ids})`;
     }
 
-    let searchFilters = ``;
+    let searchFilters = '';
     if (keywords !== undefined && keywords.trim().length > 0) {
       searchFilters = `AND (
         to_tsvector('english', COALESCE(name, ''))      ||
@@ -96,7 +96,7 @@ export default class Database {
         to_tsvector('english', COALESCE(categories, ''))
       ) @@ phraseto_tsquery('english', '%${keywords}%')
         OR name LIKE '${keywords}'
-      `
+      `;
     }
 
     return query(`
@@ -124,9 +124,7 @@ export default class Database {
       ORDER BY created DESC
       LIMIT 24
       OFFSET $1
-    `, [
-      offset || 0
-    ]).then((result) => result.rows);
+    `, [(offset || 0)]).then(result => result.rows);
   }
 
   getSavedRecipeIdsForUser(userId: string): Promise<string[]> {
@@ -136,6 +134,6 @@ export default class Database {
       RIGHT JOIN recipe on auth_user_recipe.recipe_id = recipe.id
       WHERE auth_user_recipe.user_id = $1
       AND auth_user_recipe.saved = TRUE
-    `, [ userId ]).then((result) => result.rows)
+    `, [userId]).then(result => result.rows);
   }
 }

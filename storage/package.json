@@ -6,7 +6,8 @@
   "scripts": {
     "test": "npm test",
     "start": "ts-node src/api.ts",
-    "setup": "ts-node src/setup.ts"
+    "setup": "ts-node src/setup.ts",
+    "lint-fix": "tslint --fix --project tslint.json"
   },
   "author": "Tamara Robichet",
   "license": "MIT",
@@ -21,6 +22,8 @@
     "@types/express": "^4.16.1",
     "@types/pg": "^7.4.14",
     "ts-node": "^8.1.0",
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.4.5"
   }
 }
