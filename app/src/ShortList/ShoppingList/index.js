@@ -46,7 +46,7 @@ const Content = styled(animated.div)`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-height: 75vh;
+  max-height: 100vh;
   padding: ${({ theme }) => theme.px(2)};
   background: ${({ theme }) => theme.colors.white};
   overflow-y: auto;

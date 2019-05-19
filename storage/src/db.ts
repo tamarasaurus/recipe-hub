@@ -1,49 +1,37 @@
 import query from './query';
+import { QueryResult } from 'pg';
 
 interface SearchQuery {
   keywords?: string;
   ids?: string[];
 }
 
-interface UserPreferences {
-  liked: string[]
-  excluded: string[]
-  saved: string[]
+interface RecipeUserPreference {
+  liked?: boolean
+  excluded?: boolean
+  saved?: boolean
 }
 
 export default class Database {
   createUser(auth_id: string) {
-
+    return query(`INSERT INTO auth_user (auth_id) VALUES ($1)`, [auth_id])
   }
 
-  savePreferencesForUser(userId: string, preferences: UserPreferences) {
-    const { liked, excluded, saved } = preferences
-    const recipeIds = Array.from(new Set([...liked, ...excluded, ...saved]))
-    const rowQueries = recipeIds.map((recipeId) => {
-      return query(`
-        INSERT INTO auth_user_recipe (user_id, recipe_id, liked, excluded, saved) 
-        VALUES ($1, $2, $3, $3, $5)
-        ON CONFLICT(user_id, recipe_id)
-        DO 
-          UPDATE
-            liked = COALESCE($3, auth_user_recipe.liked),
-            excluded = COALESCE($4, auth_user_recipe.excluded),
-            saved = COALESCE($5, auth_user_recipe.saved)
-            RETURNING *
-      `, [
-        userId,
-        recipeId,
-        liked.includes(recipeId) === true,
-        excluded.includes(recipeId) === true,
-        saved.includes(recipeId) === true
-      ])
-    })
+  setRecipePreference(recipeId: string, userId: string, preference: RecipeUserPreference) {
+    const { liked, excluded, saved } = preference;
 
-    return Promise.all(rowQueries).then((storedResult) => {
-      console.log(storedResult)
-    }).catch((e: Error) => {
-      console.log('Error storing user preferences')
-    });
+    return query(`
+      INSERT INTO auth_user_recipe (user_id, recipe_id, liked, excluded, saved)
+      VALUES ($1, $2, $3, $4, $5) ON CONFLICT(user_id, recipe_id)
+      DO UPDATE SET liked = $3, excluded = $4, saved = $5
+    `,
+    [
+      userId,
+      recipeId,
+      (liked || false),
+      (excluded || false),
+      (saved || false)
+    ])
   }
 
   insertOrUpdateRecipe(data: any) {
@@ -65,14 +53,14 @@ export default class Database {
     ON CONFLICT (url)
     DO
       UPDATE
-        SET name = COALESCE($1, recipes.name),
-            duration = COALESCE($2, recipes.duration),
-            ingredients = COALESCE($3, recipes.ingredients),
-            portions = COALESCE($4, recipes.portions),
-            url = COALESCE($5, recipes.url),
-            imageUrl = COALESCE($6, recipes.imageUrl),
-            categories = COALESCE($7, recipes.categories),
-            calories = COALESCE($8, recipes.calories),
+        SET name = COALESCE($1, recipe.name),
+            duration = COALESCE($2, recipe.duration),
+            ingredients = COALESCE($3, recipe.ingredients),
+            portions = COALESCE($4, recipe.portions),
+            url = COALESCE($5, recipe.url),
+            imageUrl = COALESCE($6, recipe.imageUrl),
+            categories = COALESCE($7, recipe.categories),
+            calories = COALESCE($8, recipe.calories),
             updated = now()
     RETURNING *
     `,
@@ -83,7 +71,7 @@ export default class Database {
         portions,
         url,
         imageUrl,
-        categories ? categories.join(','): '',
+        categories ? categories.join(',') : '',
         calories
       ])
       .then((storedResult) => storedResult.rows)
@@ -92,6 +80,7 @@ export default class Database {
       })
   }
 
+  // Join with user preference table
   searchRecipes(searchQuery: SearchQuery) {
     let filters = ``;
     const { ids } = searchQuery

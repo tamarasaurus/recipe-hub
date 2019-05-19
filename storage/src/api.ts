@@ -25,4 +25,35 @@ app.get('/recipes', cors(), (req, res) => {
   db.searchRecipes({ids, keywords}).then((data => res.json(data)))
 })
 
+function setRecipePreference(recipeId: string, userId: string, preference: any, res) {
+  db.setRecipePreference(recipeId, userId, { liked: true })
+  .then(() => res.sendStatus(200))
+  .catch(() => res.sendStatus(404));
+}
+
+app.post('/recipes/:id/like', cors(), (req, res) => {
+  setRecipePreference(req.params.id, '1', { liked: true }, res)
+})
+
+app.post('/recipes/:id/unlike', cors(), (req, res) => {
+  setRecipePreference(req.params.id, '1', { liked: false }, res)
+})
+
+app.post('/recipes/:id/save', cors(), (req, res) => {
+  setRecipePreference(req.params.id, '1', { saved: true }, res)
+})
+
+app.post('/recipes/:id/unsave', cors(), (req, res) => {
+  setRecipePreference(req.params.id, '1', { saved: false }, res)
+})
+
+app.post('/recipes/:id/exclude', cors(), (req, res) => {
+  setRecipePreference(req.params.id, '1', { excluded: true }, res)
+})
+
+app.use('/account/create', cors(), (req, res) => {
+  const token = req.body.token;
+  db.createUser(token).then(() => res.sendStatus(200)).catch(() => res.sendStatus(400));
+})
+
 app.listen('8000', () => console.log(`Example app listening on port 8000`))

@@ -106,7 +106,7 @@ const Infos = styled.div`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
-  border-top: ${({ theme }) => theme.border.m};
+  border-top: ${({ theme }) => theme.border.s};
   border-color: ${({ theme }) => theme.colors.gray.m};
   font-size: 14px;
 `
