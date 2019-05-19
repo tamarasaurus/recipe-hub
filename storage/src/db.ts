@@ -3,6 +3,7 @@ import query from './query';
 interface SearchQuery {
   keywords?: string;
   ids?: string[];
+  offset?: number
 }
 
 interface RecipeUserPreference {
@@ -47,21 +48,21 @@ export default class Database {
 
     return query(
       `
-    INSERT INTO recipe(name, duration, ingredients, portions, url, imageUrl, categories, calories)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-    ON CONFLICT (url)
-    DO
-      UPDATE
-        SET name = COALESCE($1, recipe.name),
-            duration = COALESCE($2, recipe.duration),
-            ingredients = COALESCE($3, recipe.ingredients),
-            portions = COALESCE($4, recipe.portions),
-            url = COALESCE($5, recipe.url),
-            imageUrl = COALESCE($6, recipe.imageUrl),
-            categories = COALESCE($7, recipe.categories),
-            calories = COALESCE($8, recipe.calories),
-            updated = now()
-    RETURNING *
+      INSERT INTO recipe(name, duration, ingredients, portions, url, imageUrl, categories, calories)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      ON CONFLICT (url)
+      DO
+        UPDATE
+          SET name = COALESCE($1, recipe.name),
+              duration = COALESCE($2, recipe.duration),
+              ingredients = COALESCE($3, recipe.ingredients),
+              portions = COALESCE($4, recipe.portions),
+              url = COALESCE($5, recipe.url),
+              imageUrl = COALESCE($6, recipe.imageUrl),
+              categories = COALESCE($7, recipe.categories),
+              calories = COALESCE($8, recipe.calories),
+              updated = now()
+      RETURNING *
     `,
       [
         name,
@@ -80,15 +81,14 @@ export default class Database {
   }
 
   searchRecipes(searchQuery: SearchQuery) {
+    const { ids, keywords, offset } = searchQuery
+
     let filters = ``;
-    let searchFilters = ``;
-
-    const { ids, keywords } = searchQuery
-
     if (ids !== undefined) {
       filters = `AND id IN (${ids})`;
     }
 
+    let searchFilters = ``;
     if (keywords !== undefined && keywords.trim().length > 0) {
       searchFilters = `AND (
         to_tsvector('english', COALESCE(name, ''))      ||
@@ -121,7 +121,12 @@ export default class Database {
       WHERE recipes.excluded = FALSE
       ${filters}
       ${searchFilters}
-    `, []).then((result) => result.rows);
+      ORDER BY created DESC
+      LIMIT 24
+      OFFSET $1
+    `, [
+      offset || 0
+    ]).then((result) => result.rows);
   }
 
   getSavedRecipeIdsForUser(userId: string): Promise<string[]> {
