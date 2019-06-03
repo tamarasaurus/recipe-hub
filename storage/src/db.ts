@@ -13,12 +13,31 @@ interface RecipeUserPreference {
 }
 
 export default class Database {
-  createUser(authId: string) {
-    return query('INSERT INTO auth_user (auth_id) VALUES ($1)', [authId]);
+  async getUserId(authId: string) {
+    const queryResult = await query(`
+      SELECT id
+      FROM auth_user
+      WHERE auth_id = $1
+    `, [authId]);
+
+    if (queryResult.rowCount === 0) {
+      throw Error('User does not exist');
+    }
+
+    return queryResult.rows[0].id;
   }
 
-  setRecipePreference(recipeId: string, userId: string, preference: RecipeUserPreference) {
+  createUser(authId: string) {
+    return query(`
+      INSERT INTO auth_user (auth_id) VALUES ($1)
+      ON CONFLICT DO NOTHING
+    `, [authId]);
+  }
+
+  async setRecipePreference(recipeId: string, authId: string, preference: RecipeUserPreference) {
     const { liked, excluded, saved } = preference;
+    const userId = await this.getUserId(authId);
+    console.log('userId', userId);
 
     return query(`
       INSERT INTO auth_user_recipe (user_id, recipe_id, liked, excluded, saved)
@@ -80,7 +99,7 @@ export default class Database {
       });
   }
 
-  searchRecipes(searchQuery: SearchQuery) {
+  async searchRecipes(searchQuery: SearchQuery, authId: string) {
     const { ids, keywords, offset } = searchQuery;
 
     let filters = '';
@@ -99,6 +118,8 @@ export default class Database {
       `;
     }
 
+    const userId = await this.getUserId(authId);
+
     return query(`
       SELECT * from
         (SELECT
@@ -116,7 +137,7 @@ export default class Database {
           COALESCE(auth_user_recipe.excluded, false) as excluded,
           COALESCE(auth_user_recipe.saved, false) as saved
         FROM recipe
-        LEFT JOIN auth_user_recipe on auth_user_recipe.user_id = '1'
+        LEFT JOIN auth_user_recipe on auth_user_recipe.user_id = $2
         AND auth_user_recipe.recipe_id = recipe.id) as recipes
       WHERE recipes.excluded = FALSE
       ${filters}
@@ -124,12 +145,29 @@ export default class Database {
       ORDER BY created DESC
       LIMIT 24
       OFFSET $1
-    `, [(offset || 0)]).then(result => result.rows);
+    `, [
+      (offset || 0),
+      userId,
+    ]).then(result => result.rows);
   }
 
-  getSavedRecipeIdsForUser(userId: string): Promise<string[]> {
+  async getSavedRecipeIdsForUser(authId: string): Promise<string[]> {
+    const userId = await this.getUserId(authId);
+
     return query(`
-      SELECT *
+      SELECT recipe.id,
+      recipe.name,
+      recipe.duration,
+      recipe.ingredients,
+      recipe.portions,
+      recipe.imageUrl,
+      recipe.url,
+      recipe.created,
+      recipe.updated,
+      recipe.categories,
+      COALESCE(auth_user_recipe.liked, false) as liked,
+      COALESCE(auth_user_recipe.excluded, false) as excluded,
+      COALESCE(auth_user_recipe.saved, false) as saved
       FROM auth_user_recipe
       RIGHT JOIN recipe on auth_user_recipe.recipe_id = recipe.id
       WHERE auth_user_recipe.user_id = $1

@@ -42,9 +42,21 @@ const isUserLoggedIn = (
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.redirect('http://localhost:8000/auth/google');
+    res.sendStatus(401);
   }
 };
+
+function setRecipePreference(
+  recipeId: string,
+  userId: string,
+  preference: any,
+  res: express.Response) {
+  db.setRecipePreference(recipeId, userId, preference)
+    .then(() => res.json({
+      message: `Saved preferences for recipe ${recipeId}`,
+    }))
+    .catch(() => res.sendStatus(404));
+}
 
 passport.use(new OAuth2Strategy(
   {
@@ -64,61 +76,50 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/', session: true }),
   (req, res) => {
-    console.log('wooo we authenticated, here is our user object:', req.user);
-    // res.json(req.user);
-    res.redirect('/');
+    console.log(req.user.id, 'logged in');
+    return db.createUser(req.user.id).then(() => {
+      res.redirect('/');
+    }).catch(() => res.sendStatus(500));
   },
 );
-
-function setRecipePreference(
-  recipeId: string,
-  userId: string,
-  preference: any,
-  res: express.Response) {
-  db.setRecipePreference(recipeId, userId, preference)
-    .then(() => res.json({
-      message: `Saved preferences for recipe ${recipeId}`,
-    }))
-    .catch(() => res.sendStatus(404));
-}
 
 app.post('/recipes', cors(), (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
-app.get('/recipes', cors(), (req, res) => {
+app.get('/recipes', isUserLoggedIn, cors(), (req, res) => {
   const { ids, keywords, offset } = req.query;
 
-  db.searchRecipes({ ids, keywords, offset })
+  db.searchRecipes({ ids, keywords, offset }, req.user.id)
     .then((data => res.json(data)))
     .catch((e: Error) => res.status(500).json({
       message: 'Error fetching recipes',
     }));
 });
 
-app.post('/recipes/:id/like', cors(), (req, res) => {
-  setRecipePreference(req.params.id, '1', { liked: true }, res);
+app.post('/recipes/:id/like', isUserLoggedIn, cors(), (req, res) => {
+  setRecipePreference(req.params.id, req.user.id, { liked: true }, res);
 });
 
-app.post('/recipes/:id/unlike', cors(), (req, res) => {
-  setRecipePreference(req.params.id, '1', { liked: false }, res);
+app.post('/recipes/:id/unlike', isUserLoggedIn, cors(), (req, res) => {
+  setRecipePreference(req.params.id, req.user.id, { liked: false }, res);
 });
 
-app.post('/recipes/:id/save', cors(), (req, res) => {
-  setRecipePreference(req.params.id, '1', { saved: true }, res);
+app.post('/recipes/:id/save', isUserLoggedIn, cors(), (req, res) => {
+  setRecipePreference(req.params.id, req.user.id, { saved: true }, res);
 });
 
-app.post('/recipes/:id/unsave', cors(), (req, res) => {
-  setRecipePreference(req.params.id, '1', { saved: false }, res);
+app.post('/recipes/:id/unsave', isUserLoggedIn, cors(), (req, res) => {
+  setRecipePreference(req.params.id, req.user.id, { saved: false }, res);
 });
 
-app.post('/recipes/:id/exclude', cors(), (req, res) => {
-  setRecipePreference(req.params.id, '1', { excluded: true }, res);
+app.post('/recipes/:id/exclude', isUserLoggedIn, cors(), (req, res) => {
+  setRecipePreference(req.params.id, req.user.id, { excluded: true }, res);
 });
 
-app.get('/recipes/saved', cors(), isUserLoggedIn, (req, res) => {
-  console.log('req.user', req.user);
-  db.getSavedRecipeIdsForUser('1')
+// isUserLoggedIn
+app.get('/recipes/saved', isUserLoggedIn, cors(), (req, res) => {
+  db.getSavedRecipeIdsForUser(req.user.id)
     .then((recipeIds: string[]) => res.json(recipeIds))
     .catch((e: Error) => res.sendStatus(404));
 });
