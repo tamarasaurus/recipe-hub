@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 
 import FoodEmoji from './FoodEmoji'
 
@@ -11,7 +11,7 @@ const Form = styled.div`
   justify-content: space-around;
   padding: ${({ theme }) => theme.px(3)};
   background: ${({ theme }) => theme.colors.white};
-  border-bottom: ${({ theme }) => theme.border.l};
+  border-bottom: ${({ theme }) => theme.borders.l};
   font-size: ${({ theme }) => theme.px(3)};
 `
 
@@ -19,10 +19,10 @@ const Input = styled.input`
   width: 100%;
   padding: ${({ theme }) => theme.px(1, 2)};
   margin-left: ${({ theme }) => theme.px(2)};
-  border: ${({ theme }) => theme.border.l};
+  border: ${({ theme }) => theme.borders.l};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ theme }) =>
-    theme.px(0.5, 0.5, 0) + ' ' + theme.colors.gray.l};
+    theme.px(0.5, 0.5, 0) + ' ' + theme.colors.grays.l};
   transition: ${({ theme }) => theme.transition};
   &:focus {
     outline: none;

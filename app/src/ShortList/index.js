@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 
 import Button from '../Button'
 import ShoppingList from './ShoppingList'
@@ -63,7 +63,7 @@ const ShowShoppingList = {
     display: none;
     ${({ theme }) => theme.mediaQueries.m} {
       display: block;
-      border: ${({ theme }) => theme.border.l};
+      border: ${({ theme }) => theme.borders.l};
       text-align: center;
     }
   `,
@@ -104,7 +104,9 @@ const ShortList = ({
       ) : !hasLoaded || isLoading ? (
         <div>Loading...</div>
       ) : (
-        <div>no saved recipes</div>
+        <div>
+          Start adding recipes to your shopping list by clicking on them
+        </div>
       )}
     </Container>
   )
