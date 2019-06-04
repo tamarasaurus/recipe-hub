@@ -1,7 +1,7 @@
 {
-  "name": "recipe-hub-storage",
+  "name": "recipe-hub-api",
   "version": "1.0.0",
-  "description": "Database storage for recipe-hub",
+  "description": "API for recipe-hub",
   "main": "index.js",
   "scripts": {
     "test": "npm test",

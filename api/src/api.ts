@@ -87,14 +87,26 @@ app.post('/recipes', cors(), (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
-app.get('/recipes', isUserLoggedIn, cors(), (req, res) => {
+app.get('/recipes', cors(), (req, res) => {
   const { ids, keywords, offset } = req.query;
 
-  db.searchRecipes({ ids, keywords, offset }, req.user.id)
-    .then((data => res.json(data)))
-    .catch((e: Error) => res.status(500).json({
-      message: 'Error fetching recipes',
-    }));
+  if (req.isAuthenticated()) {
+    db.searchRecipes({ ids, keywords, offset }, req.user.id)
+      .then((data => res.json(data)))
+      .catch((e: Error) => res.status(500).json({
+        message: 'Error fetching recipes',
+      }));
+  } else {
+    db.searchRecipes({ ids, keywords, offset }, '1')
+      .then((data => res.json(data)))
+      .catch((e: Error) => {
+        console.log(e);
+        res.status(500).json({
+          message: 'Error fetching recipes',
+        });
+      });
+  }
+
 });
 
 app.post('/recipes/:id/like', isUserLoggedIn, cors(), (req, res) => {

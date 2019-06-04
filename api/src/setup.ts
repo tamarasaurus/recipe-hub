@@ -33,6 +33,8 @@ query(
     saved BOOLEAN DEFAULT FALSE,
     primary key(recipe_id, user_id)
   );
+
+  INSERT INTO auth_user (auth_id) VALUES ('1');
   `, [])
   .then((recipes: pg.QueryResult) => {
     console.log('Finished setting up database \n', recipes);
