@@ -1,4 +1,4 @@
-import Database from './db';
+import Database from './api/db';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -12,10 +12,6 @@ const app = express();
 app.options('*', cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  next();
-});
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'default_session_secret',
@@ -62,12 +58,18 @@ passport.use(new OAuth2Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://localhost:8000/auth/google/callback',
+    callbackURL: 'http://127.0.0.1/api/auth/google/callback',
   },
   (accessToken, refreshToken, profile, cb) => {
     return cb(null, profile);
   },
 ));
+
+app.use(express.static('./frontend/build/'))
+
+app.get('/', function (req, res) {
+  res.sendfile('index.html');
+});
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: 'email' }),
@@ -83,21 +85,21 @@ app.get('/auth/google/callback',
   },
 );
 
-app.post('/recipes', cors(), (req, res) => {
+app.post('/api/recipes', cors(), (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
-app.get('/recipes', cors(), (req, res) => {
+app.get('/api/recipes', cors(), (req, res) => {
   const { ids, keywords, offset } = req.query;
 
   if (req.isAuthenticated()) {
-    db.searchRecipes({ ids, keywords, offset }, req.user.id)
+    db.searchRecipesWithUserPreference({ ids, keywords, offset }, req.user.id)
       .then((data => res.json(data)))
       .catch((e: Error) => res.status(500).json({
         message: 'Error fetching recipes',
       }));
   } else {
-    db.searchRecipes({ ids, keywords, offset }, '1')
+    db.searchRecipes({ ids, keywords, offset })
       .then((data => res.json(data)))
       .catch((e: Error) => {
         console.log(e);
@@ -106,35 +108,36 @@ app.get('/recipes', cors(), (req, res) => {
         });
       });
   }
-
 });
 
-app.post('/recipes/:id/like', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/like', isUserLoggedIn, cors(), (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { liked: true }, res);
 });
 
-app.post('/recipes/:id/unlike', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/unlike', isUserLoggedIn, cors(), (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { liked: false }, res);
 });
 
-app.post('/recipes/:id/save', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/save', isUserLoggedIn, cors(), (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { saved: true }, res);
 });
 
-app.post('/recipes/:id/unsave', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/unsave', isUserLoggedIn, cors(), (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { saved: false }, res);
 });
 
-app.post('/recipes/:id/exclude', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/exclude', isUserLoggedIn, cors(), (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { excluded: true }, res);
 });
 
-// isUserLoggedIn
-app.get('/recipes/saved', isUserLoggedIn, cors(), (req, res) => {
-  db.getSavedRecipeIdsForUser(req.user.id)
-    .then((recipeIds: string[]) => res.json(recipeIds))
-    .catch((e: Error) => res.sendStatus(404));
+app.get('/api/recipes/saved', isUserLoggedIn, cors(), (req, res) => {
+  if (req.isAuthenticated()) {
+    db.getSavedRecipeIdsForUser(req.user.id)
+      .then((recipeIds: string[]) => res.json(recipeIds))
+      .catch((e: Error) => res.sendStatus(404));
+  } else {
+    return res.json([]);
+  }
 });
 
-
-app.listen('8000', () => console.log('Example app listening on port 8000'));
+app.listen(process.env.port || '8000', () => console.log('Example app listening on port 8000'));

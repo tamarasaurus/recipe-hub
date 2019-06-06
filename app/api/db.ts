@@ -34,7 +34,11 @@ export default class Database {
     `, [authId]);
   }
 
-  async setRecipePreference(recipeId: string, authId: string, preference: RecipeUserPreference) {
+  async setRecipePreference(
+    recipeId: string,
+    authId: string = '1',
+    preference: RecipeUserPreference,
+  ) {
     const { liked, excluded, saved } = preference;
     const userId = await this.getUserId(authId);
     console.log('userId', userId);
@@ -99,7 +103,7 @@ export default class Database {
       });
   }
 
-  async searchRecipes(searchQuery: SearchQuery, authId: string) {
+  async searchRecipesWithUserPreference(searchQuery: SearchQuery, authId: string) {
     const { ids, keywords, offset } = searchQuery;
 
     let filters = '';
@@ -148,6 +152,38 @@ export default class Database {
     `, [
       (offset || 0),
       userId,
+    ]).then(result => result.rows);
+  }
+
+  async searchRecipes(searchQuery: SearchQuery) {
+    const { ids, keywords, offset } = searchQuery;
+
+    let filters = '';
+    if (ids !== undefined) {
+      filters = `AND id IN (${ids})`;
+    }
+
+    let searchFilters = '';
+    if (keywords !== undefined && keywords.trim().length > 0) {
+      searchFilters = `AND (
+        to_tsvector('english', COALESCE(name, ''))      ||
+        to_tsvector('english', ingredients::json)       ||
+        to_tsvector('english', COALESCE(categories, ''))
+      ) @@ phraseto_tsquery('english', '%${keywords}%')
+        OR name LIKE '${keywords}'
+      `;
+    }
+
+    return query(`
+      SELECT *
+      FROM recipe
+      ${filters}
+      ${searchFilters}
+      ORDER BY created DESC
+      LIMIT 24
+      OFFSET $1
+    `, [
+      (offset || 0),
     ]).then(result => result.rows);
   }
 

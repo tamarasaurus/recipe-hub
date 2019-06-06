@@ -11,20 +11,12 @@ services:
       - postgres
       - redis
 
-  nginx:
-    restart: on-failure
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./app/build:/usr/src/app
-    ports:
-      - 80:80
-
-  api:
+  app:
     command: 'npm start'
     ports:
       - 8000:8000
     volumes:
-      - ./api:/usr/src/app
+      - ./app:/usr/src/app
 
   redis:
     ports:
