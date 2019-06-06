@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import sample from 'lodash/sample'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 
 const foodEmojis = [
   '🍇',

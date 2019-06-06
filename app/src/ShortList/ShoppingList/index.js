@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { useSpring, animated } from 'react-spring'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 
 import Button from '../../Button'
 
@@ -96,7 +96,7 @@ const Ingredient = styled.div`
   display: flex;
   justify-content: space-between;
   padding: ${({ theme }) => theme.px(1)};
-  border-bottom: ${({ theme }) => theme.border.s};
+  border-bottom: ${({ theme }) => theme.borders.s};
 `
 
 const ShoppingList = ({ recipes, closeShoppingList }) => {

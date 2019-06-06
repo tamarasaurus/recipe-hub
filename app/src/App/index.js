@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import styled from '@emotion/styled'
+import styled from '@emotion/styled/macro'
 
 import Filters from '../Filters'
 import RecipeList from '../RecipeList'
@@ -15,7 +15,7 @@ const Layout = styled.div`
     'Filters Filters'
     'RecipeList ShortList';
   height: 100%;
-  background: ${({ theme }) => theme.colors.gray.s};
+  background: ${({ theme }) => theme.colors.grays.s};
 `
 
 const App = () => {
@@ -56,7 +56,7 @@ const App = () => {
     }
 
     fetchData()
-  }, [offset])
+  }, [offset /*recipes, filters.query*/])
 
   const [savedRecipes, setSavedRecipes] = useState([])
   const [hasLoadedSavecRecipes, setHasLoadedSavecRecipes] = useState(false)
