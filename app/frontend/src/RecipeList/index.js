@@ -5,6 +5,8 @@ import styled from '@emotion/styled/macro'
 import Button from '../Button'
 import Recipe from './Recipe'
 
+import { OFFSET } from '../api'
+
 const Container = styled.div`
   grid-area: RecipeList;
   position: relative;
@@ -32,6 +34,9 @@ const LoadMore = styled(Button)`
   margin: ${({ theme }) => theme.px(3)} auto 0;
 `
 
+const Placeholders = () =>
+  Array.from(new Array(OFFSET), (_, i) => <Recipe key={i} isPlaceholder />)
+
 const RecipeList = ({
   hasLoaded,
   isLoading,
@@ -39,6 +44,7 @@ const RecipeList = ({
   toggleSaveRecipe,
   toggleLikeRecipe,
   excludeRecipe,
+  canLoadMore,
   loadMore,
 }) => {
   return (
@@ -55,14 +61,13 @@ const RecipeList = ({
                 excludeRecipe={excludeRecipe}
               />
             ))}
+            {isLoading && <Placeholders />}
           </List>
-          <LoadMore onClick={loadMore}>Load more</LoadMore>
+          {canLoadMore && <LoadMore onClick={loadMore}>Load more</LoadMore>}
         </>
       ) : !hasLoaded || isLoading ? (
         <List>
-          {Array.from(new Array(9), (_, i) => (
-            <Recipe key={i} isPlaceholder />
-          ))}
+          <Placeholders />
         </List>
       ) : (
         <div>No recipes found</div>
@@ -78,6 +83,7 @@ RecipeList.propTypes = {
   toggleSaveRecipe: PropTypes.func.isRequired,
   toggleLikeRecipe: PropTypes.func.isRequired,
   excludeRecipe: PropTypes.func.isRequired,
+  canLoadMore: PropTypes.bool.isRequired,
   loadMore: PropTypes.func.isRequired,
 }
 

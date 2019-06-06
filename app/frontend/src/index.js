@@ -10,7 +10,7 @@ const colors = {
   white: '#fff',
   grays: {
     s: '#f5f5f5',
-    m: '#ddd',
+    m: '#dadada',
     l: '#222',
   },
   accent: '#0bad72',

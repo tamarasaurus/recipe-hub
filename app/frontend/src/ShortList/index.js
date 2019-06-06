@@ -5,7 +5,7 @@ import styled from '@emotion/styled/macro'
 import Button from '../Button'
 import ShoppingList from './ShoppingList'
 
-const Container = styled.div`
+const Container = styled.section`
   position: fixed;
   bottom: 0;
   right: 0;
@@ -22,10 +22,23 @@ const Container = styled.div`
   }
 `
 
+const Title = styled.h1`
+  display: none;
+  ${({ theme }) => theme.mediaQueries.m} {
+    display: block;
+    margin: ${({ theme }) => theme.px(0, 0, 2)};
+    border: ${({ theme }) => theme.borders.l};
+    border-width: ${({ theme }) => theme.px(0, 0, 0.5)};
+    border-color: ${({ theme }) => theme.colors.accent};
+    font-size: ${({ theme }) => theme.px(3)};
+  }
+`
+
 const List = styled.div`
   display: none;
   ${({ theme }) => theme.mediaQueries.m} {
     display: block;
+    flex-grow: 1;
   }
 `
 
@@ -69,6 +82,26 @@ const ShowShoppingList = {
   `,
 }
 
+const Loader = styled.div`
+  display: none;
+  ${({ theme }) => theme.mediaQueries.m} {
+    display: block;
+  }
+`
+
+const NoRecipes = styled.div`
+  display: none;
+  ${({ theme }) => theme.mediaQueries.m} {
+    display: block;
+  }
+`
+
+const ShoppingListIcon = () => (
+  <span role="img" aria-label="shopping list">
+    📝
+  </span>
+)
+
 const ShortList = ({
   hasLoaded,
   isLoading,
@@ -83,6 +116,7 @@ const ShortList = ({
     <Container>
       {savedRecipes.length ? (
         <>
+          <Title>Your recipes</Title>
           <List>
             {savedRecipes.map((recipe) => (
               <Item key={recipe.id} onClick={() => toggleSaveRecipe(recipe)}>
@@ -90,23 +124,22 @@ const ShortList = ({
               </Item>
             ))}
           </List>
-          <ShowShoppingList.s onClick={openShoppingList}>📝</ShowShoppingList.s>
+          <ShowShoppingList.s onClick={openShoppingList}>
+            <ShoppingListIcon />
+          </ShowShoppingList.s>
           <ShowShoppingList.m onClick={openShoppingList}>
-            📝 Shopping list
+            <ShoppingListIcon /> Shopping list
           </ShowShoppingList.m>
-          {isShowingShoppingList ? (
-            <ShoppingList
-              recipes={savedRecipes}
-              closeShoppingList={closeShoppingList}
-            />
-          ) : null}
+          {isShowingShoppingList && (
+            <ShoppingList recipes={savedRecipes} onClose={closeShoppingList} />
+          )}
         </>
       ) : !hasLoaded || isLoading ? (
-        <div>Loading...</div>
+        <Loader>Loading...</Loader>
       ) : (
-        <div>
+        <NoRecipes>
           Start adding recipes to your shopping list by clicking on them
-        </div>
+        </NoRecipes>
       )}
     </Container>
   )

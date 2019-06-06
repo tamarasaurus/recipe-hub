@@ -65,10 +65,15 @@ async function collectLinks(url: string, contract: any): Promise<string[]> {
 
 async function scrapeHTML() {
   for (const options of html) {
-    const links = await collectLinks(options.index, options.indexContract);
-    links.forEach((url: string) => {
-      scrapingQueue.add({ url, contract: options.recipeContract, name: url });
-    });
+    try {
+      const links = await collectLinks(options.index, options.indexContract);
+      links.forEach((url: string) => {
+        scrapingQueue.add({ url, contract: options.recipeContract, name: url });
+      });
+    } catch (e) {
+      console.log('Error scraping', options.index, e.message);
+    }
+
   }
 }
 
