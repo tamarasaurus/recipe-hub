@@ -1,28 +1,8 @@
 {
-<<<<<<< HEAD
-  "name": "recipe-hub",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@emotion/core": "^10.0.10",
-    "@emotion/styled": "^10.0.11",
-    "emotion": "^10.0.9",
-    "emotion-theming": "^10.0.10",
-    "husky": "^2.2.0",
-    "lint-staged": "^8.1.6",
-    "lodash": "^4.17.11",
-    "prettier": "^1.17.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
-    "react-scripts": "3.0.1",
-    "react-spring": "^8.0.20"
-  },
-=======
   "name": "recipe-hub-api",
   "version": "1.0.0",
   "description": "API for recipe-hub",
   "main": "index.js",
->>>>>>> Combine frontend and API into single container
   "scripts": {
     "test": "npm test",
     "start": "ts-node server.ts",
