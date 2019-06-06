@@ -41,7 +41,6 @@ export default class Database {
   ) {
     const { liked, excluded, saved } = preference;
     const userId = await this.getUserId(authId);
-    console.log('userId', userId);
 
     return query(`
       INSERT INTO auth_user_recipe (user_id, recipe_id, liked, excluded, saved)

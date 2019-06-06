@@ -79,7 +79,6 @@ app.get('/auth/google/callback',
 );
 
 app.get('/user', cors(), (req, res) => {
-  console.log('get user');
   if (req.isAuthenticated() === true) {
     return res.json({
       name: req.user.name,
@@ -144,6 +143,5 @@ app.get('/api/recipes/saved', cors(), (req, res) => {
   }
 });
 
-app.use(express.static('./frontend/build/'))
-
-app.listen(process.env.port || '8000', () => console.log('Example app listening on port 8000'));
+app.use(express.static('./frontend/build/'));
+app.listen(process.env.port || '8000', () => console.log('Started app'));
