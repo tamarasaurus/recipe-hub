@@ -32,6 +32,11 @@ storageQueue.on('completed', (job: any) => console.log('✓ stored', job.data.ur
 
 const html = [
   {
+    index: 'https://www.quitoque.fr/au-menu/2_personnes',
+    indexContract: quitoqueIndex,
+    recipeContract: quitoqueRecipe,
+  },
+  {
     index: 'https://lescommis.com/cookbook/recettes/',
     indexContract: lesCommisIndex,
     recipeContract: lesCommisRecipe,
@@ -40,11 +45,6 @@ const html = [
     index: 'https://www.hellofresh.fr/recipes/search/?order=-date',
     indexContract: hellofreshIndex,
     recipeContract: hellofreshRecipe,
-  },
-  {
-    index: 'https://www.quitoque.fr/au-menu/2_personnes',
-    indexContract: quitoqueIndex,
-    recipeContract: quitoqueRecipe,
   },
 ];
 
@@ -65,11 +65,15 @@ async function collectLinks(url: string, contract: any): Promise<string[]> {
 
 async function scrapeHTML() {
   for (const options of html) {
-    const links = await collectLinks(options.index, options.indexContract);
+    try {
+      const links = await collectLinks(options.index, options.indexContract);
+      links.forEach((url: string) => {
+        scrapingQueue.add({ url, contract: options.recipeContract, name: url });
+      });
+    } catch (e) {
+      console.log('Error scraping', options.index, e.message);
+    }
 
-    links.forEach((url: string) => {
-      scrapingQueue.add({ url, contract: options.recipeContract, name: url });
-    });
   }
 }
 

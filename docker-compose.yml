@@ -7,6 +7,16 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
 
+  app:
+    restart: always
+    build:
+      context: app
+    environment:
+      REACT_APP_API_URL: 'http://app:8000'
+      POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+
   scraper:
     image: scraper
     build:
@@ -15,7 +25,7 @@ services:
     environment:
       REDIS_URL: 'redis://cache:6379'
       POSTGRES_HOST: 'postgres'
-      API_URL: 'http://api:8000'
+      API_URL: 'http://app:8000'
     depends_on:
       - redis
 
@@ -23,14 +33,5 @@ services:
     image: redis
     container_name: cache
 
-  api:
-    restart: always
-    build:
-      context: .
-      dockerfile: storage/Dockerfile
-    environment:
-      POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
-    depends_on:
-      - postgres
 volumes:
   postgres: ~

@@ -10,15 +10,16 @@
             "dom"
         ],
         "sourceMap": true,
-        "noImplicitAny": true,
+        "noImplicitAny": false,
         "module": "commonjs",
         "strictPropertyInitialization": false,
         "resolveJsonModule": true
     },
     "include": [
-        "src/**/*"
+        "api/src/**/*", "api.ts"
     ],
     "exclude": [
-        "node_modules"
+        "node_modules",
+        "frontend"
     ]
 }

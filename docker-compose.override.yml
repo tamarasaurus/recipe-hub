@@ -11,12 +11,12 @@ services:
       - postgres
       - redis
 
-  api:
+  app:
     command: 'npm start'
     ports:
       - 8000:8000
     volumes:
-      - ./storage:/usr/src/app
+      - ./app:/usr/src/app
 
   redis:
     ports:

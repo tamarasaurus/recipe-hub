@@ -5,7 +5,7 @@ export default function store(job: any, done: any) {
 
   request({
     method: 'post',
-    url: `${process.env.API_URL}/recipes`,
+    url: `${process.env.API_URL}/api/recipes`,
     body: recipe,
     json: true,
     headers: {
