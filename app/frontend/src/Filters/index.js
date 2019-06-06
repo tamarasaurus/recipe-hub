@@ -11,7 +11,7 @@ const Form = styled.div`
   justify-content: space-around;
   padding: ${({ theme }) => theme.px(3)};
   background: ${({ theme }) => theme.colors.white};
-  border-bottom: ${({ theme }) => theme.borders.l};
+  border-bottom: ${({ theme }) => theme.borders.m};
   font-size: ${({ theme }) => theme.px(3)};
 `
 
@@ -19,7 +19,7 @@ const Input = styled.input`
   width: 100%;
   padding: ${({ theme }) => theme.px(1, 2)};
   margin-left: ${({ theme }) => theme.px(2)};
-  border: ${({ theme }) => theme.borders.l};
+  border: ${({ theme }) => theme.borders.m};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ theme }) =>
     theme.px(0.5, 0.5, 0) + ' ' + theme.colors.grays.l};

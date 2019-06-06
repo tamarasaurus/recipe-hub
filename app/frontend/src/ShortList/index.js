@@ -27,9 +27,8 @@ const Title = styled.h1`
   ${({ theme }) => theme.mediaQueries.m} {
     display: block;
     margin: ${({ theme }) => theme.px(0, 0, 2)};
-    border: ${({ theme }) => theme.borders.l};
+    border: solid ${({ theme }) => theme.colors.accent};
     border-width: ${({ theme }) => theme.px(0, 0, 0.5)};
-    border-color: ${({ theme }) => theme.colors.accent};
     font-size: ${({ theme }) => theme.px(3)};
   }
 `
@@ -52,6 +51,7 @@ const Item = styled(Button)`
     position: absolute;
     top: ${({ theme }) => theme.px(0.5)};
     right: ${({ theme }) => theme.px(0.5)};
+    color: ${({ theme }) => theme.colors.warning};
   }
 `
 
@@ -76,7 +76,7 @@ const ShowShoppingList = {
     display: none;
     ${({ theme }) => theme.mediaQueries.m} {
       display: block;
-      border: ${({ theme }) => theme.borders.l};
+      border: ${({ theme }) => theme.borders.m};
       text-align: center;
     }
   `,
