@@ -177,6 +177,7 @@ export default class Database {
     return query(`
       SELECT *
       FROM recipe
+      WHERE recipe.name IS NOT NULL
       ${filters}
       ${searchFilters}
       ORDER BY created DESC

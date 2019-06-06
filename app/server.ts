@@ -38,7 +38,7 @@ const isUserLoggedIn = (
   if (req.isAuthenticated()) {
     next();
   } else {
-    res.sendStatus(401);
+    res.status(401).json({ message: 'Unauthorized' })
   }
 };
 
@@ -134,7 +134,7 @@ app.post('/api/recipes/:id/exclude', isUserLoggedIn, cors(), (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { excluded: true }, res);
 });
 
-app.get('/api/recipes/saved', isUserLoggedIn, cors(), (req, res) => {
+app.get('/api/recipes/saved', cors(), (req, res) => {
   if (req.isAuthenticated()) {
     db.getSavedRecipeIdsForUser(req.user.id)
       .then((recipeIds: string[]) => res.json(recipeIds))
