@@ -1,4 +1,4 @@
-const API_URL = 'http://192.168.1.44:8000/api'
+const API_URL = 'http://localhost:8000/api'
 
 const fetchApi = async (query, options) => {
   const res = await fetch(API_URL + query, options)
