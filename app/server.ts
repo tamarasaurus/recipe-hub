@@ -72,12 +72,22 @@ app.get('/auth/google',
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/', session: true }),
   (req, res) => {
-    console.log(req.user.id, 'logged in');
     return db.createUser(req.user.id).then(() => {
       res.redirect('/');
     }).catch(() => res.sendStatus(500));
   },
 );
+
+app.get('/user', cors(), (req, res) => {
+  if (req.isAuthenticated() === true) {
+    return res.json({
+      name: req.user.name,
+      isLoggedIn: true,
+    })
+  }
+
+  res.json({ isLoggedIn: false })
+})
 
 app.post('/api/recipes', cors(), (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
@@ -96,7 +106,6 @@ app.get('/api/recipes', cors(), (req, res) => {
     db.searchRecipes({ ids, keywords, offset })
       .then((data => res.json(data)))
       .catch((e: Error) => {
-        console.log(e);
         res.status(500).json({
           message: 'Error fetching recipes',
         });
