@@ -31,6 +31,11 @@ const App = () => {
     setOffset(0)
   }
 
+  const [canLoadMore, setCanLoadMore] = useState(true)
+  const checkIfCanLoadMore = (items) => {
+    setCanLoadMore(items.length === api.OFFSET)
+  }
+
   const [recipes, setRecipes] = useState([])
   const [offset, setOffset] = useState(0)
   const [hasLoadedRecipes, setHasLoadedRecipes] = useState(false)
@@ -38,25 +43,29 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingRecipes(true)
-      setRecipes(await api.getRecipes(filters.query))
+      const newRecipes = await api.getRecipes(filters.query)
+      setRecipes(newRecipes)
       setIsLoadingRecipes(false)
       setHasLoadedRecipes(true)
+
+      setOffset(0)
+      checkIfCanLoadMore(newRecipes)
     }
 
     const timeout = setTimeout(fetchData, 300)
     return () => clearTimeout(timeout)
   }, [filters.query])
 
-  const loadMore = () => setOffset(offset + api.OFFSET)
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoadingRecipes(true)
-      setRecipes(recipes.concat(await api.getRecipes(filters.query, offset)))
-      setIsLoadingRecipes(false)
-    }
+  const loadMore = async () => {
+    const newOffset = offset + api.OFFSET
+    setIsLoadingRecipes(true)
+    const newRecipes = await api.getRecipes(filters.query, newOffset)
+    setRecipes(recipes.concat(newRecipes))
+    setIsLoadingRecipes(false)
 
-    fetchData()
-  }, [offset /*recipes, filters.query*/])
+    setOffset(newOffset)
+    checkIfCanLoadMore(newRecipes)
+  }
 
   const [savedRecipes, setSavedRecipes] = useState([])
   const [hasLoadedSavecRecipes, setHasLoadedSavecRecipes] = useState(false)
@@ -131,6 +140,7 @@ const App = () => {
         toggleSaveRecipe={toggleSaveRecipe}
         toggleLikeRecipe={toggleLikeRecipe}
         excludeRecipe={excludeRecipe}
+        canLoadMore={canLoadMore}
         loadMore={loadMore}
       />
       <ShortList

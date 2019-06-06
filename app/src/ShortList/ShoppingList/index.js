@@ -1,9 +1,9 @@
 import React, { useRef, useEffect } from 'react'
-import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
-import { useSpring, animated } from 'react-spring'
 import styled from '@emotion/styled/macro'
+import css from '@emotion/css/macro'
 
+import Portal from '../../Portal'
 import Button from '../../Button'
 
 const copyToClipboard = (str) => {
@@ -21,37 +21,8 @@ const formatIngredient = (ingredient) => {
     : ingredient.label
 }
 
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-`
-
-const Backdrop = styled(animated.div)`
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.6);
-  cursor: pointer;
-`
-
-const Content = styled(animated.div)`
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-height: 100vh;
-  padding: ${({ theme }) => theme.px(2)};
-  background: ${({ theme }) => theme.colors.white};
-  overflow-y: auto;
-  ${({ theme }) => theme.mediaQueries.m} {
-    width: 75vw;
+const contentCss = (theme) => css`
+  ${theme.mediaQueries.m} {
     max-width: 600px;
   }
 `
@@ -99,7 +70,7 @@ const Ingredient = styled.div`
   border-bottom: ${({ theme }) => theme.borders.s};
 `
 
-const ShoppingList = ({ recipes, closeShoppingList }) => {
+const ShoppingList = ({ recipes, onClose }) => {
   const elRef = useRef(document.createElement('div'))
 
   useEffect(() => {
@@ -108,7 +79,7 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
     document.body.style.overflow = 'hidden'
 
     const closeOnEscape = (e) => {
-      if (e.keyCode === 27) closeShoppingList()
+      if (e.keyCode === 27) onClose()
     }
     window.addEventListener('keydown', closeOnEscape)
     return () => {
@@ -116,7 +87,7 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
       document.body.style.overflow = 'auto'
       window.removeEventListener('keydown', closeOnEscape)
     }
-  }, [closeShoppingList])
+  }, [onClose])
 
   const copyRecipes = () => {
     const str = recipes
@@ -146,47 +117,37 @@ const ShoppingList = ({ recipes, closeShoppingList }) => {
     copyToClipboard(str)
   }
 
-  const backdropStyle = useSpring({ opacity: 1, from: { opacity: 0 } })
-  const contentStyle = useSpring({
-    to: { transform: 'translate(-50%, 0)' },
-    from: { transform: 'translate(-50%, 100%)' },
-  })
-
-  return createPortal(
-    <Container>
-      <Backdrop style={backdropStyle} onClick={closeShoppingList} />
-      <Content style={contentStyle}>
-        <Header>
-          <Button onClick={copyRecipes}>Copy all recipes to clipboard</Button>
-          <Button onClick={copyIngredients}>
-            Copy all ingredients to clipboard
-          </Button>
-        </Header>
-        {recipes.map((recipe) => (
-          <Recipe key={recipe.id}>
-            <RecipeName>
-              {recipe.name}
-              <CopyRecipe onClick={() => copyRecipe(recipe)}>
-                Copy recipe
-              </CopyRecipe>
-            </RecipeName>
-            {recipe.ingredients.map((ingredient, i) => (
-              <Ingredient key={i}>
-                <span>{ingredient.label}</span>
-                {ingredient.quantity && <span>{ingredient.quantity}</span>}
-              </Ingredient>
-            ))}
-          </Recipe>
-        ))}
-      </Content>
-    </Container>,
-    elRef.current,
+  return (
+    <Portal contentCss={contentCss} onClose={onClose}>
+      <Header>
+        <Button onClick={copyRecipes}>Copy all recipes to clipboard</Button>
+        <Button onClick={copyIngredients}>
+          Copy all ingredients to clipboard
+        </Button>
+      </Header>
+      {recipes.map((recipe) => (
+        <Recipe key={recipe.id}>
+          <RecipeName>
+            {recipe.name}
+            <CopyRecipe onClick={() => copyRecipe(recipe)}>
+              Copy recipe
+            </CopyRecipe>
+          </RecipeName>
+          {recipe.ingredients.map((ingredient, i) => (
+            <Ingredient key={i}>
+              <span>{ingredient.label}</span>
+              {ingredient.quantity && <span>{ingredient.quantity}</span>}
+            </Ingredient>
+          ))}
+        </Recipe>
+      ))}
+    </Portal>
   )
 }
 
 ShoppingList.propTypes = {
   recipes: PropTypes.array.isRequired,
-  closeShoppingList: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
 }
 
 export default ShoppingList

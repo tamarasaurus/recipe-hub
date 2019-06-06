@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
 import Placeholder from './Placeholder'
+import RecipeIframe from './RecipeIframe'
 
 const Container = styled.div`
   position: relative;
@@ -12,7 +13,8 @@ const Container = styled.div`
     isPlaceholder ? 'normal' : 'space-between'};
   min-height: 330px;
   border: ${({ theme }) => theme.borders.s};
-  border-color: ${({ theme }) => theme.colors.grays.m};
+  border-color: ${({ isSaved, theme }) =>
+    isSaved ? theme.colors.accent : theme.colors.grays.m};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ isSaved, theme }) =>
     !isSaved ? null : theme.px(0, 0, 0, 0.75) + ' ' + theme.colors.accent};
@@ -60,7 +62,7 @@ const ExcludeRecipe = styled(Action)`
   top: 0;
   right: 0;
   border-bottom-left-radius: ${({ theme }) => theme.radius};
-  background: ${({ theme }) => theme.colors.white};
+  background: rgba(255, 255, 255, 0.75);
   opacity: 0;
   pointer-events: none;
   transition: ${({ theme }) => theme.transition};
@@ -97,6 +99,20 @@ const Recipe = ({
   toggleLikeRecipe,
   excludeRecipe,
 }) => {
+  const [isShowingRecipeIframe, toggleShowRecipeIframe] = useState(false)
+  const openRecipeIframe = () => toggleShowRecipeIframe(true)
+  const closeRecipeIframe = () => toggleShowRecipeIframe(false)
+
+  const onClickRecipeLink = (e) => {
+    // @TODO handle cmd on mac
+    // @TODO always return on mobile
+    if (e.ctrlKey) return
+
+    e.stopPropagation()
+    e.preventDefault()
+    openRecipeIframe()
+  }
+
   return (
     <Container
       role="button"
@@ -134,7 +150,7 @@ const Recipe = ({
               {recipe.duration > 0 && <>🕒 {recipe.duration / 60} Min</>}
             </span>
             <RecipeLink
-              onClick={(e) => e.stopPropagation()}
+              onClick={onClickRecipeLink}
               href={recipe.url}
               target="_blank"
               rel="noopener noreferrer"
@@ -142,6 +158,10 @@ const Recipe = ({
               See recipe
             </RecipeLink>
           </Infos>
+
+          {isShowingRecipeIframe && (
+            <RecipeIframe href={recipe.url} onClose={closeRecipeIframe} />
+          )}
         </>
       )}
     </Container>
