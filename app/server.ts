@@ -58,18 +58,12 @@ passport.use(new OAuth2Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'http://127.0.0.1/api/auth/google/callback',
+    callbackURL: `http://localhost:8000/auth/google/callback`,
   },
   (accessToken, refreshToken, profile, cb) => {
     return cb(null, profile);
   },
 ));
-
-app.use(express.static('./frontend/build/'))
-
-app.get('/', function (req, res) {
-  res.sendfile('index.html');
-});
 
 app.get('/auth/google',
   passport.authenticate('google', { scope: 'email' }),
@@ -140,4 +134,5 @@ app.get('/api/recipes/saved', isUserLoggedIn, cors(), (req, res) => {
   }
 });
 
+app.use(express.static('./frontend/build/'))
 app.listen(process.env.port || '8000', () => console.log('Example app listening on port 8000'));
