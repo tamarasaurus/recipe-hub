@@ -79,6 +79,7 @@ app.get('/auth/google/callback',
 );
 
 app.get('/user', cors(), (req, res) => {
+  console.log('get user');
   if (req.isAuthenticated() === true) {
     return res.json({
       name: req.user.name,
@@ -86,7 +87,7 @@ app.get('/user', cors(), (req, res) => {
     })
   }
 
-  res.json({ isLoggedIn: false })
+  return res.json({ isLoggedIn: false })
 })
 
 app.post('/api/recipes', cors(), (req, res) => {
@@ -144,4 +145,5 @@ app.get('/api/recipes/saved', isUserLoggedIn, cors(), (req, res) => {
 });
 
 app.use(express.static('./frontend/build/'))
+
 app.listen(process.env.port || '8000', () => console.log('Example app listening on port 8000'));
