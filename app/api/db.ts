@@ -36,7 +36,7 @@ export default class Database {
 
   async setRecipePreference(
     recipeId: string,
-    authId: string = '1',
+    authId: string,
     preference: RecipeUserPreference,
   ) {
     const { liked, excluded, saved } = preference;
