@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npm test",
-    "build": "cd frontend && npm run build",
-    "start": "npm run build && ts-node server.ts",
+    "start": "ts-node server.ts",
     "setup": "ts-node api/setup.ts",
     "lint-fix": "tslint --fix --project tslint.json"
   },
