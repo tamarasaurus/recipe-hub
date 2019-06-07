@@ -6,8 +6,8 @@
   "scripts": {
     "test": "npm test",
     "build": "cd frontend && npm install",
-    "start": "npm run build && ts-node server.ts",
-    "setup": "ts-node api/setup.ts",
+    "start": "npm run build && ./node_modules/bin/ts-node server.ts",
+    "setup": "./node_modules/bin/ts-node api/setup.ts",
     "lint-fix": "tslint --fix --project tslint.json"
   },
   "author": "Tamara Robichet",
