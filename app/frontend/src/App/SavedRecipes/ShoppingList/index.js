@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 import css from '@emotion/css/macro'
 
-import Panel from 'Panel'
-import Button from 'Button'
+import Panel from 'components/Panel'
+import Button from 'components/Button'
 
 const copyToClipboard = (str) => {
   const el = document.createElement('textarea')

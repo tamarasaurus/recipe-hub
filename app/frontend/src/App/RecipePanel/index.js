@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
-import Panel from 'Panel'
+import Panel from 'components/Panel'
 
 const Iframe = styled.iframe`
   height: 100%;

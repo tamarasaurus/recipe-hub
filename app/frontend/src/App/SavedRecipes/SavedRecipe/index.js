@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
-import RecipePanel from 'RecipePanel'
+import RecipePanel from 'App/RecipePanel'
 
 const Container = styled.li`
   position: relative;

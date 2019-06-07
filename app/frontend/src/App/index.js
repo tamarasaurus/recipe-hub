@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled/macro'
 
-import Filters from 'Filters'
-import RecipeList from 'RecipeList'
-import SavedRecipes from 'SavedRecipes'
+import Filters from './Filters'
+import RecipeList from './RecipeList'
+import SavedRecipes from './SavedRecipes'
 
-import * as api from 'api'
+import * as api from 'utils/api'
 
 const Layout = styled.div`
   display: grid;
