@@ -44,7 +44,7 @@ const List = styled.div`
 const Item = styled(Button)`
   position: relative;
   width: 100%;
-  padding: ${({ theme }) => theme.px(0.5, 2, 0.5, 1)};
+  padding-right: ${({ theme }) => theme.px(2)};
   margin-bottom: ${({ theme }) => theme.px(1)};
   &::after {
     content: '×';
