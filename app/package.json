@@ -1,5 +1,5 @@
 {
-  "name": "recipe-hub-api",
+  "name": "recipe-hub-app",
   "version": "1.0.0",
   "description": "API for recipe-hub",
   "main": "index.js",
@@ -23,7 +23,9 @@
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.11.0",
     "rate-limiter-flexible": "^1.0.2",
-    "redis": "^2.8.0"
+    "redis": "^2.8.0",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.4.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.5",
@@ -34,9 +36,7 @@
     "@types/passport-google-oauth": "^1.0.41",
     "@types/pg": "^7.4.14",
     "@types/redis": "^2.8.13",
-    "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.4.5"
+    "tslint-config-airbnb": "^5.11.1"
   }
 }
