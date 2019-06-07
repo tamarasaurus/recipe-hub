@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cd app && npm start",
     "install-frontend": "cd app/frontend && npm install && npm run build",
-    "install-api": "cd app/api && npm install",
+    "install-api": "cd app/api && npm install && npm run setup",
     "install-scraper": "cd scraper && npm install",
     "postinstall": "npm run install-frontend && npm run install-api && npm run install-scraper",
     "scrape": "cd scraper && npm start"
