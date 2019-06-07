@@ -7,7 +7,9 @@ import * as session from 'express-session';
 import * as helmet from 'helmet';
 import { OAuth2Strategy } from 'passport-google-oauth';
 import rateLimiter from './api/middleware/rate-limiting';
+import * as ConnectRedis from 'connect-redis';
 
+const RedisStore = ConnectRedis(session);
 const PORT = process.env.port || '8000'
 const API_URL = process.env.API_URL || `http://localhost:${PORT}`
 const SESSION_SECRET = process.env.SESSION_SECRET || 'default'
@@ -28,6 +30,9 @@ app.use(bodyParser.json());
 app.use(helmet())
 
 app.use(session({
+  store: new RedisStore({
+    url: process.env.REDIS_URL
+  }),
   secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
