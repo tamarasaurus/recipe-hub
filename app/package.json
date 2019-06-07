@@ -6,7 +6,6 @@
   "scripts": {
     "test": "npm test",
     "start": "./node_modules/.bin/ts-node server.ts",
-    "postinstall": "cd frontend && npm install && npm run build",
     "setup": "./node_modules/.bin/ts-node api/setup.ts",
     "lint-fix": "tslint --fix --project tslint.json"
   },

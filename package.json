@@ -1,0 +1,24 @@
+{
+  "name": "recipe-hub",
+  "version": "1.0.0",
+  "description": "recipe hub",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd app/start",
+    "install-frontend": "cd app/frontend && npm install && npm run build",
+    "install-api": "cd app/api && npm install",
+    "install-scraper": "cd scraper && npm install",
+    "postinstall": "npm run install-frontend && npm run install-api",
+    "scrape": "cd scraper && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tamarasaurus/recipe-hub.git"
+  },
+  "author": "Tamara Robichet, Francois Robichet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tamarasaurus/recipe-hub/issues"
+  },
+  "homepage": "https://github.com/tamarasaurus/recipe-hub#readme"
+}
