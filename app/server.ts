@@ -98,8 +98,10 @@ app.get('/auth/google/callback',
 );
 
 app.get('/api/user', rateLimiter, (req, res) => {
+  const user = req.user || {};
+
   return res.json({
-    name: req.user.name || null,
+    name: user.name,
     isLoggedIn: req.isAuthenticated(),
   })
 })
