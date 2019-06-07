@@ -17,6 +17,8 @@ services:
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       REDIS_URL: 'redis://cache:6379'
+      API_URL: 'http://localhost'
+      SESSION_SECRET: ${SESSION_SECRET}
 
   scraper:
     image: scraper

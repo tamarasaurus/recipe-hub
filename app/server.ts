@@ -8,17 +8,27 @@ import * as helmet from 'helmet';
 import { OAuth2Strategy } from 'passport-google-oauth';
 import rateLimiter from './api/middleware/rate-limiting';
 
+const PORT = process.env.port || '8000'
+const API_URL = process.env.API_URL || `http://localhost:${PORT}`
+const SESSION_SECRET = process.env.SESSION_SECRET || 'default'
+
 const db = new Database();
 const app = express();
 
-app.options('*', cors());
+const corsOptions = {
+  origin: API_URL,
+  methods: ['GET', 'POST']
+}
+
+app.use(cors(corsOptions))
+app.options('*', cors(corsOptions));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(helmet())
-app.use(rateLimiter);
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'default_session_secret',
+  secret: SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
 }));
@@ -62,7 +72,7 @@ passport.use(new OAuth2Strategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: `http://localhost:8000/auth/google/callback`,
+    callbackURL: `${API_URL}/auth/google/callback`,
   },
   (accessToken, refreshToken, profile, cb) => {
     return cb(null, profile);
@@ -82,22 +92,18 @@ app.get('/auth/google/callback',
   },
 );
 
-app.get('/user', cors(), (req, res) => {
-  if (req.isAuthenticated() === true) {
-    return res.json({
-      name: req.user.name,
-      isLoggedIn: true,
-    })
-  }
-
-  return res.json({ isLoggedIn: false })
+app.get('/api/user', rateLimiter, (req, res) => {
+  return res.json({
+    name: req.user.name || null,
+    isLoggedIn: req.isAuthenticated(),
+  })
 })
 
-app.post('/api/recipes', cors(), (req, res) => {
+app.post('/api/recipes', (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
-app.get('/api/recipes', cors(), (req, res) => {
+app.get('/api/recipes', rateLimiter, (req, res) => {
   const { ids, keywords, offset } = req.query;
 
   if (req.isAuthenticated()) {
@@ -117,27 +123,27 @@ app.get('/api/recipes', cors(), (req, res) => {
   }
 });
 
-app.post('/api/recipes/:id/like', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/like', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { liked: true }, res);
 });
 
-app.post('/api/recipes/:id/unlike', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/unlike', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { liked: false }, res);
 });
 
-app.post('/api/recipes/:id/save', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/save', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { saved: true }, res);
 });
 
-app.post('/api/recipes/:id/unsave', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/unsave', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { saved: false }, res);
 });
 
-app.post('/api/recipes/:id/exclude', isUserLoggedIn, cors(), (req, res) => {
+app.post('/api/recipes/:id/exclude', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { excluded: true }, res);
 });
 
-app.get('/api/recipes/saved', cors(), (req, res) => {
+app.get('/api/recipes/saved', rateLimiter, (req, res) => {
   if (req.isAuthenticated()) {
     db.getSavedRecipeIdsForUser(req.user.id)
       .then((recipeIds: string[]) => res.json(recipeIds))
@@ -148,4 +154,4 @@ app.get('/api/recipes/saved', cors(), (req, res) => {
 });
 
 app.use(express.static('./frontend/build/'));
-app.listen(process.env.port || '8000', () => console.log('Started app'));
+app.listen(PORT, () => console.log(`Started app on ${PORT}`));
