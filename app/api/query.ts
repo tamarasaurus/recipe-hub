@@ -2,7 +2,7 @@ import * as pg from 'pg';
 
 const poolConfig: any = {
   connectionString: process.env.POSTGRES_HOST,
-  ssl: false,
+  ssl: true,
   max: 20,
   min: 4,
   idleTimeoutMillis: 1000,
