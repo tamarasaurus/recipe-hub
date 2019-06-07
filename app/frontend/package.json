@@ -1,5 +1,5 @@
 {
-  "name": "recipe-hub-api",
+  "name": "recipe-hub-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
