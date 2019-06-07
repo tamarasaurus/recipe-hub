@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
-import Portal from '../../../Portal'
+import Panel from 'Panel'
 
 const Iframe = styled.iframe`
   height: 100%;
@@ -12,9 +12,9 @@ const Iframe = styled.iframe`
 
 const RecipeIframe = ({ href, onClose }) => {
   return (
-    <Portal onClose={onClose}>
+    <Panel onClose={onClose}>
       <Iframe src={href} />
-    </Portal>
+    </Panel>
   )
 }
 

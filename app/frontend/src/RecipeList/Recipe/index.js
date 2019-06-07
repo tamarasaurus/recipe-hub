@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
+import RecipePanel from 'RecipePanel'
 import Placeholder from './Placeholder'
-import RecipeIframe from './RecipeIframe'
 
 const Container = styled.div`
   position: relative;
@@ -99,18 +99,18 @@ const Recipe = ({
   toggleLikeRecipe,
   excludeRecipe,
 }) => {
-  const [isShowingRecipeIframe, toggleShowRecipeIframe] = useState(false)
-  const openRecipeIframe = () => toggleShowRecipeIframe(true)
-  const closeRecipeIframe = () => toggleShowRecipeIframe(false)
+  const [isShowingRecipePanel, setIsShowingRecipePanel] = useState(false)
+  const openRecipePanel = () => setIsShowingRecipePanel(true)
+  const closeRecipePanel = () => setIsShowingRecipePanel(false)
 
   const onClickRecipeLink = (e) => {
-    // @TODO handle cmd on mac
+    // @TODO handle cmd on mac and ctrl everywhere else
     // @TODO always return on mobile
-    if (e.ctrlKey) return
+    if (e.ctrlKey || e.metaKey) return
 
     e.stopPropagation()
     e.preventDefault()
-    openRecipeIframe()
+    openRecipePanel()
   }
 
   return (
@@ -159,8 +159,8 @@ const Recipe = ({
             </RecipeLink>
           </Infos>
 
-          {isShowingRecipeIframe && (
-            <RecipeIframe href={recipe.url} onClose={closeRecipeIframe} />
+          {isShowingRecipePanel && (
+            <RecipePanel href={recipe.url} onClose={closeRecipePanel} />
           )}
         </>
       )}

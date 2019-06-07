@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 import css from '@emotion/css/macro'
 
-import Portal from '../../Portal'
-import Button from '../../Button'
+import Panel from 'Panel'
+import Button from 'Button'
 
 const copyToClipboard = (str) => {
   const el = document.createElement('textarea')
@@ -118,7 +118,7 @@ const ShoppingList = ({ recipes, onClose }) => {
   }
 
   return (
-    <Portal contentCss={contentCss} onClose={onClose}>
+    <Panel contentCss={contentCss} onClose={onClose}>
       <Header>
         <Button onClick={copyRecipes}>Copy all recipes to clipboard</Button>
         <Button onClick={copyIngredients}>
@@ -141,7 +141,7 @@ const ShoppingList = ({ recipes, onClose }) => {
           ))}
         </Recipe>
       ))}
-    </Portal>
+    </Panel>
   )
 }
 

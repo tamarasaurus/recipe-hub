@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import throttle from 'lodash/throttle'
 import styled from '@emotion/styled/macro'
 
-import Button from '../Button'
+import Button from 'Button'
 import Recipe from './Recipe'
 
-import { OFFSET } from '../api'
+import { OFFSET } from 'api'
 
 const Container = styled.div`
   grid-area: RecipeList;

@@ -42,7 +42,7 @@ const Content = styled(animated.div)`
   }
 `
 
-const Portal = ({ contentCss, children, onClose }) => {
+const Panel = ({ contentCss, children, onClose }) => {
   const elRef = useRef(document.createElement('div'))
 
   useEffect(() => {
@@ -78,10 +78,10 @@ const Portal = ({ contentCss, children, onClose }) => {
   )
 }
 
-Portal.propTypes = {
+Panel.propTypes = {
   contentCss: PropTypes.string,
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
 }
 
-export default Portal
+export default Panel

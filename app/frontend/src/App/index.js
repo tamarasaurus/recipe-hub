@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import styled from '@emotion/styled/macro'
 
-import Filters from '../Filters'
-import RecipeList from '../RecipeList'
-import ShortList from '../ShortList'
+import Filters from 'Filters'
+import RecipeList from 'RecipeList'
+import SavedRecipes from 'SavedRecipes'
 
-import * as api from '../api'
+import * as api from 'api'
 
 const Layout = styled.div`
   display: grid;
@@ -13,7 +13,7 @@ const Layout = styled.div`
   grid-template-rows: auto 1fr;
   grid-template-areas:
     'Filters Filters'
-    'RecipeList ShortList';
+    'RecipeList SavedRecipes';
   height: 100%;
   background: ${({ theme }) => theme.colors.grays.s};
 `
@@ -143,11 +143,11 @@ const App = () => {
         canLoadMore={canLoadMore}
         loadMore={loadMore}
       />
-      <ShortList
+      <SavedRecipes
         hasLoaded={hasLoadedSavecRecipes}
         isLoading={isLoadingSavecRecipes}
         savedRecipes={savedRecipes}
-        toggleSaveRecipe={toggleSaveRecipe}
+        removeSavedRecipe={toggleSaveRecipe}
       />
     </Layout>
   )
