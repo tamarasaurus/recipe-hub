@@ -4,7 +4,7 @@
   "description": "recipe hub",
   "main": "index.js",
   "scripts": {
-    "start": "cd app/start",
+    "start": "cd app && npm start",
     "install-frontend": "cd app/frontend && npm install && npm run build",
     "install-api": "cd app/api && npm install",
     "install-scraper": "cd scraper && npm install",
