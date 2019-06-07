@@ -16,6 +16,7 @@ services:
       POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      REDIS_URL: 'redis://cache:6379'
 
   scraper:
     image: scraper

@@ -4,7 +4,9 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as passport from 'passport';
 import * as session from 'express-session';
+import * as helmet from 'helmet';
 import { OAuth2Strategy } from 'passport-google-oauth';
+import rateLimiter from './api/middleware/rate-limiting';
 
 const db = new Database();
 const app = express();
@@ -12,6 +14,8 @@ const app = express();
 app.options('*', cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(helmet())
+app.use(rateLimiter);
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'default_session_secret',
