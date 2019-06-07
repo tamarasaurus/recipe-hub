@@ -10,7 +10,7 @@ import rateLimiter from './api/middleware/rate-limiting';
 import * as ConnectRedis from 'connect-redis';
 
 const RedisStore = ConnectRedis(session);
-const PORT = process.env.port || '8000'
+const PORT = process.env.PORT || '8000'
 const API_URL = process.env.API_URL || `http://localhost:${PORT}`
 const SESSION_SECRET = process.env.SESSION_SECRET || 'default'
 
