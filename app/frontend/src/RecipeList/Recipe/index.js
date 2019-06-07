@@ -11,7 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: ${({ isPlaceholder }) =>
     isPlaceholder ? 'normal' : 'space-between'};
-  min-height: 330px;
+  min-height: 340px;
   border: ${({ theme }) => theme.borders.s};
   border-color: ${({ isSaved, theme }) =>
     isSaved ? theme.colors.accent : theme.colors.grays.m};

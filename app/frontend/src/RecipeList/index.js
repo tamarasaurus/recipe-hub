@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import throttle from 'lodash/throttle'
 import styled from '@emotion/styled/macro'
 
 import Button from '../Button'
@@ -47,8 +48,29 @@ const RecipeList = ({
   canLoadMore,
   loadMore,
 }) => {
+  // Can't use ref because a ref mutates and can't be used as a useEffect dependency
+  const [list, setList] = useState()
+  const loadMoreRef = useRef()
+
+  useEffect(() => {
+    if (!list) return
+
+    const handleScroll = throttle(() => {
+      const { top, bottom } = loadMoreRef.current.getBoundingClientRect()
+      if (top >= 0 && bottom <= window.innerHeight) {
+        loadMore()
+      }
+    }, 200)
+    list.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => {
+      handleScroll.cancel()
+      list.removeEventListener('scroll', handleScroll)
+    }
+  }, [list, loadMore])
+
   return (
-    <Container>
+    <Container ref={(el) => setList(el)}>
       {recipes.length ? (
         <>
           <List>
@@ -63,7 +85,11 @@ const RecipeList = ({
             ))}
             {isLoading && <Placeholders />}
           </List>
-          {canLoadMore && <LoadMore onClick={loadMore}>Load more</LoadMore>}
+          {canLoadMore && (
+            <LoadMore ref={loadMoreRef} onClick={isLoading ? null : loadMore}>
+              {isLoading ? 'Loading...' : 'Load more'}
+            </LoadMore>
+          )}
         </>
       ) : !hasLoaded || isLoading ? (
         <List>
