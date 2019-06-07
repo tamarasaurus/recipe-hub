@@ -14,7 +14,9 @@
     "bull": "^3.9.1",
     "contract-scraper": "^1.0.4",
     "jsonpath": "^1.0.1",
-    "request-promise": "^4.2.4"
+    "request-promise": "^4.2.4",
+    "typescript": "^3.4.5",
+    "ts-node": "^8.1.0"
   },
   "devDependencies": {
     "@types/bull": "^3.5.13",
@@ -22,9 +24,7 @@
     "@types/node": "^12.0.0",
     "@types/request-promise": "^4.1.43",
     "bull-arena": "^2.6.3",
-    "ts-node": "^8.1.0",
     "tslint": "^5.16.0",
-    "tslint-config-airbnb": "^5.11.1",
-    "typescript": "^3.4.5"
+    "tslint-config-airbnb": "^5.11.1"
   }
 }
