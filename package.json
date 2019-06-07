@@ -8,7 +8,7 @@
     "install-frontend": "cd app/frontend && npm install && npm run build",
     "install-api": "cd app/api && npm install",
     "install-scraper": "cd scraper && npm install",
-    "postinstall": "npm run install-frontend && npm run install-api",
+    "postinstall": "npm run install-frontend && npm run install-api && npm run install-scraper",
     "scrape": "cd scraper && npm start"
   },
   "repository": {
