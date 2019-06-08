@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
+import RecipePanel from 'App/RecipePanel'
 import Placeholder from './Placeholder'
-import RecipeIframe from './RecipeIframe'
 
 const Container = styled.div`
   position: relative;
@@ -11,7 +11,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: ${({ isPlaceholder }) =>
     isPlaceholder ? 'normal' : 'space-between'};
-  min-height: 330px;
+  min-height: 340px;
   border: ${({ theme }) => theme.borders.s};
   border-color: ${({ isSaved, theme }) =>
     isSaved ? theme.colors.accent : theme.colors.grays.m};
@@ -81,13 +81,16 @@ const ExcludeRecipe = styled(Action)`
 const Infos = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.px(1)};
+  align-items: center;
+  // padding-left only because we want the link to be big
+  padding-left: ${({ theme }) => theme.px(1)};
   border-top: ${({ theme }) => theme.borders.s};
   border-color: ${({ theme }) => theme.colors.grays.m};
   font-size: 14px;
 `
 
 const RecipeLink = styled.a`
+  padding: ${({ theme }) => theme.px(1)};
   color: ${({ theme }) => theme.colors.accent};
   transition: ${({ theme }) => theme.transition};
 `
@@ -99,18 +102,18 @@ const Recipe = ({
   toggleLikeRecipe,
   excludeRecipe,
 }) => {
-  const [isShowingRecipeIframe, toggleShowRecipeIframe] = useState(false)
-  const openRecipeIframe = () => toggleShowRecipeIframe(true)
-  const closeRecipeIframe = () => toggleShowRecipeIframe(false)
+  const [isShowingRecipePanel, setIsShowingRecipePanel] = useState(false)
+  const openRecipePanel = () => setIsShowingRecipePanel(true)
+  const closeRecipePanel = () => setIsShowingRecipePanel(false)
 
   const onClickRecipeLink = (e) => {
-    // @TODO handle cmd on mac
+    // @TODO handle cmd on mac and ctrl everywhere else
     // @TODO always return on mobile
-    if (e.ctrlKey) return
+    if (e.ctrlKey || e.metaKey) return
 
     e.stopPropagation()
     e.preventDefault()
-    openRecipeIframe()
+    openRecipePanel()
   }
 
   return (
@@ -159,8 +162,8 @@ const Recipe = ({
             </RecipeLink>
           </Infos>
 
-          {isShowingRecipeIframe && (
-            <RecipeIframe href={recipe.url} onClose={closeRecipeIframe} />
+          {isShowingRecipePanel && (
+            <RecipePanel href={recipe.url} onClose={closeRecipePanel} />
           )}
         </>
       )}

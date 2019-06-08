@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled/macro'
 
-import Button from '../Button'
+import Button from 'components/Button'
+import SavedRecipe from './SavedRecipe'
 import ShoppingList from './ShoppingList'
 
 const Container = styled.section`
@@ -10,7 +11,7 @@ const Container = styled.section`
   bottom: 0;
   right: 0;
   background: none;
-  grid-area: ShortList;
+  grid-area: SavedRecipes;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -33,25 +34,11 @@ const Title = styled.h1`
   }
 `
 
-const List = styled.div`
+const List = styled.ul`
   display: none;
   ${({ theme }) => theme.mediaQueries.m} {
     display: block;
     flex-grow: 1;
-  }
-`
-
-const Item = styled(Button)`
-  position: relative;
-  width: 100%;
-  padding: ${({ theme }) => theme.px(0.5, 2, 0.5, 1)};
-  margin-bottom: ${({ theme }) => theme.px(1)};
-  &::after {
-    content: '×';
-    position: absolute;
-    top: ${({ theme }) => theme.px(0.5)};
-    right: ${({ theme }) => theme.px(0.5)};
-    color: ${({ theme }) => theme.colors.warning};
   }
 `
 
@@ -102,11 +89,11 @@ const ShoppingListIcon = () => (
   </span>
 )
 
-const ShortList = ({
+const SavedRecipes = ({
   hasLoaded,
   isLoading,
   savedRecipes,
-  toggleSaveRecipe,
+  removeSavedRecipe,
 }) => {
   const [isShowingShoppingList, toggleShowShoppingList] = useState(false)
   const openShoppingList = () => toggleShowShoppingList(true)
@@ -119,9 +106,11 @@ const ShortList = ({
           <Title>Your recipes</Title>
           <List>
             {savedRecipes.map((recipe) => (
-              <Item key={recipe.id} onClick={() => toggleSaveRecipe(recipe)}>
-                {recipe.name}
-              </Item>
+              <SavedRecipe
+                key={recipe.id}
+                recipe={recipe}
+                onRemove={() => removeSavedRecipe(recipe)}
+              />
             ))}
           </List>
           <ShowShoppingList.s onClick={openShoppingList}>
@@ -145,10 +134,11 @@ const ShortList = ({
   )
 }
 
-ShortList.propTypes = {
+SavedRecipes.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
+  removeSavedRecipe: PropTypes.func.isRequired,
 }
 
-export default ShortList
+export default SavedRecipes
