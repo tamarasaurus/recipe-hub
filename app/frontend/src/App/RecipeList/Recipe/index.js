@@ -81,13 +81,16 @@ const ExcludeRecipe = styled(Action)`
 const Infos = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: ${({ theme }) => theme.px(1)};
+  align-items: center;
+  // padding-left only because we want the link to be big
+  padding-left: ${({ theme }) => theme.px(1)};
   border-top: ${({ theme }) => theme.borders.s};
   border-color: ${({ theme }) => theme.colors.grays.m};
   font-size: 14px;
 `
 
 const RecipeLink = styled.a`
+  padding: ${({ theme }) => theme.px(1)};
   color: ${({ theme }) => theme.colors.accent};
   transition: ${({ theme }) => theme.transition};
 `

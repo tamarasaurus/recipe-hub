@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from 'react'
 import styled from '@emotion/styled/macro'
 
 import Filters from './Filters'
@@ -17,6 +23,8 @@ const Layout = styled.div`
   height: 100%;
   background: ${({ theme }) => theme.colors.grays.s};
 `
+
+export const AppContext = createContext()
 
 const App = () => {
   const [filters, setFilters] = useState({
@@ -80,76 +88,96 @@ const App = () => {
 
     fetchData()
   }, [])
-  const toggleSaveRecipe = (recipe) => {
-    const isRecipeSaved = savedRecipes.some((r) => r.id === recipe.id)
-    if (isRecipeSaved) {
-      api.unsaveRecipe(recipe.id)
-      setSavedRecipes(savedRecipes.filter(({ id }) => id !== recipe.id))
-    } else {
-      api.saveRecipe(recipe.id)
-      setSavedRecipes([...savedRecipes, recipe])
-    }
+  const toggleSaveRecipe = useCallback(
+    (recipe) => {
+      const isRecipeSaved = savedRecipes.some((r) => r.id === recipe.id)
+      if (isRecipeSaved) {
+        api.unsaveRecipe(recipe.id)
+        setSavedRecipes(savedRecipes.filter(({ id }) => id !== recipe.id))
+      } else {
+        api.saveRecipe(recipe.id)
+        setSavedRecipes([...savedRecipes, recipe])
+      }
 
-    setRecipes(
-      recipes.map((r) => {
-        if (r.id !== recipe.id) return r
-        return {
-          ...recipe,
-          saved: !isRecipeSaved,
-        }
-      }),
-    )
-  }
-
-  const toggleLikeRecipe = (recipe) => {
-    if (recipe.liked) {
-      api.unlikeRecipe(recipe.id)
-    } else {
-      api.likeRecipe(recipe.id)
-    }
-
-    setRecipes(
-      recipes.map((r) => {
-        if (r.id !== recipe.id) return r
-        return {
-          ...recipe,
-          liked: !recipe.liked,
-        }
-      }),
-    )
-  }
-
-  const excludeRecipe = (recipe) => {
-    if (
-      window.confirm(
-        'Do you really want to exclude this recipe? It will be hidden for ever ever',
+      setRecipes((recipes) =>
+        recipes.map((r) => {
+          if (r.id !== recipe.id) return r
+          return {
+            ...recipe,
+            saved: !isRecipeSaved,
+          }
+        }),
       )
-    ) {
-      api.excludeRecipe(recipe.id)
-      setRecipes(recipes.filter((r) => r.id !== recipe.id))
-    }
-  }
+    },
+    [savedRecipes],
+  )
+
+  const toggleLikeRecipe = useCallback(
+    (recipe) => {
+      if (recipe.liked) {
+        api.unlikeRecipe(recipe.id)
+      } else {
+        api.likeRecipe(recipe.id)
+      }
+
+      setRecipes(
+        recipes.map((r) => {
+          if (r.id !== recipe.id) return r
+          return {
+            ...recipe,
+            liked: !recipe.liked,
+          }
+        }),
+      )
+    },
+    [recipes],
+  )
+
+  const excludeRecipe = useCallback(
+    (recipe) => {
+      if (
+        window.confirm(
+          'Do you really want to exclude this recipe? It will be hidden for ever ever',
+        )
+      ) {
+        api.excludeRecipe(recipe.id)
+        setRecipes(recipes.filter((r) => r.id !== recipe.id))
+      }
+    },
+    [recipes],
+  )
+
+  const contextValue = useMemo(
+    () => ({
+      toggleSaveRecipe,
+      toggleLikeRecipe,
+      excludeRecipe,
+    }),
+    [toggleSaveRecipe, toggleLikeRecipe, excludeRecipe],
+  )
 
   return (
-    <Layout>
-      <Filters filters={filters} setFilter={setFilter} />
-      <RecipeList
-        hasLoaded={hasLoadedRecipes}
-        isLoading={isLoadingRecipes}
-        recipes={recipes}
-        toggleSaveRecipe={toggleSaveRecipe}
-        toggleLikeRecipe={toggleLikeRecipe}
-        excludeRecipe={excludeRecipe}
-        canLoadMore={canLoadMore}
-        loadMore={loadMore}
-      />
-      <SavedRecipes
-        hasLoaded={hasLoadedSavecRecipes}
-        isLoading={isLoadingSavecRecipes}
-        savedRecipes={savedRecipes}
-        removeSavedRecipe={toggleSaveRecipe}
-      />
-    </Layout>
+    <AppContext.Provider value={contextValue}>
+      <Layout>
+        <Filters filters={filters} setFilter={setFilter} />
+        <RecipeList
+          hasLoaded={hasLoadedRecipes}
+          isLoading={isLoadingRecipes}
+          recipes={recipes}
+          toggleSaveRecipe={toggleSaveRecipe}
+          toggleLikeRecipe={toggleLikeRecipe}
+          excludeRecipe={excludeRecipe}
+          canLoadMore={canLoadMore}
+          loadMore={loadMore}
+        />
+        <SavedRecipes
+          hasLoaded={hasLoadedSavecRecipes}
+          isLoading={isLoadingSavecRecipes}
+          savedRecipes={savedRecipes}
+          removeSavedRecipe={toggleSaveRecipe}
+        />
+      </Layout>
+    </AppContext.Provider>
   )
 }
 
