@@ -22,8 +22,8 @@ const corsOptions = {
   methods: ['GET', 'POST']
 }
 
-app.use(cors(corsOptions))
-app.options('*', cors(corsOptions));
+app.use(cors());
+// app.options('*', cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -107,7 +107,6 @@ app.get('/api/user', rateLimiter, (req, res) => {
 })
 
 app.post('/api/recipes', (req, res) => {
-  console.log(req.headers.host);
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
