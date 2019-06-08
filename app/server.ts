@@ -18,20 +18,24 @@ const db = new Database();
 const app = express();
 
 const corsOptions = {
-  origin: API_URL,
-  methods: ['GET', 'POST']
-}
+  origin: [ 'https://recipe-hub-app.herokuapp.com'],
+  methods: ['POST', 'GET'],
+  credentials: true,
+  maxAge: 3600,
+};
 
-app.use(cors());
-// app.options('*', cors());
+console.log(corsOptions);
+
+app.use(cors(corsOptions));
+app.options('*', cors());
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(helmet())
+app.use(helmet());
 
 app.use(session({
   store: new RedisStore({
-    url: process.env.REDIS_URL
+    url: process.env.REDIS_URL,
   }),
   secret: SESSION_SECRET,
   resave: false,
@@ -103,8 +107,8 @@ app.get('/api/user', rateLimiter, (req, res) => {
   return res.json({
     name: user.name,
     isLoggedIn: req.isAuthenticated(),
-  })
-})
+  });
+});
 
 app.post('/api/recipes', (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
