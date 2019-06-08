@@ -10,9 +10,9 @@ import rateLimiter from './api/middleware/rate-limiting';
 import * as ConnectRedis from 'connect-redis';
 
 const RedisStore = ConnectRedis(session);
-const PORT = process.env.PORT || '8000'
-const API_URL = process.env.API_URL || `http://localhost:${PORT}`
-const SESSION_SECRET = process.env.SESSION_SECRET || 'default'
+const PORT = process.env.PORT || '8000';
+const API_URL = process.env.API_URL || `http://localhost:${PORT}`;
+const SESSION_SECRET = process.env.SESSION_SECRET || 'default';
 
 const db = new Database();
 const app = express();
@@ -107,6 +107,7 @@ app.get('/api/user', rateLimiter, (req, res) => {
 })
 
 app.post('/api/recipes', (req, res) => {
+  console.log(req.headers.host);
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
