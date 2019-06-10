@@ -38,7 +38,7 @@ const SavedRecipe = ({ recipe, onRemove }) => {
         ×
       </RemoveRecipe>
       {isShowingRecipePanel && (
-        <RecipePanel href={recipe.url} onClose={closeRecipePanel} />
+        <RecipePanel recipe={recipe} onClose={closeRecipePanel} />
       )}
     </Container>
   )

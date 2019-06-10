@@ -19,7 +19,7 @@ const Iframe = memo(styled.iframe`
   background: ${({ theme }) => theme.colors.grays.m};
 `)
 
-const RecipePanel = memo(({ href, onClose }) => {
+const RecipePanel = ({ recipe, onClose }) => {
   const { toggleSaveRecipe, toggleLikeRecipe, excludeRecipe } = useContext(
     AppContext,
   )
@@ -28,18 +28,20 @@ const RecipePanel = memo(({ href, onClose }) => {
     <Panel onClose={onClose}>
       <Buttons>
         <Button onClick={toggleSaveRecipe}>
-          Add recipe to your shopping list
+          {recipe.saved ? 'Remove' : 'Add'} recipe to your shopping list
         </Button>
-        <Button onClick={toggleLikeRecipe}>Like recipe</Button>
-        <Button onClick={excludeRecipe}>Exclude recipe</Button>
+        <Button onClick={() => toggleLikeRecipe(recipe)}>
+          {recipe.liked ? 'Unlike' : 'Like'} recipe
+        </Button>
+        <Button onClick={() => excludeRecipe(recipe)}>Exclude recipe</Button>
       </Buttons>
-      <Iframe src={href} />
+      <Iframe src={recipe.url} />
     </Panel>
   )
-})
+}
 
 RecipePanel.propTypes = {
-  href: PropTypes.string.isRequired,
+  recipe: PropTypes.object.isRequired,
   onClose: PropTypes.func.isRequired,
 }
 

@@ -163,7 +163,7 @@ const Recipe = ({
           </Infos>
 
           {isShowingRecipePanel && (
-            <RecipePanel href={recipe.url} onClose={closeRecipePanel} />
+            <RecipePanel recipe={recipe} onClose={closeRecipePanel} />
           )}
         </>
       )}
