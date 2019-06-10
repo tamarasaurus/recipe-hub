@@ -67,9 +67,14 @@ const Panel = ({ contentCss, children, onClose }) => {
     from: { transform: 'translate(-50%, 100%)' },
   })
 
+  const onClickBackdrop = (e) => {
+    e.stopPropagation()
+    onClose()
+  }
+
   return createPortal(
     <Container>
-      <Backdrop style={backdropStyle} onClick={onClose} />
+      <Backdrop style={backdropStyle} onClick={onClickBackdrop} />
       <Content style={contentStyle} css={contentCss}>
         {children}
       </Content>
