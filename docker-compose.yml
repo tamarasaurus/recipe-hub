@@ -12,7 +12,7 @@ services:
     build:
       context: app
     environment:
-      REACT_APP_API_URL: 'http://app:8000'
+      REACT_APP_API_URL: ${API_URL}
       POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}

@@ -1,5 +1,4 @@
-const API_URL = 'http://localhost:8000/api'
-// const API_URL = 'https://recipe-hub-app.herokuapp.com/api'
+const API_URL = process.env.REACT_APP_API_URL + '/api' || ''
 
 const fetchApi = async (query, options) => {
   const res = await fetch(API_URL + query, options)
