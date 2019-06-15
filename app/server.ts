@@ -14,17 +14,16 @@ const PORT = process.env.PORT || '8000';
 const API_URL = process.env.API_URL || `http://localhost:${PORT}`;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'default';
 
+console.log('API_URL', API_URL);
 const db = new Database();
 const app = express();
 
 const corsOptions = {
-  origin: [ 'https://recipe-hub-app.herokuapp.com'],
+  origin: ['https://recipe-hub-app.herokuapp.com'],
   methods: ['POST', 'GET'],
   credentials: true,
   maxAge: 3600,
 };
-
-console.log(corsOptions);
 
 app.use(cors(corsOptions));
 app.options('*', cors());
@@ -88,9 +87,14 @@ passport.use(new OAuth2Strategy(
   },
 ));
 
-app.get('/auth/google',
+app.get('/login',
   passport.authenticate('google', { scope: 'email' }),
 );
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/', session: true }),
@@ -120,15 +124,21 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
   if (req.isAuthenticated()) {
     db.searchRecipesWithUserPreference({ ids, keywords, offset }, req.user.id)
       .then((data => res.json(data)))
-      .catch((e: Error) => res.status(500).json({
-        message: 'Error fetching recipes',
-      }));
+      .catch((e: Error) => {
+        console.log('The error', e);
+        res.status(500).json({
+          message: 'Error fetching recipes',
+          e,
+        });
+      });
   } else {
     db.searchRecipes({ ids, keywords, offset })
       .then((data => res.json(data)))
       .catch((e: Error) => {
+        console.log('the error', e)
         res.status(500).json({
           message: 'Error fetching recipes',
+          e,
         });
       });
   }

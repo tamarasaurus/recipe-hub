@@ -28,7 +28,8 @@ const RecipePanel = ({ recipe, onClose }) => {
     <Panel onClose={onClose}>
       <Buttons>
         <Button onClick={() => toggleSaveRecipe(recipe)}>
-          {recipe.saved ? 'Remove' : 'Add'} recipe to your shopping list
+          {recipe.saved ? 'Remove' : 'Add'} recipe{' '}
+          {recipe.saved ? 'from' : 'to'} your shopping list
         </Button>
         <Button onClick={() => toggleLikeRecipe(recipe)}>
           {recipe.liked ? 'Unlike' : 'Like'} recipe
