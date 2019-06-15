@@ -19,7 +19,7 @@ const Container = styled.section`
   ${({ theme }) => theme.mediaQueries.m} {
     position: static;
     width: 300px;
-    background: ${({ theme }) => theme.colors.white};
+    background: ${({ theme }) => theme.colors.base3};
   }
 `
 

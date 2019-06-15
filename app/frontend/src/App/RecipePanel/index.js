@@ -16,7 +16,7 @@ const Buttons = styled.div`
 const Iframe = memo(styled.iframe`
   height: 100%;
   border: none;
-  background: ${({ theme }) => theme.colors.grays.m};
+  background: ${({ theme }) => theme.colors.base1};
 `)
 
 const RecipePanel = ({ recipe, onClose }) => {

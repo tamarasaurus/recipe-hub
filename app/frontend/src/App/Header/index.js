@@ -5,12 +5,12 @@ import styled from 'styled-components/macro'
 import FoodEmoji from './FoodEmoji'
 
 const Form = styled.div`
-  grid-area: Filters;
+  grid-area: Header;
   display: flex;
   align-items: center;
   justify-content: space-around;
   padding: ${({ theme }) => theme.px(3)};
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.base3};
   border-bottom: ${({ theme }) => theme.borders.m};
   font-size: ${({ theme }) => theme.px(3)};
 `
@@ -22,7 +22,7 @@ const Input = styled.input`
   border: ${({ theme }) => theme.borders.m};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ theme }) =>
-    theme.px(0.5, 0.5, 0) + ' ' + theme.colors.grays.l};
+    theme.px(0.5, 0.5, 0) + ' ' + theme.colors.base0};
   transition: ${({ theme }) => theme.transition};
   &:focus {
     outline: none;
@@ -32,7 +32,11 @@ const Input = styled.input`
   }
 `
 
-const Filters = ({ filters, setFilter }) => {
+const ThemeToggle = styled.button`
+  margin-left: ${({ theme }) => theme.px(2)};
+`
+
+const Header = ({ filters, setFilter, hasLightTheme, toggleTheme }) => {
   const onChange = (e) => {
     setFilter(e.target.name, e.target.value)
   }
@@ -46,13 +50,18 @@ const Filters = ({ filters, setFilter }) => {
         value={filters.query}
         onChange={onChange}
       />
+      <ThemeToggle onClick={toggleTheme}>
+        {hasLightTheme ? '🌙' : '☀️'}
+      </ThemeToggle>
     </Form>
   )
 }
 
-Filters.propTypes = {
+Header.propTypes = {
   filters: PropTypes.object,
-  setFilter: PropTypes.func,
+  setFilter: PropTypes.func.isRequired,
+  hasLightTheme: PropTypes.bool.isRequired,
+  toggleTheme: PropTypes.func.isRequired,
 }
 
-export default Filters
+export default Header

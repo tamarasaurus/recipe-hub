@@ -4,10 +4,10 @@ const Button = styled.button`
   padding: ${({ theme }) => theme.px(1)};
   border: ${({ theme }) => theme.borders.s};
   border-radius: ${({ theme }) => theme.radius};
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.base3};
   transition: ${({ theme }) => theme.transition};
   &:hover {
-    background: ${({ theme }) => theme.colors.grays.s};
+    background: ${({ theme }) => theme.colors.base2};
   }
   &:focus {
     border-color: ${({ theme }) => theme.colors.accent};

@@ -14,11 +14,11 @@ const Container = styled.div`
   min-height: 340px;
   border: ${({ theme }) => theme.borders.s};
   border-color: ${({ isSaved, theme }) =>
-    isSaved ? theme.colors.accent : theme.colors.grays.m};
+    isSaved ? theme.colors.accent : theme.colors.base1};
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ isSaved, theme }) =>
     !isSaved ? null : theme.px(0, 0, 0, 0.75) + ' ' + theme.colors.accent};
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.base3};
   transition: ${({ theme }) => theme.transition};
   overflow: hidden;
   &:hover {
@@ -31,7 +31,7 @@ const Container = styled.div`
 const Image = styled.div`
   height: ${({ theme }) => theme.imageHeight}px;
   background: url("${({ url }) => url}") center
-    ${({ theme }) => theme.colors.grays.m};
+    ${({ theme }) => theme.colors.base1};
   background-size: cover;
 `
 
@@ -85,7 +85,7 @@ const Infos = styled.div`
   // padding-left only because we want the link to be big
   padding-left: ${({ theme }) => theme.px(1)};
   border-top: ${({ theme }) => theme.borders.s};
-  border-color: ${({ theme }) => theme.colors.grays.m};
+  border-color: ${({ theme }) => theme.colors.base1};
   font-size: 14px;
 `
 

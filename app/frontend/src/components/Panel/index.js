@@ -33,7 +33,7 @@ const Content = styled(animated.div)`
   padding: ${({ theme }) => theme.px(2)};
   border-top-left-radius: ${({ theme }) => theme.radius};
   border-top-right-radius: ${({ theme }) => theme.radius};
-  background: ${({ theme }) => theme.colors.white};
+  background: ${({ theme }) => theme.colors.base3};
   overflow-y: auto;
   ${({ theme }) => theme.mediaQueries.m} {
     width: 75vw;
