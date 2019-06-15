@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled/macro'
+import styled from 'styled-components/macro'
 
 import Button from 'components/Button'
 import SavedRecipe from './SavedRecipe'

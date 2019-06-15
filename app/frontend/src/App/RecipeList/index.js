@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import throttle from 'lodash/throttle'
-import styled from '@emotion/styled/macro'
+import styled from 'styled-components/macro'
 
 import Button from 'components/Button'
 import Recipe from './Recipe'

@@ -1,7 +1,6 @@
 import React, { useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled/macro'
-import css from '@emotion/css/macro'
+import styled, { css } from 'styled-components/macro'
 
 import Panel from 'components/Panel'
 import Button from 'components/Button'
@@ -21,8 +20,8 @@ const formatIngredient = (ingredient) => {
     : ingredient.label
 }
 
-const contentCss = (theme) => css`
-  ${theme.mediaQueries.m} {
+const contentCss = css`
+  ${({ theme }) => theme.mediaQueries.m} {
     max-width: 600px;
   }
 `

@@ -1,8 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { injectGlobal } from 'emotion/macro'
-
-import { ThemeProvider } from 'emotion-theming'
+import { ThemeProvider, createGlobalStyle } from 'styled-components/macro'
 import App from './App'
 
 const colors = {
@@ -39,7 +37,7 @@ const theme = {
   transition: '200ms',
 }
 
-injectGlobal`
+const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     line-height: ${theme.lineHeight};
@@ -85,8 +83,11 @@ injectGlobal`
 `
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <App />
-  </ThemeProvider>,
+  <>
+    <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <App />
+    </ThemeProvider>
+  </>,
   document.getElementById('root'),
 )

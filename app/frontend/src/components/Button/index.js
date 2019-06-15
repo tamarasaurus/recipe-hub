@@ -1,4 +1,4 @@
-import styled from '@emotion/styled/macro'
+import styled from 'styled-components/macro'
 
 const Button = styled.button`
   padding: ${({ theme }) => theme.px(1)};

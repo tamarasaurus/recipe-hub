@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled/macro'
+import styled from 'styled-components/macro'
 
 import RecipePanel from 'App/RecipePanel'
 
@@ -12,7 +12,7 @@ const Container = styled.li`
   margin-bottom: ${({ theme }) => theme.px(1)};
 `
 
-const SeeRecipe = styled.button()
+const SeeRecipe = styled.button``
 
 const RemoveRecipe = styled.button`
   position: absolute;
@@ -28,8 +28,8 @@ const RemoveRecipe = styled.button`
 
 const SavedRecipe = ({ recipe, onRemove }) => {
   const [isShowingRecipePanel, setIsShowingRecipePanel] = useState(false)
-  const openRecipePanel = () => setIsShowingRecipePanel(true)
-  const closeRecipePanel = () => setIsShowingRecipePanel(false)
+  const openRecipePanel = useCallback(() => setIsShowingRecipePanel(true), [])
+  const closeRecipePanel = useCallback(() => setIsShowingRecipePanel(false), [])
 
   return (
     <Container>

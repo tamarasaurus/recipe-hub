@@ -5,7 +5,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
-import styled from '@emotion/styled/macro'
+import styled from 'styled-components/macro'
 
 import Filters from './Filters'
 import RecipeList from './RecipeList'
@@ -96,7 +96,13 @@ const App = () => {
         setSavedRecipes(savedRecipes.filter(({ id }) => id !== recipe.id))
       } else {
         api.saveRecipe(recipe.id)
-        setSavedRecipes([...savedRecipes, recipe])
+        setSavedRecipes([
+          ...savedRecipes,
+          {
+            ...recipe,
+            saved: true,
+          },
+        ])
       }
 
       setRecipes((recipes) =>

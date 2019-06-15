@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
-import styled from '@emotion/styled/macro'
+import styled from 'styled-components/macro'
 
 import RecipePanel from 'App/RecipePanel'
 import Placeholder from './Placeholder'
@@ -103,8 +103,8 @@ const Recipe = ({
   excludeRecipe,
 }) => {
   const [isShowingRecipePanel, setIsShowingRecipePanel] = useState(false)
-  const openRecipePanel = () => setIsShowingRecipePanel(true)
-  const closeRecipePanel = () => setIsShowingRecipePanel(false)
+  const openRecipePanel = useCallback(() => setIsShowingRecipePanel(true), [])
+  const closeRecipePanel = useCallback(() => setIsShowingRecipePanel(false), [])
 
   const onClickRecipeLink = (e) => {
     // @TODO handle cmd on mac and ctrl everywhere else

@@ -1,10 +1,8 @@
-/** @jsx jsx */
-import { useRef, useEffect } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
 import { useSpring, animated } from 'react-spring'
-import styled from '@emotion/styled/macro'
-import { jsx } from '@emotion/core'
+import styled from 'styled-components/macro'
 
 const Container = styled.div`
   position: absolute;
