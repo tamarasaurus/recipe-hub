@@ -19,7 +19,7 @@ const db = new Database();
 const app = express();
 
 const corsOptions = {
-  origin: ['https://recipe-hub-app.herokuapp.com'],
+  origin: [API_URL],
   methods: ['POST', 'GET'],
   credentials: true,
   maxAge: 3600,
@@ -125,20 +125,18 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
     db.searchRecipesWithUserPreference({ ids, keywords, offset }, req.user.id)
       .then((data => res.json(data)))
       .catch((e: Error) => {
-        console.log('The error', e);
+        console.log(e);
         res.status(500).json({
           message: 'Error fetching recipes',
-          e,
         });
       });
   } else {
     db.searchRecipes({ ids, keywords, offset })
       .then((data => res.json(data)))
       .catch((e: Error) => {
-        console.log('the error', e)
+        console.log('the error', e);
         res.status(500).json({
           message: 'Error fetching recipes',
-          e,
         });
       });
   }
