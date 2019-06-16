@@ -32,11 +32,7 @@ const Input = styled.input`
   }
 `
 
-const ThemeToggle = styled.button`
-  margin-left: ${({ theme }) => theme.px(2)};
-`
-
-const Header = ({ filters, setFilter, hasLightTheme, toggleTheme }) => {
+const Header = ({ filters, setFilter }) => {
   const onChange = (e) => {
     setFilter(e.target.name, e.target.value)
   }
@@ -50,9 +46,6 @@ const Header = ({ filters, setFilter, hasLightTheme, toggleTheme }) => {
         value={filters.query}
         onChange={onChange}
       />
-      <ThemeToggle onClick={toggleTheme}>
-        {hasLightTheme ? '🌙' : '☀️'}
-      </ThemeToggle>
     </Form>
   )
 }
@@ -60,8 +53,6 @@ const Header = ({ filters, setFilter, hasLightTheme, toggleTheme }) => {
 Header.propTypes = {
   filters: PropTypes.object,
   setFilter: PropTypes.func.isRequired,
-  hasLightTheme: PropTypes.bool.isRequired,
-  toggleTheme: PropTypes.func.isRequired,
 }
 
 export default Header

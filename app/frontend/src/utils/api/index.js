@@ -20,5 +20,6 @@ export const unsaveRecipe = (id) => post(`/recipes/${id}/unsave`)
 export const likeRecipe = (id) => post(`/recipes/${id}/like`)
 export const unlikeRecipe = (id) => post(`/recipes/${id}/unlike`)
 export const excludeRecipe = (id) => post(`/recipes/${id}/exclude`)
+export const user = (id) => post(`/user`)
 
 export const OFFSET = 24

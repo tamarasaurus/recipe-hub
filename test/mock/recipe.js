@@ -1,7 +1,7 @@
 const faker = require('faker');
 const generateRecipes = () => {
     const recipes = []
-    for(let i = 0; i < 200; i++) {
+    for(let i = 0; i < 24; i++) {
         const ingredients = []
         for(let x = 0; x < 10; x++ ) {
             ingredients.push({

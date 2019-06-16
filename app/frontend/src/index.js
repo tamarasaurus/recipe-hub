@@ -1,26 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { ThemeProvider } from 'styled-components/macro'
+import { createGlobalStyle, ThemeProvider } from 'styled-components/macro'
 
 import App from './App'
 
-const darkColors = {
-  base3: '#073642',
-  base2: '#002b36',
-  base1: '#586e75',
-  base0: '#839496',
-}
-
-const lightColors = {
-  base3: '#fdf6e3',
-  base2: '#eee8d5',
-  base1: '#93a1a1',
-  base0: '#657b83',
-}
-
-const accentColors = {
-  accent: '#268bd2',
-  warning: '#dc322f',
+const colors = {
+  base3: '#ffffff',
+  base2: '#e6ecf0',
+  base1: '#dadada',
+  base0: '#14171a',
+  accent: '#0bad72',
+  warning: '#ce0e0e',
 }
 
 const breakpoints = {
@@ -29,9 +19,7 @@ const breakpoints = {
 }
 
 const theme = {
-  accentColors,
-  darkColors,
-  lightColors,
+  colors,
   px: (...values) => values.map((value) => 8 * value + 'px').join(' '),
   radius: '4px',
   imageHeight: 230,
@@ -41,12 +29,72 @@ const theme = {
     m: `@media (min-width: ${breakpoints.m})`,
     l: `@media (min-width: ${breakpoints.l})`,
   },
+  borders: {
+    s: `1px solid ${colors.base0}`,
+    m: `2px solid ${colors.base0}`,
+    l: `4px solid ${colors.base0}`,
+  },
   transition: '200ms',
 }
 
+const GlobalStyle = createGlobalStyle`
+  html {
+    box-sizing: border-box;
+    line-height: ${({ theme }) => theme.lineHeight};
+  }
+
+  *,
+  ::before,
+  ::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: inherit;
+  }
+
+  ::selection {
+    background: ${({ theme }) => theme.colors.accent};
+    color: ${({ theme }) => theme.colors.base3};
+    text-shadow: none;
+  }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    font-family: sans-serif;
+    color: ${({ theme }) => theme.colors.base0};
+  }
+
+  button {
+    appearance: none;
+    border: none;
+    background: none;
+    text-align: left;
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  input {
+    background: ${({ theme }) => theme.colors.base3};
+  }
+
+  :focus {
+    outline: ${({ theme }) => theme.colors.accent} auto 5px;
+  }
+`
+
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <App />
+    <>
+      <GlobalStyle />
+      <App />
+    </>
   </ThemeProvider>,
   document.getElementById('root'),
 )

@@ -5,68 +5,13 @@ import React, {
   useCallback,
   useMemo,
 } from 'react'
-import styled, {
-  ThemeProvider,
-  createGlobalStyle,
-} from 'styled-components/macro'
+import styled from 'styled-components/macro'
 
 import Header from './Header'
 import RecipeList from './RecipeList'
 import SavedRecipes from './SavedRecipes'
 
 import * as api from 'utils/api'
-
-const GlobalStyle = createGlobalStyle`
-  html {
-    box-sizing: border-box;
-    line-height: ${({ theme }) => theme.lineHeight};
-  }
-
-  *,
-  ::before,
-  ::after {
-    padding: 0;
-    margin: 0;
-    box-sizing: inherit;
-  }
-
-  ::selection {
-    background: ${({ theme }) => theme.colors.accent};
-    color: ${({ theme }) => theme.colors.base3};
-    text-shadow: none;
-  }
-
-  html,
-  body,
-  #root {
-    height: 100%;
-  }
-
-  body {
-    font-family: sans-serif;
-    color: ${({ theme }) => theme.colors.base0};
-  }
-
-  button {
-    appearance: none;
-    border: none;
-    background: none;
-    text-align: left;
-  }
-
-  button,
-  [role='button'] {
-    cursor: pointer;
-  }
-
-  input {
-    background: ${({ theme }) => theme.colors.base3};
-  }
-
-  :focus {
-    outline: ${({ theme }) => theme.colors.accent} auto 5px;
-  }
-`
 
 const Layout = styled.div`
   display: grid;
@@ -82,37 +27,6 @@ const Layout = styled.div`
 export const AppContext = createContext()
 
 const App = () => {
-  const [currentTheme, setCurrentTheme] = useState(
-    localStorage.getItem('theme') || 'light',
-  )
-  const toggleTheme = useCallback(() => {
-    setCurrentTheme((theme) => {
-      const newTheme = theme === 'light' ? 'dark' : 'light'
-      localStorage.setItem('theme', newTheme)
-      return newTheme
-    })
-  }, [])
-  const theme = useCallback(
-    (mainTheme) => {
-      const currentColors =
-        currentTheme === 'light' ? mainTheme.lightColors : mainTheme.darkColors
-
-      return {
-        ...mainTheme,
-        colors: {
-          ...mainTheme.accentColors,
-          ...currentColors,
-        },
-        borders: {
-          s: `1px solid ${currentColors.base0}`,
-          m: `2px solid ${currentColors.base0}`,
-          l: `4px solid ${currentColors.base0}`,
-        },
-      }
-    },
-    [currentTheme],
-  )
-
   const [filters, setFilters] = useState({
     query: '',
   })
@@ -250,35 +164,25 @@ const App = () => {
 
   return (
     <AppContext.Provider value={contextValue}>
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <Layout>
-            <Header
-              filters={filters}
-              setFilter={setFilter}
-              hasLightTheme={currentTheme === 'light'}
-              toggleTheme={toggleTheme}
-            />
-            <RecipeList
-              hasLoaded={hasLoadedRecipes}
-              isLoading={isLoadingRecipes}
-              recipes={recipes}
-              toggleSaveRecipe={toggleSaveRecipe}
-              toggleLikeRecipe={toggleLikeRecipe}
-              excludeRecipe={excludeRecipe}
-              canLoadMore={canLoadMore}
-              loadMore={loadMore}
-            />
-            <SavedRecipes
-              hasLoaded={hasLoadedSavecRecipes}
-              isLoading={isLoadingSavecRecipes}
-              savedRecipes={savedRecipes}
-              removeSavedRecipe={toggleSaveRecipe}
-            />
-          </Layout>
-        </>
-      </ThemeProvider>
+      <Layout>
+        <Header filters={filters} setFilter={setFilter} />
+        <RecipeList
+          hasLoaded={hasLoadedRecipes}
+          isLoading={isLoadingRecipes}
+          recipes={recipes}
+          toggleSaveRecipe={toggleSaveRecipe}
+          toggleLikeRecipe={toggleLikeRecipe}
+          excludeRecipe={excludeRecipe}
+          canLoadMore={canLoadMore}
+          loadMore={loadMore}
+        />
+        <SavedRecipes
+          hasLoaded={hasLoadedSavecRecipes}
+          isLoading={isLoadingSavecRecipes}
+          savedRecipes={savedRecipes}
+          removeSavedRecipe={toggleSaveRecipe}
+        />
+      </Layout>
     </AppContext.Provider>
   )
 }
