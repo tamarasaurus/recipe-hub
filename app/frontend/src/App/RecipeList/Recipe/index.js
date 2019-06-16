@@ -91,8 +91,6 @@ const Infos = styled.div`
 
 const RecipeLink = styled.a`
   padding: ${({ theme }) => theme.px(1)};
-  color: ${({ theme }) => theme.colors.accent};
-  transition: ${({ theme }) => theme.transition};
 `
 
 const Recipe = ({

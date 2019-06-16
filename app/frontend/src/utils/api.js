@@ -20,6 +20,9 @@ export const unsaveRecipe = (id) => post(`/recipes/${id}/unsave`)
 export const likeRecipe = (id) => post(`/recipes/${id}/like`)
 export const unlikeRecipe = (id) => post(`/recipes/${id}/unlike`)
 export const excludeRecipe = (id) => post(`/recipes/${id}/exclude`)
-export const user = (id) => post(`/user`)
+
+export const getUser = (id) => get(`/user`)
+export const loginUrl = process.env.REACT_APP_API_URL + '/login'
+export const logoutUrl = process.env.REACT_APP_API_URL + '/logout'
 
 export const OFFSET = 24

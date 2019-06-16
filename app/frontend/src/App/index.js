@@ -27,6 +27,20 @@ const Layout = styled.div`
 export const AppContext = createContext()
 
 const App = () => {
+  const [user, setUser] = useState()
+  useEffect(() => {
+    const fetchData = async () => {
+      // setIsLoadingRecipes(true)
+      const user = await api.getUser()
+      console.log(user)
+      setUser(user)
+      // setIsLoadingRecipes(false)
+      // setHasLoadedRecipes(true)
+    }
+
+    fetchData()
+  }, [])
+
   const [filters, setFilters] = useState({
     query: '',
   })
@@ -165,7 +179,7 @@ const App = () => {
   return (
     <AppContext.Provider value={contextValue}>
       <Layout>
-        <Header filters={filters} setFilter={setFilter} />
+        <Header filters={filters} setFilter={setFilter} user={user} />
         <RecipeList
           hasLoaded={hasLoadedRecipes}
           isLoading={isLoadingRecipes}

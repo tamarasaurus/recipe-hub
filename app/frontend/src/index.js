@@ -84,6 +84,11 @@ const GlobalStyle = createGlobalStyle`
     background: ${({ theme }) => theme.colors.base3};
   }
 
+  a {
+    color: ${({ theme }) => theme.colors.accent};
+    transition: ${({ theme }) => theme.transition};
+  }
+
   :focus {
     outline: ${({ theme }) => theme.colors.accent} auto 5px;
   }

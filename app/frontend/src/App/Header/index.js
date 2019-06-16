@@ -4,6 +4,8 @@ import styled from 'styled-components/macro'
 
 import FoodEmoji from './FoodEmoji'
 
+import * as api from 'utils/api'
+
 const Form = styled.div`
   grid-area: Header;
   display: flex;
@@ -12,7 +14,6 @@ const Form = styled.div`
   padding: ${({ theme }) => theme.px(3)};
   background: ${({ theme }) => theme.colors.base3};
   border-bottom: ${({ theme }) => theme.borders.m};
-  font-size: ${({ theme }) => theme.px(3)};
 `
 
 const Input = styled.input`
@@ -23,6 +24,7 @@ const Input = styled.input`
   border-radius: ${({ theme }) => theme.radius};
   box-shadow: ${({ theme }) =>
     theme.px(0.5, 0.5, 0) + ' ' + theme.colors.base0};
+  font-size: ${({ theme }) => theme.px(3)};
   transition: ${({ theme }) => theme.transition};
   &:focus {
     outline: none;
@@ -32,7 +34,11 @@ const Input = styled.input`
   }
 `
 
-const Header = ({ filters, setFilter }) => {
+const Link = styled.a`
+  margin-left: ${({ theme }) => theme.px(2)};
+`
+
+const Header = ({ filters, setFilter, user }) => {
   const onChange = (e) => {
     setFilter(e.target.name, e.target.value)
   }
@@ -46,6 +52,16 @@ const Header = ({ filters, setFilter }) => {
         value={filters.query}
         onChange={onChange}
       />
+      {user &&
+        (user.isLoggedIn ? (
+          <Link target="_blank" href={api.logoutUrl}>
+            Logout {user.name}
+          </Link>
+        ) : (
+          <Link target="_blank" href={api.loginUrl}>
+            Login
+          </Link>
+        ))}
     </Form>
   )
 }
