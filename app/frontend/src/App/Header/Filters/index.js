@@ -8,7 +8,7 @@ const Container = styled.div`
 `
 
 const Input = styled.input`
-  width: 50%;
+  width: 100%;
   padding: ${({ theme }) => theme.px(1, 2)};
   border: ${({ theme }) => theme.borders.m};
   border-radius: ${({ theme }) => theme.radius};
@@ -23,7 +23,6 @@ const Input = styled.input`
     isFocused &&
     css`
       outline: none;
-      width: 100%;
       border-color: ${({ theme }) => theme.colors.accent};
       border-radius: ${({ theme }) => theme.radius}
         ${({ theme }) => theme.radius} 0 0;
@@ -78,7 +77,6 @@ const Filters = ({ className, filters, setFilters }) => {
         value={filters.query}
         onChange={onChange}
         onFocus={openDropdown}
-        isFocused={isDropdownOpen}
         autoComplete="off"
       />
       {false && isDropdownOpen && (
