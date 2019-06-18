@@ -29,12 +29,12 @@ function setRecipePreference(
 
 app.get('/login', (req, res) => {
     data.isLoggedIn = true;
-    res.redirect('/');
+    res.redirect('back');
 });
 
 app.get('/logout', (req, res) => {
     data.isLoggedIn = false
-    res.redirect('/');
+    res.redirect('back');
 });
 
 app.get('/api/user', (req, res) => {
