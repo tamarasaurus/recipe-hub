@@ -1,8 +1,8 @@
 import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import PropTypes from 'prop-types'
-import { useSpring, animated } from 'react-spring'
 import styled from 'styled-components/macro'
+import { animated, useSpring } from 'react-spring'
 
 const Container = styled.div`
   position: absolute;
@@ -18,6 +18,7 @@ const Backdrop = styled(animated.div)`
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 1;
   background: rgba(0, 0, 0, 0.6);
   cursor: pointer;
 `
@@ -26,6 +27,7 @@ const Content = styled(animated.div)`
   position: absolute;
   bottom: 0;
   left: 50%;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -82,7 +84,7 @@ const Panel = ({ contentCss, children, onClose }) => {
 }
 
 Panel.propTypes = {
-  contentCss: PropTypes.string,
+  contentCss: PropTypes.array,
   children: PropTypes.node.isRequired,
   onClose: PropTypes.func.isRequired,
 }

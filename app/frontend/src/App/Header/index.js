@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
 import FoodEmoji from './FoodEmoji'
+import Filters from './Filters'
 
 import * as api from 'utils/api'
 
-const Form = styled.div`
+const Container = styled.div`
+  position: relative;
+  z-index: 1;
   grid-area: Header;
   display: flex;
   align-items: center;
@@ -16,59 +19,39 @@ const Form = styled.div`
   border-bottom: ${({ theme }) => theme.borders.m};
 `
 
-const Input = styled.input`
-  width: 100%;
-  padding: ${({ theme }) => theme.px(1, 2)};
-  margin-left: ${({ theme }) => theme.px(2)};
-  border: ${({ theme }) => theme.borders.m};
-  border-radius: ${({ theme }) => theme.radius};
-  box-shadow: ${({ theme }) =>
-    theme.px(0.5, 0.5, 0) + ' ' + theme.colors.base0};
-  font-size: ${({ theme }) => theme.px(3)};
-  transition: ${({ theme }) => theme.transition};
-  &:focus {
-    outline: none;
-    border-color: ${({ theme }) => theme.colors.accent};
-    box-shadow: ${({ theme }) =>
-      theme.px(0.5, 0.5, 0) + ' ' + theme.colors.accent};
-  }
+const StyledFilters = styled(Filters)`
+  flex-grow: 1;
+  margin: 0 ${({ theme }) => theme.px(2)};
 `
 
-const Link = styled.a`
-  margin-left: ${({ theme }) => theme.px(2)};
-`
+const Link = styled.a``
 
-const Header = ({ filters, setFilter, user }) => {
-  const onChange = (e) => {
-    setFilter(e.target.name, e.target.value)
-  }
-
+const Header = ({ filters, setFilters, user }) => {
   return (
-    <Form>
+    <Container>
       <FoodEmoji />
-      <Input
-        name="query"
-        placeholder="Search for a recipe name, ingredient or category"
-        value={filters.query}
-        onChange={onChange}
-      />
+      <StyledFilters filters={filters} setFilters={setFilters} />
       {user &&
         (user.isLoggedIn ? (
           <Link target="_blank" href={api.logoutUrl}>
-            Logout {user.name}
+            Logout
           </Link>
         ) : (
           <Link target="_blank" href={api.loginUrl}>
             Login
           </Link>
         ))}
-    </Form>
+    </Container>
   )
 }
 
 Header.propTypes = {
   filters: PropTypes.object,
-  setFilter: PropTypes.func.isRequired,
+  setFilters: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    isLoggedIn: PropTypes.bool,
+  }),
 }
 
 export default Header

@@ -30,26 +30,22 @@ const App = () => {
   const [user, setUser] = useState()
   useEffect(() => {
     const fetchData = async () => {
-      // setIsLoadingRecipes(true)
       const user = await api.getUser()
-      console.log(user)
       setUser(user)
-      // setIsLoadingRecipes(false)
-      // setHasLoadedRecipes(true)
     }
 
     fetchData()
   }, [])
 
-  const [filters, setFilters] = useState({
+  const [filters, setFilterss] = useState({
     query: '',
   })
-  const setFilter = (label, value) => {
+  const setFilters = (label, value) => {
     const newFilters = {
       ...filters,
       [label]: value,
     }
-    setFilters(newFilters)
+    setFilterss(newFilters)
     setOffset(0)
   }
 
@@ -179,7 +175,7 @@ const App = () => {
   return (
     <AppContext.Provider value={contextValue}>
       <Layout>
-        <Header filters={filters} setFilter={setFilter} user={user} />
+        <Header filters={filters} setFilters={setFilters} user={user} />
         <RecipeList
           hasLoaded={hasLoadedRecipes}
           isLoading={isLoadingRecipes}

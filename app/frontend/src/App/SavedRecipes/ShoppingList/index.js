@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useEffect, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components/macro'
 
@@ -96,7 +96,7 @@ const ShoppingList = ({ recipes, onClose }) => {
     copyToClipboard(str)
   }
 
-  const copyIngredients = () => {
+  const copyIngredients = useCallback(() => {
     const str = recipes
       .map((recipe) => recipe.ingredients.map(formatIngredient))
       .flat()
@@ -104,7 +104,7 @@ const ShoppingList = ({ recipes, onClose }) => {
       .join('\n')
 
     copyToClipboard(str)
-  }
+  }, [recipes])
 
   const copyRecipe = (recipe) => {
     const str = [
