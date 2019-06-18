@@ -9,3 +9,20 @@ Scrape and store recipes to generate shopping lists
 - [x] Bon Appetit
 - [ ] Blue Apron
 - [ ] Foodette
+
+## Setup
+
+
+```bash
+cp .env.dist .env
+```
+
+In `.env`, replace `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` with real values.
+
+```bash
+export $(cat .env)
+./bin/install_dependencies.sh
+./bin/run.sh
+```
+
+Go to http://localhost:8000
