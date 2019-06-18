@@ -81,7 +81,7 @@ const Filters = ({ className, filters, setFilters }) => {
         isFocused={isDropdownOpen}
         autoComplete="off"
       />
-      {isDropdownOpen && (
+      {false && isDropdownOpen && (
         <>
           <Backdrop onClick={closeDropdown} />
           {dropdownTransition.map(
