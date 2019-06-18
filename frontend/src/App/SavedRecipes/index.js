@@ -6,6 +6,8 @@ import Button from 'components/Button'
 import SavedRecipe from './SavedRecipe'
 import ShoppingList from './ShoppingList'
 
+import { GENERATE_RECIPES_COUNT } from 'utils/api'
+
 const Container = styled.section`
   position: fixed;
   bottom: 0;
@@ -83,6 +85,10 @@ const NoRecipes = styled.div`
   }
 `
 
+const GenerateRecipesButton = styled(Button)`
+  margin-top: ${({ theme }) => theme.px(2)};
+`
+
 const ShoppingListIcon = () => (
   <span role="img" aria-label="shopping list">
     📝
@@ -94,6 +100,7 @@ const SavedRecipes = ({
   isLoading,
   savedRecipes,
   removeSavedRecipe,
+  generateRecipes,
 }) => {
   const [isShowingShoppingList, toggleShowShoppingList] = useState(false)
   const openShoppingList = () => toggleShowShoppingList(true)
@@ -128,6 +135,9 @@ const SavedRecipes = ({
       ) : (
         <NoRecipes>
           Start adding recipes to your shopping list by clicking on them
+          <GenerateRecipesButton onClick={generateRecipes}>
+            Add {GENERATE_RECIPES_COUNT} random recipes to your list
+          </GenerateRecipesButton>
         </NoRecipes>
       )}
     </Container>
@@ -139,6 +149,7 @@ SavedRecipes.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
   removeSavedRecipe: PropTypes.func.isRequired,
+  generateRecipes: PropTypes.func.isRequired,
 }
 
 export default SavedRecipes

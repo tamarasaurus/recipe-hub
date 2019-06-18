@@ -12,14 +12,18 @@ const post = (query, options) =>
     method: 'POST',
   })
 
-export const getRecipes = (keyword = '', offset = 0) =>
-  get(`/recipes?keywords=${keyword}&offset=${offset}`)
+export const getRecipes = ({ keywords = '', offset = 0 } = {}) =>
+  get(`/recipes?keywords=${keywords}&offset=${offset}`)
 export const getSavedRecipes = () => get('/recipes/saved')
 export const saveRecipe = (id) => post(`/recipes/${id}/save`)
 export const unsaveRecipe = (id) => post(`/recipes/${id}/unsave`)
 export const likeRecipe = (id) => post(`/recipes/${id}/like`)
 export const unlikeRecipe = (id) => post(`/recipes/${id}/unlike`)
 export const excludeRecipe = (id) => post(`/recipes/${id}/exclude`)
+
+export const GENERATE_RECIPES_COUNT = 5
+export const generateRecipes = () =>
+  post(`/recipes/generate?count=${GENERATE_RECIPES_COUNT}`)
 
 export const getUser = (id) => get(`/user`)
 export const loginUrl = process.env.REACT_APP_API_URL + '/login'
