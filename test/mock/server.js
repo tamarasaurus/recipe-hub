@@ -45,16 +45,29 @@ app.get('/api/user', (req, res) => {
 });
 
 app.get('/api/recipes', (req, res) => {
-    const { ids, keywords, offset } = req.query;
+    const { ids, keywords, offset, random } = req.query;
 
     if (data.isLoggedIn) {
-        const data = db.searchRecipesWithUserPreference({ ids, keywords, offset })
+        const data = db.searchRecipesWithUserPreference({ ids, keywords, offset, random })
         res.json(data);
     } else {
-        const data = db.searchRecipes({ ids, keywords, offset })
+        const data = db.searchRecipes({ ids, keywords, offset, random })
         res.json(data);
     }
 });
+
+app.post('/api/recipes/generate', (req, res) => {
+    const { count } = req.query;
+
+    let recipes
+    if (data.isLoggedIn) {
+        recipes = db.generateRecipesWithUserPreference({ count })
+    } else {
+        recipes = db.generateRecipes({ count })
+    }
+    res.json(recipes);
+});
+
 
 app.post('/api/recipes/:id/like', (req, res) => {
     setRecipePreference(req.params.id, { liked: true }, res);

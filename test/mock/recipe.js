@@ -1,5 +1,7 @@
+const sampleSize = require('lodash/sampleSize');
 const faker = require('faker');
-const generateRecipes = () => {
+
+const createFakeRecipes = () => {
     const recipes = []
     for(let i = 0; i < 24; i++) {
         const ingredients = []
@@ -27,7 +29,7 @@ const generateRecipes = () => {
 }
 
 const data = {
-    recipes: generateRecipes(),
+    recipes: createFakeRecipes(),
     liked: [],
     saved: [],
     excluded: []
@@ -69,6 +71,17 @@ module.exports = function () {
 
     this.searchRecipes = () => {
         return data.recipes;
+    }
+
+    this.generateRecipesWithUserPreference = ({ count }) => {
+        return sampleSize(
+            data.recipes.filter(recipe => data.excluded.includes(recipe.id) === false),
+            count
+        )
+    }
+
+    this.generateRecipes = ({ count }) => {
+        return sampleSize(data.recipes, count)
     }
 
     this.getSavedRecipeIdsForUser = () => {
