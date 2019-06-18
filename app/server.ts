@@ -1,4 +1,4 @@
-import Database from './api/db';
+import Database from './api/recipe';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
