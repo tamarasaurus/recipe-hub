@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "husky": "^2.4.1",
+    "jest-fetch-mock": "^2.1.2",
     "lint-staged": "^8.2.1",
     "prettier": "^1.18.2",
     "react-scripts": "^3.0.1"
