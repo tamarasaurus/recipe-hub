@@ -33,13 +33,9 @@ const Header = ({ filters, setFilters, user }) => {
       <StyledFilters filters={filters} setFilters={setFilters} />
       {user &&
         (user.isLoggedIn ? (
-          <Link target="_blank" href={api.logoutUrl}>
-            Logout
-          </Link>
+          <Link href={api.logoutUrl}>Logout</Link>
         ) : (
-          <Link target="_blank" href={api.loginUrl}>
-            Login
-          </Link>
+          <Link href={api.loginUrl}>Login</Link>
         ))}
     </Container>
   )
