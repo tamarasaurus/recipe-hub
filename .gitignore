@@ -64,3 +64,5 @@ typings/
 .vscode
 
 dump.rdb
+
+cypress
