@@ -25,10 +25,16 @@ storageQueue.process(storeJob);
 
 scrapingQueue.on('completed', (job: any, scrapedRecipes: any[]) => {
   console.log('✓ scraped', job.data.url, '\n');
-  scrapedRecipes.forEach((recipe: any) => storageQueue.add(recipe));
+  scrapedRecipes.forEach((recipe: any) => {
+    storageQueue.add(recipe);
+    job.remove();
+  });
 }).on('error', (error: Error) => console.log('error', error));
 
-storageQueue.on('completed', (job: any) => console.log('✓ stored', job.data.url));
+storageQueue.on('completed', (job: any) => {
+  console.log('✓ stored', job.data.url);
+  job.remove();
+}).on('failed', (job: any) => job.remove());
 
 const html = [
   {
