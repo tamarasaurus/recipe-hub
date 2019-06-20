@@ -8,10 +8,11 @@
   },
   "scripts": {
     "start": "cd app && npm start",
-    "install-frontend": "cd app/frontend && npm install && npm run build",
+    "install-frontend": "cd app/frontend && npm install",
+    "build-frontend": "cd app/frontend && npm run build",
     "install-api": "cd app/api && npm install && npm run setup",
     "install-scraper": "cd scraper && npm install",
-    "postinstall": "npm run install-frontend && npm run install-api && npm run install-scraper",
+    "postinstall": "npm run install-frontend && npm run install-api && npm run install-scraper && npm run build-frontend",
     "scrape": "cd scraper && npm start"
   },
   "repository": {
