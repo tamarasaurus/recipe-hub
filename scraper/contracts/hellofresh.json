@@ -21,7 +21,7 @@
             "type": "digit",
             "selector": "[data-test-id=\"recipeDetailFragment.ingredients\"] button[checked]"
         },
-        "imageUrl": {
+        "imageurl": {
             "type": "link",
             "selector": "img[srcset]",
             "attribute": "src"

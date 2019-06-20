@@ -21,7 +21,7 @@
             "type": "digit",
             "selector": ".recipe-ingredients tbody tr:first-child td:nth-child(2)"
         },
-        "imageUrl": {
+        "imageurl": {
             "type": "link",
             "selector": ".recipe-image",
             "attribute": "src"

@@ -1,0 +1,1018 @@
+[{
+	"id": 377,
+	"name": "Épaule d'Agneau & Crème à l'Ail",
+	"duration": 0,
+	"ingredients": [{
+		"label": "Épaule d'agneau",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Pommes de terre",
+		"quantity": "1000 g"
+	}, {
+		"label": "Crème fraîche",
+		"quantity": "200 g"
+	}, {
+		"label": "Ail",
+		"quantity": "2,5 pièces"
+	}, {
+		"label": "Romarin frais",
+		"quantity": "3 feuilles"
+	}, {
+		"label": "Beurre",
+		"quantity": "50 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Sel & poivre",
+		"quantity": "1 pincée"
+	}],
+	"portions": 4,
+	"imageurl": "https://lescommis.com/media/cache/e3/75/e375870ee0295eb6b149d2c2f59800e4.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/epaule-dagneau-creme-a-lail/",
+	"created": "2019-06-19T21:03:00.223Z",
+	"updated": "2019-06-19T21:03:00.223Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 376,
+	"name": "Gigot d'Agneau aux Olives",
+	"duration": 0,
+	"ingredients": [{
+		"label": "Poitrine d'agneau",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Pommes de terre",
+		"quantity": "1000 g"
+	}, {
+		"label": "Oignon rouge",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Tomates séchées",
+		"quantity": "150 g"
+	}, {
+		"label": "Olives noires",
+		"quantity": "2 c.s."
+	}, {
+		"label": "Laurier",
+		"quantity": "2 feuilles"
+	}, {
+		"label": "Romarin frais",
+		"quantity": "3 tiges"
+	}, {
+		"label": "Origan",
+		"quantity": "4 pincées"
+	}, {
+		"label": "Beurre",
+		"quantity": "50 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Sel & poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Eau",
+		"quantity": "200 ml"
+	}],
+	"portions": 5,
+	"imageurl": "https://lescommis.com/media/cache/7a/52/7a5284bed34f92568170892b5d6b74a9.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/gigot-dagneau-aux-olives/",
+	"created": "2019-06-19T21:02:59.870Z",
+	"updated": "2019-06-19T21:02:59.870Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 375,
+	"name": "Cheesecake Divin au Citron Vert",
+	"duration": 0,
+	"ingredients": [{
+		"label": "Speculoos",
+		"quantity": "200 g"
+	}, {
+		"label": "Beurre demi-sel",
+		"quantity": "100 g"
+	}, {
+		"label": "Cream cheese",
+		"quantity": "150 g"
+	}, {
+		"label": "Petit suisse",
+		"quantity": "3 pièces"
+	}, {
+		"label": "Crème liquide",
+		"quantity": "200 ml"
+	}, {
+		"label": "Citron vert",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Sucre",
+		"quantity": "70 g"
+	}, {
+		"label": "Rhodoïd",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Papier cuisson",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 6,
+	"imageurl": "https://lescommis.com/media/cache/0f/bc/0fbca989f5f71e12c1b3d2eb7a440bea.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/cheesecake-divin-au-citron-vert/",
+	"created": "2019-06-19T21:02:59.451Z",
+	"updated": "2019-06-19T21:02:59.451Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 374,
+	"name": "Ribs Tex-Mex & Sauce Barbecue",
+	"duration": 0,
+	"ingredients": [{
+		"label": "Travers de porc",
+		"quantity": "750 g"
+	}, {
+		"label": "Pommes de terre grenaille",
+		"quantity": "600 g"
+	}, {
+		"label": "Échalote",
+		"quantity": "200 g"
+	}, {
+		"label": "Épices Cajun",
+		"quantity": "10 g"
+	}, {
+		"label": "Sauce BBQ maison",
+		"quantity": "102 g"
+	}, {
+		"label": "Sauce BBQ maison",
+		"quantity": "102 g"
+	}, {
+		"label": "Sauce BBQ maison",
+		"quantity": "102 g"
+	}, {
+		"label": "Sauce BBQ maison",
+		"quantity": "102 g"
+	}, {
+		"label": "Sauce BBQ maison",
+		"quantity": "102 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/e1/08/e10867e8d3ab424358e6530a17b6ff73.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/ribs-bbq/",
+	"created": "2019-06-19T21:02:59.042Z",
+	"updated": "2019-06-19T21:02:59.042Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 373,
+	"name": "Wok de Poulet",
+	"duration": 1500,
+	"ingredients": [{
+		"label": "Filets de poulet",
+		"quantity": "280 g"
+	}, {
+		"label": "Chou kale",
+		"quantity": "150 g"
+	}, {
+		"label": "Nouilles soba",
+		"quantity": "125 g"
+	}, {
+		"label": "Carotte",
+		"quantity": "200 g"
+	}, {
+		"label": "Navet long",
+		"quantity": "150 g"
+	}, {
+		"label": "Ail",
+		"quantity": "10 g"
+	}, {
+		"label": "Graines de sésame",
+		"quantity": "5 g"
+	}, {
+		"label": "Sauce Kyoto",
+		"quantity": "65 g"
+	}, {
+		"label": "Sauce Kyoto",
+		"quantity": "65 g"
+	}, {
+		"label": "Sauce Kyoto",
+		"quantity": "65 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/12/36/1236677d913c3f596b4f2db83d7148c0.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/551_chef_wok-de-poulet-au-kale-et-sesame/",
+	"created": "2019-06-19T21:02:58.537Z",
+	"updated": "2019-06-19T21:02:58.537Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 372,
+	"name": "Filet de Volaille Sauce Roscovite",
+	"duration": 2100,
+	"ingredients": [{
+		"label": "Filets de poulet",
+		"quantity": "280 g"
+	}, {
+		"label": "Tartare d'algues",
+		"quantity": "50 g"
+	}, {
+		"label": "Oignon",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Champignons de Paris",
+		"quantity": "250 g"
+	}, {
+		"label": "Crème liquide",
+		"quantity": "200 ml"
+	}, {
+		"label": "Vin blanc",
+		"quantity": "100 ml"
+	}, {
+		"label": "Rattes du Touquet",
+		"quantity": "300 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Beurre",
+		"quantity": "20 g"
+	}, {
+		"label": "Sel & poivre",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/20/73/2073040b902f2de26dc8622eaf5c6710.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/filet-de-volaille-aux-algues/",
+	"created": "2019-06-19T21:02:58.014Z",
+	"updated": "2019-06-19T21:02:58.014Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 371,
+	"name": "Merlu Poché au Court Bouillon",
+	"duration": 2100,
+	"ingredients": [{
+		"label": "Merlu",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Carotte",
+		"quantity": "300 g"
+	}, {
+		"label": "Cerfeuil",
+		"quantity": "0,2 pièce"
+	}, {
+		"label": "Fenouil",
+		"quantity": "150 g"
+	}, {
+		"label": "Échalote",
+		"quantity": "60 g"
+	}, {
+		"label": "Vin blanc",
+		"quantity": "80 ml"
+	}, {
+		"label": "Laurier",
+		"quantity": "3 feuilles"
+	}, {
+		"label": "Mélange d'herbes citron",
+		"quantity": "3 g"
+	}, {
+		"label": "Fumet de poisson",
+		"quantity": "2 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/36/75/3675a06d7d29a8602d8b33578809b91e.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/merlu-poche-court-bouillon/",
+	"created": "2019-06-19T21:02:57.607Z",
+	"updated": "2019-06-19T21:02:57.607Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 370,
+	"name": "Soupe à l’Oseille & Chorizo Grillé",
+	"duration": 1800,
+	"ingredients": [{
+		"label": "Oseille",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Pommes de terre",
+		"quantity": "200 g"
+	}, {
+		"label": "Oignon",
+		"quantity": "150 g"
+	}, {
+		"label": "Chorizo",
+		"quantity": "120 g"
+	}, {
+		"label": "Crème fraîche",
+		"quantity": "100 ml"
+	}, {
+		"label": "Bouillon de volaille",
+		"quantity": "3 g"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/77/79/77797e0db6bccc13dccad7311ace30ed.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/soupe-oseille-chorizo/",
+	"created": "2019-06-19T21:02:57.208Z",
+	"updated": "2019-06-19T21:02:57.208Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 369,
+	"name": "Conchiglioni Ricotta-Epinard",
+	"duration": 1800,
+	"ingredients": [{
+		"label": "Pâtes - Conchiglie",
+		"quantity": "200 g"
+	}, {
+		"label": "Ricotta",
+		"quantity": "250 g"
+	}, {
+		"label": "Épinards",
+		"quantity": "200 g"
+	}, {
+		"label": "Champignons de Paris",
+		"quantity": "250 g"
+	}, {
+		"label": "Pulpe de tomate",
+		"quantity": "200 g"
+	}, {
+		"label": "Emmental râpé",
+		"quantity": "40 g"
+	}, {
+		"label": "Câpres",
+		"quantity": "20 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/18/df/18df556aff67baa8bd87a09fb8a100ec.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/conchiglioni-ricotta-epinard/",
+	"created": "2019-06-19T21:02:56.788Z",
+	"updated": "2019-06-19T21:02:56.788Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 368,
+	"name": "Pot-Au-Feu Traditionnel",
+	"duration": 0,
+	"ingredients": [{
+		"label": "Bœuf (Assortiment pot au feu Aubrac)",
+		"quantity": "400 g"
+	}, {
+		"label": "Carotte",
+		"quantity": "300 g"
+	}, {
+		"label": "Poireau",
+		"quantity": "400 g"
+	}, {
+		"label": "Céleri branche",
+		"quantity": "100 g"
+	}, {
+		"label": "Oignon",
+		"quantity": "150 g"
+	}, {
+		"label": "Bouillon de volaille",
+		"quantity": "5 g"
+	}, {
+		"label": "Laurier",
+		"quantity": "3 pièces"
+	}, {
+		"label": "Clous de girofle",
+		"quantity": "4 pièces"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/72/72/7272d4387df43b912186366279be1196.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/pot-au-feu/",
+	"created": "2019-06-19T21:02:56.381Z",
+	"updated": "2019-06-19T21:02:56.381Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 367,
+	"name": "Poulet Nikkō à la Sauce Miso",
+	"duration": 1500,
+	"ingredients": [{
+		"label": "Filets de poulet",
+		"quantity": "280 g"
+	}, {
+		"label": "Chou pak choï",
+		"quantity": "300 g"
+	}, {
+		"label": "Riz japonais",
+		"quantity": "150 g"
+	}, {
+		"label": "Sauce Ponzu",
+		"quantity": "40 g"
+	}, {
+		"label": "Pâte miso",
+		"quantity": "20 g"
+	}, {
+		"label": "Beurre demi-sel",
+		"quantity": "25 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/b9/e7/b9e7ffbe5712296286c60d13081e0d66.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/poulet-nikko-sauce-miso/",
+	"created": "2019-06-19T21:02:55.893Z",
+	"updated": "2019-06-19T21:02:55.893Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 366,
+	"name": "Merlu & Patates Douces Twistées",
+	"duration": 2100,
+	"ingredients": [{
+		"label": "Merlu",
+		"quantity": "240 g"
+	}, {
+		"label": "Patate douce",
+		"quantity": "600 g"
+	}, {
+		"label": "Pesto",
+		"quantity": "30 g"
+	}, {
+		"label": "Gingembre frais",
+		"quantity": "20 g"
+	}, {
+		"label": "Amandes effilées",
+		"quantity": "10 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/56/16/5616f5f48162ad98e5b94594f9fa68f6.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/merlu-patates-douces/",
+	"created": "2019-06-19T21:02:55.553Z",
+	"updated": "2019-06-19T21:02:55.553Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 365,
+	"name": "La Complète Œuf Miroir",
+	"duration": 900,
+	"ingredients": [{
+		"label": "Galette au sarrasin",
+		"quantity": "6 pièces"
+	}, {
+		"label": "Jambon blanc",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Emmental râpé",
+		"quantity": "200 g"
+	}, {
+		"label": "Œuf",
+		"quantity": "4 pièces"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Beurre demi-sel",
+		"quantity": "40 g"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/81/25/8125dd2831a53ef35a028c2fede42cc8.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/galettes-completes/",
+	"created": "2019-06-19T21:02:55.158Z",
+	"updated": "2019-06-19T21:02:55.158Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 364,
+	"name": "Poulet Laqué à la Sauce Yakitori",
+	"duration": 2400,
+	"ingredients": [{
+		"label": "Filets de poulet",
+		"quantity": "300 g"
+	}, {
+		"label": "Pommes de terre grenaille",
+		"quantity": "500 g"
+	}, {
+		"label": "Oignon nouveau",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Gingembre frais",
+		"quantity": "20 g"
+	}, {
+		"label": "Sauce yakitori sucrée",
+		"quantity": "60 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "3 traits"
+	}, {
+		"label": "Sel & poivre",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/76/5f/765f44fb595b3b243459c65778898564.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/poulet-laque-sauce-yakitori/",
+	"created": "2019-06-19T21:02:54.740Z",
+	"updated": "2019-06-19T21:02:54.740Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 363,
+	"name": "Risotto Alla Parmigiana",
+	"duration": 1800,
+	"ingredients": [{
+		"label": "Riz",
+		"quantity": "150 g"
+	}, {
+		"label": "Noix",
+		"quantity": "25 g"
+	}, {
+		"label": "Parmesan râpé",
+		"quantity": "60 g"
+	}, {
+		"label": "Cébette",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Vin blanc",
+		"quantity": "100 ml"
+	}, {
+		"label": "Ail",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Bouillon de légumes",
+		"quantity": "10 g"
+	}, {
+		"label": "Beurre demi-sel",
+		"quantity": "25 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/8c/a9/8ca988af8b7f7e4ecafd6047b1f31fd9.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/risotto-de-noix-et-cebette/",
+	"created": "2019-06-19T21:02:54.312Z",
+	"updated": "2019-06-19T21:02:54.312Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 362,
+	"name": "Burger de Cochon Capelin",
+	"duration": 2700,
+	"ingredients": [{
+		"label": "Pain à burger",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Chair à saucisse",
+		"quantity": "250 g"
+	}, {
+		"label": "Paprika",
+		"quantity": "2 g"
+	}, {
+		"label": "Patate douce",
+		"quantity": "600 g"
+	}, {
+		"label": "Coriandre fraîche",
+		"quantity": "4 pièces"
+	}, {
+		"label": "Mayonnaise",
+		"quantity": "50 g"
+	}, {
+		"label": "Cheddar râpé",
+		"quantity": "60 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/0c/a5/0ca56e0678242a2af81025a9363123af.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/594_viande_burger-de-cochon-a-la-coriandre/",
+	"created": "2019-06-19T21:02:53.933Z",
+	"updated": "2019-06-19T21:02:53.933Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 361,
+	"name": "Poêlée façon Couscous à la Feta",
+	"duration": 1800,
+	"ingredients": [{
+		"label": "Semoule",
+		"quantity": "150 g"
+	}, {
+		"label": "Pois chiches",
+		"quantity": "100 g"
+	}, {
+		"label": "Feta",
+		"quantity": "100 g"
+	}, {
+		"label": "Pulpe de tomate",
+		"quantity": "100 ml"
+	}, {
+		"label": "Oignon",
+		"quantity": "150 g"
+	}, {
+		"label": "Pimenton de la vera",
+		"quantity": "2 g"
+	}, {
+		"label": "Câpres",
+		"quantity": "20 g"
+	}, {
+		"label": "Ail",
+		"quantity": "10 g"
+	}, {
+		"label": "Carotte",
+		"quantity": "150 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/c8/8c/c88c87e394b73edbcfe69bec104ae6fb.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/poelee-de-pois-chiches-au-paprika/",
+	"created": "2019-06-19T21:02:53.509Z",
+	"updated": "2019-06-19T21:02:53.509Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 360,
+	"name": "Cotriade Bretonne",
+	"duration": 2100,
+	"ingredients": [{
+		"label": "Lieu noir",
+		"quantity": "240 g"
+	}, {
+		"label": "Pommes de terre grenaille",
+		"quantity": "300 g"
+	}, {
+		"label": "Carotte",
+		"quantity": "300 g"
+	}, {
+		"label": "Oignon",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Thym frais",
+		"quantity": "0,1 botte"
+	}, {
+		"label": "Laurier",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Fumet de poisson",
+		"quantity": "10 g"
+	}, {
+		"label": "Vinaigrette maison",
+		"quantity": "40 g"
+	}, {
+		"label": "Vinaigrette maison",
+		"quantity": "40 g"
+	}, {
+		"label": "Vinaigrette maison",
+		"quantity": "40 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/c6/4d/c64dd477e74618dc6e556d2cf9c3230e.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/cotriade-bretonne/",
+	"created": "2019-06-19T21:02:53.000Z",
+	"updated": "2019-06-19T21:02:53.000Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 359,
+	"name": "Tarte d'Hiver au Parmesan",
+	"duration": 2400,
+	"ingredients": [{
+		"label": "Pâte feuilletée",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Poireau",
+		"quantity": "3 pièces"
+	}, {
+		"label": "Parmesan râpé",
+		"quantity": "100 g"
+	}, {
+		"label": "Crème liquide",
+		"quantity": "100 ml"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/23/0b/230b28d248e61b59d7d922d1f5e8ec19.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/tarte-hiver-poireaux-parmesan/",
+	"created": "2019-06-19T21:02:52.495Z",
+	"updated": "2019-06-19T21:02:52.495Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 358,
+	"name": "Courge à la Mexicaine",
+	"duration": 2100,
+	"ingredients": [{
+		"label": "Butternut",
+		"quantity": "500 g"
+	}, {
+		"label": "Haricots rouges",
+		"quantity": "100 g"
+	}, {
+		"label": "Riz",
+		"quantity": "150 g"
+	}, {
+		"label": "Feta",
+		"quantity": "100 g"
+	}, {
+		"label": "Citron vert",
+		"quantity": "1 pièce"
+	}, {
+		"label": "Épices mexicaines",
+		"quantity": "4 g"
+	}, {
+		"label": "Oignon rouge",
+		"quantity": "100 g"
+	}, {
+		"label": "Concentré de tomate",
+		"quantity": "50 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Sel & poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Eau",
+		"quantity": "250 ml"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/86/c8/86c829ea047e284af1dbc973c53806ff.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/courge-mexicaine/",
+	"created": "2019-06-19T21:02:52.047Z",
+	"updated": "2019-06-19T21:02:52.047Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 357,
+	"name": "Cordon Bleu du Chef",
+	"duration": 1800,
+	"ingredients": [{
+		"label": "Filets de poulet",
+		"quantity": "300 g"
+	}, {
+		"label": "Lard fumé",
+		"quantity": "60 g"
+	}, {
+		"label": "Spaghetti",
+		"quantity": "200 g"
+	}, {
+		"label": "Sauce tomate",
+		"quantity": "100 ml"
+	}, {
+		"label": "Mozzarella",
+		"quantity": "60 g"
+	}, {
+		"label": "Chapelure panko",
+		"quantity": "50 g"
+	}, {
+		"label": "Origan",
+		"quantity": "2 g"
+	}, {
+		"label": "Farine de blé",
+		"quantity": "20 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/34/e9/34e934080a90cbecc2bc487c64f7834c.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/cordon-bleu-spaghetti/",
+	"created": "2019-06-19T21:02:51.655Z",
+	"updated": "2019-06-19T21:02:51.655Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 356,
+	"name": "Pommes de Terre à l'Encalat",
+	"duration": 2400,
+	"ingredients": [{
+		"label": "Chorizo",
+		"quantity": "60 g"
+	}, {
+		"label": "Encalat de brebis",
+		"quantity": "120 g"
+	}, {
+		"label": "Pommes de terre",
+		"quantity": "700 g"
+	}, {
+		"label": "Échalote",
+		"quantity": "60 g"
+	}, {
+		"label": "Crème liquide",
+		"quantity": "200 ml"
+	}, {
+		"label": "Muscade",
+		"quantity": "1 g"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/c0/4f/c04f15c991cde9f123279f882ea36b71.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/gratin-pommes-de-terre-encalat-chorizo/",
+	"created": "2019-06-19T21:02:51.257Z",
+	"updated": "2019-06-19T21:02:51.257Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 355,
+	"name": "Bœuf Bourguignon",
+	"duration": 0,
+	"ingredients": [{
+		"label": "Base côte (Bœuf)",
+		"quantity": "300 g"
+	}, {
+		"label": "Lardons",
+		"quantity": "100 g"
+	}, {
+		"label": "Carotte",
+		"quantity": "200 g"
+	}, {
+		"label": "Oignon",
+		"quantity": "125 g"
+	}, {
+		"label": "Tagliatelle",
+		"quantity": "200 g"
+	}, {
+		"label": "Vin rouge",
+		"quantity": "125 ml"
+	}, {
+		"label": "Ail",
+		"quantity": "10 g"
+	}, {
+		"label": "Laurier",
+		"quantity": "2 pièces"
+	}, {
+		"label": "Poivre mignonette",
+		"quantity": "1 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Farine de blé",
+		"quantity": "1 c.s."
+	}, {
+		"label": "Eau",
+		"quantity": "200 ml"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/54/3d/543d6ea2b29ba48309fed0b176ce7dec.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/boeuf-bouguignon/",
+	"created": "2019-06-19T21:02:50.819Z",
+	"updated": "2019-06-19T21:02:50.819Z",
+	"categories": "",
+	"calories": null
+}, {
+	"id": 354,
+	"name": "Crevettes à la Sauce Yuzu",
+	"duration": 1500,
+	"ingredients": [{
+		"label": "Crevettes roses cuites",
+		"quantity": "240 g"
+	}, {
+		"label": "Algues wakamé",
+		"quantity": "2 g"
+	}, {
+		"label": "Quinoa rouge",
+		"quantity": "120 g"
+	}, {
+		"label": "Carotte",
+		"quantity": "200 g"
+	}, {
+		"label": "Cacahuètes",
+		"quantity": "20 g"
+	}, {
+		"label": "Vinaigrette au yuzu",
+		"quantity": "80 g"
+	}, {
+		"label": "Vinaigrette au yuzu",
+		"quantity": "80 g"
+	}, {
+		"label": "Vinaigrette au yuzu",
+		"quantity": "80 g"
+	}, {
+		"label": "Huile d'olive",
+		"quantity": "1 trait"
+	}, {
+		"label": "Poivre",
+		"quantity": "1 pincée"
+	}, {
+		"label": "Sel",
+		"quantity": "1 pincée"
+	}],
+	"portions": 2,
+	"imageurl": "https://lescommis.com/media/cache/2f/c3/2fc32229d0b3607f4f8f697aeb40d867.jpg",
+	"url": "https://lescommis.com/cookbook/recettes/crevettes-sauce-yuzu/",
+	"created": "2019-06-19T21:02:50.431Z",
+	"updated": "2019-06-19T21:02:50.431Z",
+	"categories": "",
+	"calories": null
+}]

@@ -10,7 +10,7 @@ query(
     duration INTEGER,
     ingredients JSON,
     portions INTEGER,
-    imageUrl TEXT,
+    imageurl TEXT,
     url TEXT NOT NULL UNIQUE,
     created timestamp NOT NULL DEFAULT current_timestamp,
     updated timestamp NOT NULL DEFAULT current_timestamp,

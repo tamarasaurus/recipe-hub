@@ -4,10 +4,11 @@
   "description": "API for recipe-hub",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "./node_modules/.bin/cypress run",
     "start": "./node_modules/.bin/ts-node server.ts",
     "setup": "./node_modules/.bin/ts-node api/setup.ts",
-    "lint-fix": "tslint --fix --project tslint.json"
+    "lint-fix": "tslint --fix --project tslint.json",
+    "load-fixtures": "node fixtures/load-fixtures.js"
   },
   "author": "Tamara Robichet",
   "license": "MIT",
@@ -36,6 +37,9 @@
     "typescript": "^3.4.5"
   },
   "devDependencies": {
+    "cypress": "^3.3.1",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
     "tslint": "^5.16.0",
     "tslint-config-airbnb": "^5.11.1"
   }

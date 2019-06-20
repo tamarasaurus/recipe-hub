@@ -63,14 +63,14 @@ export default class Database {
       ingredients,
       portions,
       url,
-      imageUrl,
+      imageurl,
       categories,
       calories,
     } = data;
 
     return query(
       `
-      INSERT INTO recipe(name, duration, ingredients, portions, url, imageUrl, categories, calories)
+      INSERT INTO recipe(name, duration, ingredients, portions, url, imageurl, categories, calories)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
       ON CONFLICT (url)
       DO
@@ -80,7 +80,7 @@ export default class Database {
               ingredients = COALESCE($3, recipe.ingredients),
               portions = COALESCE($4, recipe.portions),
               url = COALESCE($5, recipe.url),
-              imageUrl = COALESCE($6, recipe.imageUrl),
+              imageurl = COALESCE($6, recipe.imageurl),
               categories = COALESCE($7, recipe.categories),
               calories = COALESCE($8, recipe.calories),
               updated = now()
@@ -92,7 +92,7 @@ export default class Database {
         JSON.stringify(ingredients),
         portions,
         url,
-        imageUrl,
+        imageurl,
         categories ? categories.join(',') : '',
         calories,
       ])
@@ -131,7 +131,7 @@ export default class Database {
           recipe.duration,
           recipe.ingredients,
           recipe.portions,
-          recipe.imageUrl,
+          recipe.imageurl,
           recipe.url,
           recipe.created,
           recipe.updated,
@@ -196,7 +196,7 @@ export default class Database {
       recipe.duration,
       recipe.ingredients,
       recipe.portions,
-      recipe.imageUrl,
+      recipe.imageurl,
       recipe.url,
       recipe.created,
       recipe.updated,

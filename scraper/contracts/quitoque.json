@@ -22,7 +22,7 @@
             "selector": "[data-nbpersons]",
             "attribute": "value"
         },
-        "imageUrl": {
+        "imageurl": {
             "type": "link",
             "selector": ".recipe__img--img",
             "attribute": "src"

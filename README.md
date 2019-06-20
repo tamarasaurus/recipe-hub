@@ -1,6 +1,8 @@
 # recipe-hub
 
-Scrape and store recipes to generate shopping lists
+[![Build Status](https://travis-ci.org/tamarasaurus/recipe-hub.svg?branch=master)](https://travis-ci.org/tamarasaurus/recipe-hub)
+
+Scrapes and store recipes to generate shopping lists
 
 ### Sites
 - [x] HelloFresh

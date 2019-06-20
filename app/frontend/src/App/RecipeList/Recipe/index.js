@@ -135,7 +135,7 @@ const Recipe = ({
             }}
           />
           <Image url={recipe.imageurl} />
-          <Header>
+          <Header data-test="recipe-name">
             {recipe.name}
             <LikeRecipe
               title={recipe.liked ? 'Unlink recipe' : 'Like recipe'}
