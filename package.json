@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "recipe hub",
   "main": "index.js",
+  "engines": {
+    "node": "11.15.0"
+  },
   "scripts": {
     "start": "cd app && npm start",
     "install-frontend": "cd app/frontend && npm install && npm run build",
