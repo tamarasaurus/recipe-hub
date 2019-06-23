@@ -3,7 +3,7 @@
     "scrapeAfterLoading": true,
     "attributes": {
         "link": {
-            "type": "link",
+            "type": "quitoqueLink",
             "selector": ".product__image-container > a",
             "attribute": "href"
         }

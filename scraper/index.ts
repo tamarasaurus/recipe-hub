@@ -14,6 +14,9 @@ import * as hellofreshRecipe from './contracts/hellofresh.json';
 import * as quitoqueIndex from './contracts/quitoque-index.json';
 import * as quitoqueRecipe from './contracts/quitoque.json';
 
+// Attributes
+import quitoqueLink from './attributes/quitoque-link';
+
 // JSON parsers
 import parseBonAppetit from './parsers/bon-appetit';
 
@@ -62,8 +65,9 @@ const json = [
   },
 ];
 
+// Move to a file
 async function collectLinks(url: string, contract: any): Promise<string[]> {
-  const scraper = new Scraper(url, contract);
+  const scraper = new Scraper(url, contract, { quitoqueLink });
   const links = await scraper.scrapePage();
   const cleanedLinks = links.map(link => link.link).filter(link => link !== null);
   return Array.from(new Set(cleanedLinks));
@@ -79,7 +83,6 @@ async function scrapeHTML() {
     } catch (e) {
       console.log('Error scraping', options.index, e.message);
     }
-
   }
 }
 
