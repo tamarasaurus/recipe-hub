@@ -119,7 +119,7 @@ app.post('/api/recipes', (req, res) => {
 });
 
 app.get('/api/recipes', rateLimiter, (req, res) => {
-  const { ids, keywords, offset, source } = req.query;
+  const { ids, keywords, offset, source, sort } = req.query;
 
   if (req.isAuthenticated()) {
     db.searchRecipesWithUserPreference({
@@ -127,6 +127,7 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
       keywords,
       offset,
       source,
+      sort,
     }, req.user.id)
       .then((data => res.json(data)))
       .catch((e: Error) => {
@@ -140,6 +141,7 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
       keywords,
       offset,
       source,
+      sort,
     })
       .then((data => res.json(data)))
       .catch((e: Error) => {

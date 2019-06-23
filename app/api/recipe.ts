@@ -5,6 +5,7 @@ interface SearchQuery {
   ids?: string[];
   offset?: number;
   source?: string;
+  sort?: string;
 }
 
 interface RecipeUserPreference {
@@ -107,7 +108,7 @@ export default class Database {
   }
 
   async searchRecipesWithUserPreference(searchQuery: SearchQuery, authId: string) {
-    const { ids, keywords, offset, source } = searchQuery;
+    const { ids, keywords, offset, source, sort } = searchQuery;
 
     let filters = '';
     if (ids !== undefined) {
@@ -127,6 +128,13 @@ export default class Database {
       ) @@ phraseto_tsquery('english', '%${keywords}%')
         OR name LIKE '${keywords}'
       `;
+    }
+
+    const sortByDate = 'ORDER BY created DESC';
+    let sortQuery = sortByDate;
+
+    if (sort === 'complexity') {
+      sortQuery = 'ORDER BY complexity DESC';
     }
 
     const userId = await this.getUserId(authId);
@@ -145,6 +153,7 @@ export default class Database {
           recipe.updated,
           recipe.categories,
           recipe.source,
+          json_array_length(recipe.ingredients) as complexity,
           COALESCE(auth_user_recipe.liked, false) as liked,
           COALESCE(auth_user_recipe.excluded, false) as excluded,
           COALESCE(auth_user_recipe.saved, false) as saved
@@ -154,7 +163,7 @@ export default class Database {
       WHERE recipes.excluded = FALSE
       ${filters}
       ${searchFilters}
-      ORDER BY created DESC
+      ${sortQuery}
       LIMIT 24
       OFFSET $1
     `, [
@@ -164,7 +173,7 @@ export default class Database {
   }
 
   async searchRecipes(searchQuery: SearchQuery) {
-    const { ids, keywords, offset, source } = searchQuery;
+    const { ids, keywords, offset, source, sort } = searchQuery;
 
     let filters = '';
     if (ids !== undefined) {
@@ -173,6 +182,13 @@ export default class Database {
 
     if (source !== undefined && source.trim().length > 0) {
       filters += `AND source LIKE '${source}'`;
+    }
+
+    const sortByDate = 'ORDER BY created DESC';
+    let sortQuery = sortByDate;
+
+    if (sort === 'complexity') {
+      sortQuery = 'ORDER BY complexity DESC';
     }
 
     let searchFilters = '';
@@ -187,12 +203,13 @@ export default class Database {
     }
 
     return query(`
-      SELECT *
+      SELECT *,
+      json_array_length(recipe.ingredients) as complexity
       FROM recipe
       WHERE recipe.name IS NOT NULL
       ${filters}
       ${searchFilters}
-      ORDER BY created DESC
+      ${sortQuery}
       LIMIT 24
       OFFSET $1
     `, [
@@ -215,6 +232,7 @@ export default class Database {
       recipe.updated,
       recipe.categories,
       recipe.source,
+      json_array_length(recipe.ingredients) as complexity,
       COALESCE(auth_user_recipe.liked, false) as liked,
       COALESCE(auth_user_recipe.excluded, false) as excluded,
       COALESCE(auth_user_recipe.saved, false) as saved
