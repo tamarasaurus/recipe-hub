@@ -4,6 +4,7 @@ interface SearchQuery {
   keywords?: string;
   ids?: string[];
   offset?: number;
+  source?: string;
 }
 
 interface RecipeUserPreference {
@@ -66,12 +67,13 @@ export default class Database {
       imageurl,
       categories,
       calories,
+      source,
     } = data;
 
     return query(
       `
-      INSERT INTO recipe(name, duration, ingredients, portions, url, imageurl, categories, calories)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      INSERT INTO recipe(name, duration, ingredients, portions, url, imageurl, categories, calories, source)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
       ON CONFLICT (url)
       DO
         UPDATE
@@ -83,6 +85,7 @@ export default class Database {
               imageurl = COALESCE($6, recipe.imageurl),
               categories = COALESCE($7, recipe.categories),
               calories = COALESCE($8, recipe.calories),
+              source = COALESCE($9, recipe.source),
               updated = now()
       RETURNING *
     `,
@@ -95,6 +98,7 @@ export default class Database {
         imageurl,
         categories ? categories.join(',') : '',
         calories,
+        source,
       ])
       .then(storedResult => storedResult.rows)
       .catch((error: Error) => {
@@ -103,11 +107,15 @@ export default class Database {
   }
 
   async searchRecipesWithUserPreference(searchQuery: SearchQuery, authId: string) {
-    const { ids, keywords, offset } = searchQuery;
+    const { ids, keywords, offset, source } = searchQuery;
 
     let filters = '';
     if (ids !== undefined) {
       filters = `AND id IN (${ids})`;
+    }
+
+    if (source !== undefined && source.trim().length > 0) {
+      filters += `AND source LIKE '${source}'`;
     }
 
     let searchFilters = '';
@@ -136,6 +144,7 @@ export default class Database {
           recipe.created,
           recipe.updated,
           recipe.categories,
+          recipe.source,
           COALESCE(auth_user_recipe.liked, false) as liked,
           COALESCE(auth_user_recipe.excluded, false) as excluded,
           COALESCE(auth_user_recipe.saved, false) as saved
@@ -155,11 +164,15 @@ export default class Database {
   }
 
   async searchRecipes(searchQuery: SearchQuery) {
-    const { ids, keywords, offset } = searchQuery;
+    const { ids, keywords, offset, source } = searchQuery;
 
     let filters = '';
     if (ids !== undefined) {
       filters = `AND id IN (${ids})`;
+    }
+
+    if (source !== undefined && source.trim().length > 0) {
+      filters += `AND source LIKE '${source}'`;
     }
 
     let searchFilters = '';
@@ -201,6 +214,7 @@ export default class Database {
       recipe.created,
       recipe.updated,
       recipe.categories,
+      recipe.source,
       COALESCE(auth_user_recipe.liked, false) as liked,
       COALESCE(auth_user_recipe.excluded, false) as excluded,
       COALESCE(auth_user_recipe.saved, false) as saved

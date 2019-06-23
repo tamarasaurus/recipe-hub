@@ -28,5 +28,6 @@ export default function (data: any) {
     categories: data.cneTags,
     calories: calories === null ? null : parseInt(calories[1], 10),
     url: `https://bonappetit.com${data.url}`,
+    source: 'Bon Appetit',
   };
 }
