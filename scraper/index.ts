@@ -61,7 +61,7 @@ const json = [
   {
     parser: parseBonAppetit,
     itemProperty: 'items',
-    url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=500',
+    url: 'https://www.bonappetit.com/api/search?size=500&meal=dinner&tag=weeknight&sort=newest&content=recipe',
   },
 ];
 
@@ -100,5 +100,5 @@ async function scrapeJSON() {
   parsedResults.forEach((recipe: any) => storageQueue.add(recipe));
 }
 
-scrapeHTML();
+// scrapeHTML();
 scrapeJSON();
