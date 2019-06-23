@@ -1,4 +1,5 @@
 import * as path from 'jsonpath';
+const ms = require('ms');
 
 export default function (data: any) {
   const calories = /\(kcal\)\s(\d+)/gm.exec(data.nutritionalInfo);
@@ -7,9 +8,15 @@ export default function (data: any) {
   const photoId = path.value(data, '$.photos.tout.0.id');
   const photoTitle = path.value(data, '$.photos.tout.0.title');
 
+  let durationInSeconds = 0;
+
+  if (duration !== undefined) {
+    durationInSeconds = ms(duration) / 1000;
+  }
+
   return {
     name: data.hed,
-    duration: duration ? parseInt(duration.replace(/\D+/gm, '').trim(), 10) * 3600 : 0,
+    duration: durationInSeconds,
     ingredients: data.ingredientGroups[0].ingredients.map((ingredient: any): any => {
       return {
         label: ingredient.name,
@@ -21,5 +28,6 @@ export default function (data: any) {
     categories: data.cneTags,
     calories: calories === null ? null : parseInt(calories[1], 10),
     url: `https://bonappetit.com${data.url}`,
+    source: 'Bon Appetit',
   };
 }

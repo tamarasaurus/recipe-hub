@@ -14,6 +14,9 @@ import * as hellofreshRecipe from './contracts/hellofresh.json';
 import * as quitoqueIndex from './contracts/quitoque-index.json';
 import * as quitoqueRecipe from './contracts/quitoque.json';
 
+// Attributes
+import quitoqueLink from './attributes/quitoque-link';
+
 // JSON parsers
 import parseBonAppetit from './parsers/bon-appetit';
 
@@ -41,16 +44,19 @@ const html = [
     index: 'https://www.quitoque.fr/au-menu/2_personnes',
     indexContract: quitoqueIndex,
     recipeContract: quitoqueRecipe,
+    sourceName: 'Quitoque',
   },
   {
     index: 'https://lescommis.com/cookbook/recettes/',
     indexContract: lesCommisIndex,
     recipeContract: lesCommisRecipe,
+    sourceName: 'Les Commis',
   },
   {
     index: 'https://www.hellofresh.fr/recipes/search/?order=-date',
     indexContract: hellofreshIndex,
     recipeContract: hellofreshRecipe,
+    sourceName: 'Hello Fresh',
   },
 ];
 
@@ -59,11 +65,13 @@ const json = [
     parser: parseBonAppetit,
     itemProperty: 'items',
     url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=500',
+    sourceName: 'Bon Appetit',
   },
 ];
 
+// Move to a file
 async function collectLinks(url: string, contract: any): Promise<string[]> {
-  const scraper = new Scraper(url, contract);
+  const scraper = new Scraper(url, contract, { quitoqueLink });
   const links = await scraper.scrapePage();
   const cleanedLinks = links.map(link => link.link).filter(link => link !== null);
   return Array.from(new Set(cleanedLinks));
@@ -71,15 +79,21 @@ async function collectLinks(url: string, contract: any): Promise<string[]> {
 
 async function scrapeHTML() {
   for (const options of html) {
+    const { index, indexContract, recipeContract, sourceName } = options;
+
     try {
-      const links = await collectLinks(options.index, options.indexContract);
+      const links = await collectLinks(index, indexContract);
       links.forEach((url: string) => {
-        scrapingQueue.add({ url, contract: options.recipeContract, name: url });
+        scrapingQueue.add({
+          url,
+          contract: recipeContract,
+          name: url,
+          sourceName,
+        });
       });
     } catch (e) {
-      console.log('Error scraping', options.index, e.message);
+      console.log('Error scraping', index, e.message);
     }
-
   }
 }
 

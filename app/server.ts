@@ -119,22 +119,32 @@ app.post('/api/recipes', (req, res) => {
 });
 
 app.get('/api/recipes', rateLimiter, (req, res) => {
-  const { ids, keywords, offset } = req.query;
+  const { ids, keywords, offset, source, sort } = req.query;
 
   if (req.isAuthenticated()) {
-    db.searchRecipesWithUserPreference({ ids, keywords, offset }, req.user.id)
+    db.searchRecipesWithUserPreference({
+      ids,
+      keywords,
+      offset,
+      source,
+      sort,
+    }, req.user.id)
       .then((data => res.json(data)))
       .catch((e: Error) => {
-        console.log(e);
         res.status(500).json({
           message: 'Error fetching recipes',
         });
       });
   } else {
-    db.searchRecipes({ ids, keywords, offset })
+    db.searchRecipes({
+      ids,
+      keywords,
+      offset,
+      source,
+      sort,
+    })
       .then((data => res.json(data)))
       .catch((e: Error) => {
-        console.log('the error', e);
         res.status(500).json({
           message: 'Error fetching recipes',
         });

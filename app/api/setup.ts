@@ -15,7 +15,8 @@ query(
     created timestamp NOT NULL DEFAULT current_timestamp,
     updated timestamp NOT NULL DEFAULT current_timestamp,
     categories TEXT,
-    calories INTEGER
+    calories INTEGER,
+    source TEXT NOT NULL
   );
 
   CREATE TABLE IF NOT EXISTS
