@@ -25,12 +25,11 @@ before_script:
   - psql -c "ALTER USER postgres PASSWORD 'postgres';"
 
 install:
-- cd scraper && npm install && cd ../
-- cd app && npm install
-- cd frontend && npm install && npm run build && cd ../../
-- cd app && npm run setup && npm start &
+- npm install
+- cd frontend && npm install && npm run build && cd ../
+- npm run setup && npm start &
 
 script:
-  - cd app && sleep 10 && npm run load-fixtures && cd ../
-  - cd app/frontend && npm test && cd ../../
-  - cd app && npm test
+  - sleep 10 && npm run load-fixtures && cd ../
+  - cd frontend && npm test && cd ../
+  - npm test
