@@ -18,4 +18,8 @@ RUN apt-get update \
             /usr/share/doc/* /usr/share/groff/* /usr/share/info/* /usr/share/linda/* \
             /usr/share/lintian/* /usr/share/locale/* /usr/share/man/*
 
-COPY ./scraper .
+WORKDIR /usr/src/app
+
+EXPOSE 8000
+
+COPY . .

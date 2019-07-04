@@ -10,7 +10,7 @@ services:
   app:
     restart: always
     build:
-      context: app
+      context: .
     environment:
       REACT_APP_API_URL: ${API_URL}
       POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
@@ -25,7 +25,6 @@ services:
     image: scraper
     build:
       context: .
-      dockerfile: scraper/Dockerfile
     environment:
       REDIS_URL: 'redis://cache:6379'
       POSTGRES_HOST: 'postgres'
