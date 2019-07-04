@@ -43,7 +43,6 @@
     "express-session": "^1.16.1",
     "helmet": "^3.18.0",
     "passport": "^0.4.0",
-    "passport-google-auth": "^1.0.2",
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.11.0",
     "rate-limiter-flexible": "^1.0.2",
