@@ -61,11 +61,12 @@
     "request-promise": "^4.2.4"
   },
   "devDependencies": {
+    "bull-arena": "^2.6.3",
     "cypress": "^3.3.1",
+    "husky": "^3.0.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "tslint-config-airbnb": "^5.11.1",
-    "bull-arena": "^2.6.3",
-    "tslint": "^5.16.0"
+    "tslint": "^5.16.0",
+    "tslint-config-airbnb": "^5.11.1"
   }
 }
