@@ -7,15 +7,13 @@
     "node": "11.15.0"
   },
   "scripts": {
-    "install-frontend": "cd app/frontend && npm install",
-    "build-frontend": "cd app/frontend && npm run build",
-    "install-api": "cd app/api && npm install && npm run setup",
-    "install-scraper": "cd scraper && npm install",
-    "postinstall": "npm run install-frontend && npm run install-api && npm run install-scraper && npm run build-frontend",
-    "scrape": "cd scraper && npm start",
-    "test": "./node_modules/.bin/cypress run",
-    "start": "./node_modules/.bin/ts-node server.ts",
-    "setup": "./node_modules/.bin/ts-node api/setup.ts",
+    "install-frontend": "cd frontend && npm install",
+    "build-frontend": "cd frontend && npm run build",
+    "postinstall": "npm run install-frontend && npm run build-frontend",
+    "scrape": "cd scraper && ts-node index.ts",
+    "test": "cypress run",
+    "start": "ts-node server.ts",
+    "setup": "ts-node api/setup.ts",
     "lint-fix": "tslint --fix --project tslint.json",
     "load-fixtures": "node fixtures/load-fixtures.js"
   },

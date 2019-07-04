@@ -15,13 +15,7 @@ services:
     command: 'npm start'
     ports:
       - 8000:8000
-    volumes:
-      - ./app:/usr/src/app
 
   redis:
     ports:
       - 6379:6379
-
-  scraper:
-    volumes:
-      - ./scraper:/usr/src/app
