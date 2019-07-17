@@ -1,4 +1,4 @@
-import Database from './api/recipe';
+import Database from './api/repository';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -120,36 +120,22 @@ app.post('/api/recipes', (req, res) => {
 
 app.get('/api/recipes', rateLimiter, (req, res) => {
   const { ids, keywords, offset, source, sort } = req.query;
+  const user = req.user || {};
 
-  if (req.isAuthenticated()) {
-    db.searchRecipesWithUserPreference({
-      ids,
-      keywords,
-      offset,
-      source,
-      sort,
-    }, req.user.id)
-      .then((data => res.json(data)))
-      .catch((e: Error) => {
-        res.status(500).json({
-          message: 'Error fetching recipes',
-        });
+  db.searchRecipes({
+    ids,
+    keywords,
+    offset,
+    source,
+    sort,
+  }, user.id)
+    .then((data => res.json(data)))
+    .catch((e: Error) => {
+      console.log(e);
+      res.status(500).json({
+        message: 'Error fetching recipes',
       });
-  } else {
-    db.searchRecipes({
-      ids,
-      keywords,
-      offset,
-      source,
-      sort,
-    })
-      .then((data => res.json(data)))
-      .catch((e: Error) => {
-        res.status(500).json({
-          message: 'Error fetching recipes',
-        });
-      });
-  }
+    });
 });
 
 app.post('/api/recipes/:id/like', rateLimiter, isUserLoggedIn, (req, res) => {

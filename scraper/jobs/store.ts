@@ -2,6 +2,7 @@ import * as request from 'request-promise';
 
 export default function store(job: any, done: any) {
   const recipe = job.data;
+  console.log('store', job.data);
 
   request({
     method: 'post',
@@ -12,5 +13,8 @@ export default function store(job: any, done: any) {
       'Content-Type': 'application/json; charset=utf-8',
     },
   }).then((savedRecipe: any) => done(null, savedRecipe))
-    .catch((error: Error) => done(error));
+    .catch((error: Error) => {
+      console.log('error', error)
+      done(error)
+    });
 }
