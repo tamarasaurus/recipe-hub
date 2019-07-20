@@ -5,6 +5,7 @@ import csv from '../attributes/csv';
 import duration from '../attributes/duration';
 import quantity from '../attributes/quantity';
 import label from '../attributes/label';
+import unit from '../attributes/unit';
 
 export default function scrape(job: any, done: any) {
   const { url, contract, sourceName } = job.data;
@@ -14,6 +15,7 @@ export default function scrape(job: any, done: any) {
     duration,
     quantity,
     label,
+    unit,
   });
 
   scraper.scrapePage().then((items: any[]) => {
@@ -25,5 +27,7 @@ export default function scrape(job: any, done: any) {
     });
 
     done(null, mappedItems);
-  }).catch((e: Error) => done(e, []));
+  }).catch((e: Error) => {
+    done(e, []);
+  });
 }

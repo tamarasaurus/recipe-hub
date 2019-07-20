@@ -4,5 +4,5 @@ export default function (quantityString: string) {
     return;
   }
 
-  this.value = quantityString.replace(/\(|\)/gm, '');
+  this.value = parseFloat(quantityString.replace(/\(|\)/gm, '').match(/\d+/gm)[0]);
 }

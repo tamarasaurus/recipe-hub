@@ -1,5 +1,6 @@
+
 {
-    "itemSelector": "[data-test-id=\"search-result\"] + div div div div",
+    "itemSelector": "[data-test-id=\"search-result\"] + div div div div:nth-child(2) div",
     "scrapeAfterLoading": true,
     "attributes": {
         "link": {

@@ -3,7 +3,7 @@ import query from './query';
 
 query(
   `
-  CREATE EXTENSION "unaccent";
+  CREATE EXTENSION IF NOT EXISTS "unaccent";
 
   CREATE TABLE IF NOT EXISTS
   recipe (

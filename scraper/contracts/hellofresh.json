@@ -14,7 +14,8 @@
             "itemSelector": "[data-test-id=\"recipeDetailFragment.ingredients\"] > div:nth-child(4) > div > div",
             "attributes": {
                 "label": { "type": "text", "selector": "div p:nth-child(2)" },
-                "quantity": { "type": "text", "selector": "div p:nth-child(1)" }
+                "quantity": { "type": "quantity", "selector": "div p:nth-child(1)" },
+                "unit": { "type": "unit", "selector": "div p:nth-child(1)"}
             }
         },
         "portions": {

@@ -72,9 +72,14 @@ const json = [
 // Move to a file
 async function collectLinks(url: string, contract: any): Promise<string[]> {
   const scraper = new Scraper(url, contract, { quitoqueLink });
-  const links = await scraper.scrapePage();
-  const cleanedLinks = links.map(link => link.link).filter(link => link !== null);
-  return Array.from(new Set(cleanedLinks));
+  try {
+    const links = await scraper.scrapePage();
+    const cleanedLinks = links.map(link => link.link).filter(link => link !== null);
+    return Array.from(new Set(cleanedLinks));
+  } catch (e) {
+    console.log(e);
+    return [];
+  }
 }
 
 async function scrapeHTML() {
@@ -83,12 +88,13 @@ async function scrapeHTML() {
 
     try {
       const links = await collectLinks(index, indexContract);
+
       links.forEach((url: string) => {
         scrapingQueue.add({
+          sourceName,
           url,
           contract: recipeContract,
           name: url,
-          sourceName,
         });
       });
     } catch (e) {
