@@ -1,4 +1,4 @@
-FROM node:10-slim
+FROM node:11-slim
 WORKDIR /usr/src/app
 
 RUN apt-get update \
