@@ -6,24 +6,17 @@ interface SearchQuery {
   offset?: number;
   source?: string;
   sort?: string;
+  order?: string;
 }
 
 const allowedSortTypes = {
-  difficulty: 'complexity',
+  complexity: 'r.complexity',
 };
 
 export default async function searchRecipes(searchQuery: SearchQuery) {
-  const { ids, keywords, offset, source, sort } = searchQuery;
+  const { ids, keywords, offset, source, sort, order } = searchQuery;
   const sortType = allowedSortTypes[sort] || 'created';
-
-  let filters = '';
-  if (ids !== undefined) {
-    filters = `AND id IN (${ids})`;
-  }
-
-  if (source !== undefined && source.trim().length > 0) {
-    filters += `AND source LIKE '${source}'`;
-  }
+  const sortOrder = order || 'desc';
 
   let searchFilters = '';
   if (keywords !== undefined && keywords.trim().length > 0) {
@@ -57,15 +50,16 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
       )), '|') AS labels
       FROM recipe
     ) AS r
-    WHERE r.name IS NOT NULL
-    ${filters}
+    WHERE name IS NOT NULL
+    AND source LIKE $1
+    ${ids ? `AND r.id IN (${ids})` : ''}
     ${searchFilters}
-    ORDER BY $1 DESC
+    ORDER BY ${sortType} ${sortOrder}
     LIMIT 24
     OFFSET $2
   `, [
-    sortType,
-    (offset || 0),
+    `%${source || ''}%`,
+    offset || 0,
   ]);
 
   return rows;
