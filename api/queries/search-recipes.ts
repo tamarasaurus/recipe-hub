@@ -10,7 +10,7 @@ interface SearchQuery {
 
 const allowedSortTypes = {
   difficulty: 'complexity',
-}
+};
 
 export default async function searchRecipes(searchQuery: SearchQuery) {
   const { ids, keywords, offset, source, sort } = searchQuery;
@@ -28,8 +28,8 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
   let searchFilters = '';
   if (keywords !== undefined && keywords.trim().length > 0) {
     searchFilters = `
-      AND unaccent(lower(r.name)) ILIKE unaccent(lower('%${keywords.trim()}%'))
-      OR unaccent(lower(r.labels)) ILIKE unaccent(lower('%${keywords.trim()}%'))
+      AND unaccent(lower(r.name)) LIKE unaccent(lower('%${keywords.trim()}%'))
+      OR unaccent(lower(r.labels)) LIKE unaccent(lower('%${keywords.trim()}%'))
     `;
   }
 
