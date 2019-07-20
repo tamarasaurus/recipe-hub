@@ -9,7 +9,7 @@ interface SearchQuery {
 }
 
 const allowedSortTypes = {
-  difficulty: 'complexity'
+  difficulty: 'complexity',
 }
 
 export default async function searchRecipes(searchQuery: SearchQuery) {
@@ -27,20 +27,37 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
 
   let searchFilters = '';
   if (keywords !== undefined && keywords.trim().length > 0) {
-    searchFilters = `AND (
-      to_tsvector('english', COALESCE(name, ''))      ||
-      to_tsvector('english', ingredients::json)       ||
-      to_tsvector('english', COALESCE(categories, ''))
-    ) @@ phraseto_tsquery('english', '%${keywords}%')
-      OR name LIKE '${keywords}'
+    searchFilters = `
+      AND unaccent(lower(r.name)) ILIKE unaccent(lower('%${keywords.trim()}%'))
+      OR unaccent(lower(r.labels)) ILIKE unaccent(lower('%${keywords.trim()}%'))
     `;
   }
 
   const { rows } = await query(`
-    SELECT *,
-    json_array_length(recipe.ingredients) as complexity
-    FROM recipe
-    WHERE recipe.name IS NOT NULL
+    SELECT
+      r.id,
+      r.name,
+      r.duration,
+      r.ingredients,
+      r.portions,
+      r.imageurl,
+      r.url,
+      r.created,
+      r.updated,
+      r.categories,
+      r.source,
+      r.complexity
+    FROM (
+      SELECT *,
+      json_array_length(recipe.ingredients) as complexity,
+      array_to_string(array((
+        SELECT json_agg(list->'label')
+        FROM json_array_elements(recipe.ingredients)
+        AS list
+      )), '|') AS labels
+      FROM recipe
+    ) AS r
+    WHERE r.name IS NOT NULL
     ${filters}
     ${searchFilters}
     ORDER BY $1 DESC

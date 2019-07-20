@@ -3,6 +3,8 @@ import query from './query';
 
 query(
   `
+  CREATE EXTENSION "unaccent";
+
   CREATE TABLE IF NOT EXISTS
   recipe (
     id SERIAL UNIQUE PRIMARY KEY NOT NULL,
