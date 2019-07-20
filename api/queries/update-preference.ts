@@ -11,18 +11,25 @@ export default async function (
   try {
     const { rows } = await query(`
       INSERT INTO auth_user_recipe (user_id, recipe_id, liked, excluded, saved)
-      VALUES ($1, $2, $3, $4, $5) ON CONFLICT(user_id, recipe_id)
+      VALUES (
+        $1,
+        $2,
+        COALESCE($3, false),
+        COALESCE($4, false),
+        COALESCE($5, false)
+      ) ON CONFLICT(user_id, recipe_id)
       DO UPDATE SET
-        liked = COALESCE($3, auth_user_recipe.liked),
-        excluded = COALESCE($4, auth_user_recipe.excluded),
-        saved = COALESCE($5, auth_user_recipe.saved)
+        liked = COALESCE($3, auth_user_recipe.liked, false),
+        excluded = COALESCE($4, auth_user_recipe.excluded, false),
+        saved = COALESCE($5, auth_user_recipe.saved, false)
+      RETURNING *
     `,
-      [userId, recipeId, liked, excluded, saved]);
+    [userId, recipeId, liked, excluded, saved]);
 
     return rows;
 
   } catch (e) {
-    throw new Error('Error saving preference');
+    console.log('Query error', e);
   }
 
 }

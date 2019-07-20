@@ -29,9 +29,9 @@ query(
   auth_user_recipe (
     recipe_id INTEGER UNIQUE references recipe(id),
     user_id INTEGER references auth_user(id),
-    liked BOOLEAN DEFAULT FALSE,
-    excluded BOOLEAN DEFAULT FALSE,
-    saved BOOLEAN DEFAULT FALSE,
+    liked BOOLEAN DEFAULT FALSE NOT NULL,
+    excluded BOOLEAN DEFAULT FALSE NOT NULL,
+    saved BOOLEAN DEFAULT FALSE NOT NULL,
     primary key(recipe_id, user_id)
   );
   `, [])

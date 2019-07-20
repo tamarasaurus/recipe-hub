@@ -8,8 +8,13 @@ interface SearchQuery {
   sort?: string;
 }
 
+const allowedSortTypes = {
+  difficulty: 'complexity'
+}
+
 export default async function searchRecipes(searchQuery: SearchQuery) {
   const { ids, keywords, offset, source, sort } = searchQuery;
+  const sortType = allowedSortTypes[sort] || 'created';
 
   let filters = '';
   if (ids !== undefined) {
@@ -18,13 +23,6 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
 
   if (source !== undefined && source.trim().length > 0) {
     filters += `AND source LIKE '${source}'`;
-  }
-
-  const sortByDate = 'ORDER BY created DESC';
-  let sortQuery = sortByDate;
-
-  if (sort === 'complexity') {
-    sortQuery = 'ORDER BY complexity DESC';
   }
 
   let searchFilters = '';
@@ -45,10 +43,11 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
     WHERE recipe.name IS NOT NULL
     ${filters}
     ${searchFilters}
-    ${sortQuery}
+    ORDER BY $1 DESC
     LIMIT 24
-    OFFSET $1
+    OFFSET $2
   `, [
+    sortType,
     (offset || 0),
   ]);
 
