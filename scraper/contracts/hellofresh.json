@@ -4,7 +4,7 @@
     "attributes": {
         "name": {
             "type": "text",
-            "selector": "[data-test-id=\"recipeDetailFragment.recipe-name\"]"
+            "selector": "h1"
         },
         "duration": {
             "type": "duration",
