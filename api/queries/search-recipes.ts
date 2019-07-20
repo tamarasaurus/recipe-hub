@@ -23,6 +23,7 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
     searchFilters = `
       AND unaccent(lower(r.name)) LIKE unaccent(lower('%${keywords.trim()}%'))
       OR unaccent(lower(r.labels)) LIKE unaccent(lower('%${keywords.trim()}%'))
+      OR unaccent(lower(r.categories)) LIKE unaccent(lower('%${keywords.trim()}%'))
     `;
   }
 
