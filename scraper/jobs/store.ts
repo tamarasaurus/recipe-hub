@@ -2,7 +2,6 @@ import * as request from 'request-promise';
 
 export default function store(job: any, done: any) {
   const recipe = job.data;
-  console.log('store', job.data);
 
   request({
     method: 'post',
