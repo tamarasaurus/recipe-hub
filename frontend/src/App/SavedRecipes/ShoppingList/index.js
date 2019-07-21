@@ -16,7 +16,7 @@ const copyToClipboard = (str) => {
 
 const formatIngredient = (ingredient) => {
   return ingredient.quantity
-    ? `${ingredient.label}: ${ingredient.quantity}`
+    ? `${ingredient.label}: ${ingredient.quantity} ${ingredient.unit || ''}`
     : ingredient.label
 }
 
@@ -135,7 +135,11 @@ const ShoppingList = ({ recipes, onClose }) => {
           {recipe.ingredients.map((ingredient, i) => (
             <Ingredient key={i}>
               <span>{ingredient.label}</span>
-              {ingredient.quantity && <span>{ingredient.quantity}</span>}
+              {ingredient.quantity && (
+                <span>
+                  {ingredient.quantity} {ingredient.unit}
+                </span>
+              )}
             </Ingredient>
           ))}
         </Recipe>
