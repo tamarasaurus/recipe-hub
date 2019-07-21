@@ -14,7 +14,8 @@
             "itemSelector": ".recipe-ingredients tbody tr:not(tr:first-child)",
             "attributes": {
                 "label": { "type": "text", "selector": "[itemprop=\"recipeIngredient\"]" },
-                "quantity": { "type": "text", "selector": ".td_quantity_for_2" }
+                "quantity": { "type": "quantity", "selector": ".td_quantity_for_2" },
+                "unit": { "type": "unit", "selector": ".td_quantity_for_2"}
             }
         },
         "portions": {

@@ -14,7 +14,8 @@
             "itemSelector": ".recipe__articles .article, .recipe__kitchen .article",
             "attributes": {
                 "label": { "type": "label", "selector": ".article__label" },
-                "quantity": { "type": "quantity", "selector": ".article__quantity" }
+                "quantity": { "type": "quantity", "selector": ".article__quantity" },
+                "unit": { "type": "unit", "selector": ".article__quantity"}
             }
         },
         "portions": {

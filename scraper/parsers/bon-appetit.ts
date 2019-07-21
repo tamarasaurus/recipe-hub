@@ -20,7 +20,8 @@ export default function (data: any) {
     ingredients: data.ingredientGroups[0].ingredients.map((ingredient: any): any => {
       return {
         label: ingredient.name,
-        quantity: null,
+        quantity: ingredient.unitQuantity,
+        unit: ingredient.unit,
       };
     }),
     portions: parseInt(`${portions}`, 10),
