@@ -8,20 +8,23 @@ const createFakeRecipes = () => {
         for(let x = 0; x < 10; x++ ) {
             ingredients.push({
                 label: faker.commerce.productName(),
-                quantity: 2
+                quantity: 2,
+                unit: 'grams'
             })
         }
         recipes.push({
             id: faker.random.uuid(),
             name: faker.commerce.productName(),
-            duration: faker.random.number(),
+            duration: faker.random.number({min: 2000, max: 8000}),
             ingredients: ingredients,
             portions: 2,
             imageurl: 'https://picsum.photos/500/320/?image='+faker.random.number(1084),
             url: faker.internet.url(),
             created: faker.date.past(),
             updated: faker.date.past(),
-            categories: 'chicken, pork, vegetables'
+            categories: 'chicken, pork, vegetables',
+            complexity: faker.random.number({min:5, max:10}),
+            source: 'Hello Fresh'
         })
     }
 
