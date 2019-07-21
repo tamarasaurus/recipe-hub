@@ -118,6 +118,19 @@ app.post('/api/recipes', (req, res) => {
   db.insertOrUpdateRecipe(req.body).then(data => res.json(data));
 });
 
+app.get('/api/recipes/generate', rateLimiter, (req, res) => {
+  const user = req.user || {};
+
+  db.generateRecipes(user.id)
+    .then((data => res.json(data)))
+    .catch((e: Error) => {
+      console.log(e);
+      res.status(500).json({
+        message: 'Error generating recipes',
+      });
+    });
+});
+
 app.get('/api/recipes', rateLimiter, (req, res) => {
   const { ids, keywords, offset, source, sort, order } = req.query;
   const user = req.user || {};
@@ -138,6 +151,7 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
       });
     });
 });
+
 
 app.post('/api/recipes/:id/like', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { liked: true }, res);

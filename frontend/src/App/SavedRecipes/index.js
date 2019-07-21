@@ -6,8 +6,6 @@ import Button from 'components/Button'
 import SavedRecipe from './SavedRecipe'
 import ShoppingList from './ShoppingList'
 
-import { GENERATE_RECIPES_COUNT } from 'utils/api'
-
 const Container = styled.section`
   position: fixed;
   bottom: 0;
@@ -136,7 +134,7 @@ const SavedRecipes = ({
         <NoRecipes>
           Start adding recipes to your shopping list by clicking on them
           <GenerateRecipesButton onClick={generateRecipes}>
-            Add {GENERATE_RECIPES_COUNT} random recipes to your list
+            Add 5 random recipes to your list
           </GenerateRecipesButton>
         </NoRecipes>
       )}
