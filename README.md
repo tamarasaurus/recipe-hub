@@ -2,14 +2,15 @@
 
 [![Build Status](https://travis-ci.org/tamarasaurus/recipe-hub.svg?branch=master)](https://travis-ci.org/tamarasaurus/recipe-hub)
 
-Scrapes and store recipes to generate shopping lists
+Recipe Hub scrapes and stores recipes from subscription box websites. With Recipe Hub you can choose your recipes for the week and generate a shopping list for all the ingredients. Logging in with Google lets you save, like, and exclude recipes. 
 
-### Sites
-- [x] HelloFresh
+![Recipe Hub UI](https://user-images.githubusercontent.com/1336344/61590615-49b04180-abbc-11e9-814b-033266874edb.png)
+
+### Scraped sites
 - [x] Quitoque
 - [x] Les commis
 - [x] Bon Appetit
-- [ ] Blue Apron
+- [x] Blue Apron
 - [ ] Foodette
 
 ## Setup
