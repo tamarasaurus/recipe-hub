@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components/macro'
 import { animated, useTransition } from 'react-spring'
@@ -55,7 +55,7 @@ const Dropdown = styled(animated.div)`
 `
 
 const Filters = ({ className, filters, setFilters }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [isDropdownOpen] = useState(false)
   // @TODO Uncomment for filtering
   // const openDropdown = useCallback(() => setIsDropdownOpen(true), [])
   // const closeDropdown = useCallback(() => setIsDropdownOpen(false), [])
