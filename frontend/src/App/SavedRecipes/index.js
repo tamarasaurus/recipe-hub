@@ -83,6 +83,10 @@ const NoRecipes = styled.div`
   }
 `
 
+const GenerateRecipesButton = styled(Button)`
+  margin-top: ${({ theme }) => theme.px(2)};
+`
+
 const ShoppingListIcon = () => (
   <span role="img" aria-label="shopping list">
     📝
@@ -94,6 +98,7 @@ const SavedRecipes = ({
   isLoading,
   savedRecipes,
   removeSavedRecipe,
+  generateRecipes,
 }) => {
   const [isShowingShoppingList, toggleShowShoppingList] = useState(false)
   const openShoppingList = () => toggleShowShoppingList(true)
@@ -128,6 +133,9 @@ const SavedRecipes = ({
       ) : (
         <NoRecipes>
           Start adding recipes to your shopping list by clicking on them
+          <GenerateRecipesButton onClick={generateRecipes}>
+            Add 5 random recipes to your list
+          </GenerateRecipesButton>
         </NoRecipes>
       )}
     </Container>
@@ -139,6 +147,7 @@ SavedRecipes.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
   removeSavedRecipe: PropTypes.func.isRequired,
+  generateRecipes: PropTypes.func.isRequired,
 }
 
 export default SavedRecipes

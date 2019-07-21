@@ -56,6 +56,19 @@ app.get('/api/recipes', (req, res) => {
     }
 });
 
+app.post('/api/recipes/generate', (req, res) => {
+    const { count } = req.query;
+
+    let recipes
+    if (data.isLoggedIn) {
+        recipes = db.generateRecipesWithUserPreference({ count })
+    } else {
+        recipes = db.generateRecipes({ count })
+    }
+    res.json(recipes);
+});
+
+
 app.post('/api/recipes/:id/like', (req, res) => {
     setRecipePreference(req.params.id, { liked: true }, res);
 });

@@ -61,7 +61,7 @@ const App = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingRecipes(true)
-      const newRecipes = await api.getRecipes(filters.query)
+      const newRecipes = await api.getRecipes({ keywords: filters.query })
       setRecipes(newRecipes)
       setIsLoadingRecipes(false)
       setHasLoadedRecipes(true)
@@ -77,7 +77,10 @@ const App = () => {
   const loadMore = async () => {
     const newOffset = offset + api.OFFSET
     setIsLoadingRecipes(true)
-    const newRecipes = await api.getRecipes(filters.query, newOffset)
+    const newRecipes = await api.getRecipes({
+      keywords: filters.query,
+      offset: newOffset,
+    })
     setRecipes(recipes.concat(newRecipes))
     setIsLoadingRecipes(false)
 
@@ -98,6 +101,18 @@ const App = () => {
 
     fetchData()
   }, [])
+
+  const generateRecipes = useCallback(async () => {
+    const savedRecipes = await api.generateRecipes()
+    setSavedRecipes(savedRecipes)
+    setRecipes((recipes) =>
+      recipes.map((recipe) => ({
+        ...recipe,
+        saved: savedRecipes.some((savedRecipe) => savedRecipe.id === recipe.id),
+      })),
+    )
+  }, [])
+
   const toggleSaveRecipe = useCallback(
     (recipe) => {
       const isRecipeSaved = savedRecipes.some((r) => r.id === recipe.id)
@@ -191,6 +206,7 @@ const App = () => {
           isLoading={isLoadingSavecRecipes}
           savedRecipes={savedRecipes}
           removeSavedRecipe={toggleSaveRecipe}
+          generateRecipes={generateRecipes}
         />
       </Layout>
     </AppContext.Provider>
