@@ -4,11 +4,12 @@ import throttle from 'lodash/throttle'
 import styled from 'styled-components/macro'
 
 import Button from 'components/Button'
+import Header from './Header'
 import Recipe from './Recipe'
 
 import { OFFSET } from 'utils/api'
 
-const Container = styled.div`
+const Container = styled.section`
   grid-area: RecipeList;
   position: relative;
   padding: ${({ theme }) => theme.px(3, 4)};
@@ -47,6 +48,8 @@ const RecipeList = ({
   excludeRecipe,
   canLoadMore,
   loadMore,
+  sortBy,
+  onChangeSortBy,
 }) => {
   // Can't use ref because a ref mutates and can't be used as a useEffect dependency
   const [list, setList] = useState()
@@ -73,6 +76,7 @@ const RecipeList = ({
     <Container ref={(el) => setList(el)}>
       {recipes.length ? (
         <>
+          <Header sortBy={sortBy} onChange={onChangeSortBy} />
           <List>
             {recipes.map((recipe) => (
               <Recipe
@@ -92,9 +96,12 @@ const RecipeList = ({
           )}
         </>
       ) : !hasLoaded || isLoading ? (
-        <List>
-          <Placeholders />
-        </List>
+        <>
+          <Header sortBy={sortBy} onChange={onChangeSortBy} />
+          <List>
+            <Placeholders />
+          </List>
+        </>
       ) : (
         <div>No recipes found</div>
       )}
@@ -111,6 +118,8 @@ RecipeList.propTypes = {
   excludeRecipe: PropTypes.func.isRequired,
   canLoadMore: PropTypes.bool.isRequired,
   loadMore: PropTypes.func.isRequired,
+  sortBy: Header.propTypes.sortBy,
+  onChangeSortBy: Header.propTypes.onChange,
 }
 
 export default RecipeList

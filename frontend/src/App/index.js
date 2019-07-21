@@ -58,10 +58,14 @@ const App = () => {
   const [offset, setOffset] = useState(0)
   const [hasLoadedRecipes, setHasLoadedRecipes] = useState(false)
   const [isLoadingRecipes, setIsLoadingRecipes] = useState(false)
+  const [sortBy, setSortBy] = useState(api.SORT_BY.CREATED_DESC)
   useEffect(() => {
     const fetchData = async () => {
       setIsLoadingRecipes(true)
-      const newRecipes = await api.getRecipes({ keywords: filters.query })
+      const newRecipes = await api.getRecipes({
+        keywords: filters.query,
+        sortBy,
+      })
       setRecipes(newRecipes)
       setIsLoadingRecipes(false)
       setHasLoadedRecipes(true)
@@ -72,7 +76,7 @@ const App = () => {
 
     const timeout = setTimeout(fetchData, 300)
     return () => clearTimeout(timeout)
-  }, [filters.query])
+  }, [filters.query, sortBy])
 
   const loadMore = async () => {
     const newOffset = offset + api.OFFSET
@@ -80,6 +84,7 @@ const App = () => {
     const newRecipes = await api.getRecipes({
       keywords: filters.query,
       offset: newOffset,
+      sortBy,
     })
     setRecipes(recipes.concat(newRecipes))
     setIsLoadingRecipes(false)
@@ -200,6 +205,8 @@ const App = () => {
           excludeRecipe={excludeRecipe}
           canLoadMore={canLoadMore}
           loadMore={loadMore}
+          sortBy={sortBy}
+          onChangeSortBy={setSortBy}
         />
         <SavedRecipes
           hasLoaded={hasLoadedSavecRecipes}
