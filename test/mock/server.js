@@ -45,13 +45,13 @@ app.get('/api/user', (req, res) => {
 });
 
 app.get('/api/recipes', (req, res) => {
-    const { ids, keywords, offset, random } = req.query;
+    const { ids, keywords, offset } = req.query;
 
     if (data.isLoggedIn) {
-        const data = db.searchRecipesWithUserPreference({ ids, keywords, offset, random })
+        const data = db.searchRecipesWithUserPreference({ ids, keywords, offset })
         res.json(data);
     } else {
-        const data = db.searchRecipes({ ids, keywords, offset, random })
+        const data = db.searchRecipes({ ids, keywords, offset })
         res.json(data);
     }
 });

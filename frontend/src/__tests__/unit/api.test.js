@@ -8,10 +8,10 @@ describe('api', () => {
   it('fetches recipes from the api', () => {
     fetch.mockResponseOnce(JSON.stringify([]))
 
-    const keyword = 'poulet'
+    const keywords = 'poulet'
     const offset = 24
 
-    api.getRecipes(keyword, offset)
+    api.getRecipes({ keywords, offset })
     expect(fetch.mock.calls[0][0]).toEqual(
       'http://localhost:8000/api/recipes?keywords=poulet&offset=24',
     )
