@@ -33,5 +33,5 @@ Go to http://localhost:8000
 
 ## Mock setup
 
-cd frontend && REACT_APP_API_URL=http://localhost:4000 npm start
-cd test && npm start
+`cd frontend && REACT_APP_API_URL=http://localhost:4000 npm start`
+`cd test && npm start`
