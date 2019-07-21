@@ -6,6 +6,7 @@ import duration from '../attributes/duration';
 import quantity from '../attributes/quantity';
 import label from '../attributes/label';
 import unit from '../attributes/unit';
+import blueapronLabel from '../attributes/blueapron-label';
 
 export default function scrape(job: any, done: any) {
   const { url, contract, sourceName } = job.data;
@@ -16,6 +17,7 @@ export default function scrape(job: any, done: any) {
     quantity,
     label,
     unit,
+    blueapronLabel,
   });
 
   scraper.scrapePage().then((items: any[]) => {
@@ -28,6 +30,7 @@ export default function scrape(job: any, done: any) {
 
     done(null, mappedItems);
   }).catch((e: Error) => {
+    console.log(e);
     done(e, []);
   });
 }

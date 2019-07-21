@@ -50,6 +50,7 @@
     "express-session": "^1.16.1",
     "helmet": "^3.18.0",
     "jsonpath": "^1.0.1",
+    "numeric-quantity": "^0.3.2",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.11.0",

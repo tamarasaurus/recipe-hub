@@ -1,7 +1,7 @@
 
 {
-    "itemSelector": "[data-test-id=\"search-result\"] + div div div div:nth-child(2)",
-    "scrapeAfterLoading": true,
+    "itemSelector": ".week__products div.recipe-product-card",
+    "scrapeAfterLoading": false,
     "attributes": {
         "link": {
             "type": "link",

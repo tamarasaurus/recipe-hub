@@ -9,8 +9,8 @@ import storeJob from './jobs/store';
 // HTML contracts
 import * as lesCommisIndex from './contracts/lescommis-index.json';
 import * as lesCommisRecipe from './contracts/lescommis.json';
-import * as hellofreshIndex from './contracts/hellofresh-index.json';
-import * as hellofreshRecipe from './contracts/hellofresh.json';
+import * as blueApronIndex from './contracts/blueapron-index.json';
+import * as blueApronRecipe from './contracts/blueapron.json';
 import * as quitoqueIndex from './contracts/quitoque-index.json';
 import * as quitoqueRecipe from './contracts/quitoque.json';
 
@@ -53,10 +53,10 @@ const html = [
     sourceName: 'Les Commis',
   },
   {
-    index: 'https://www.hellofresh.fr/recipes/search/?order=-date',
-    indexContract: hellofreshIndex,
-    recipeContract: hellofreshRecipe,
-    sourceName: 'Hello Fresh',
+    index: 'https://www.blueapron.com/pages/sample-recipes',
+    indexContract: blueApronIndex,
+    recipeContract: blueApronRecipe,
+    sourceName: 'Blue Apron',
   },
 ];
 
@@ -77,7 +77,6 @@ async function collectLinks(url: string, contract: any): Promise<string[]> {
     const cleanedLinks = links.map(link => link.link).filter(link => link !== null);
     return Array.from(new Set(cleanedLinks));
   } catch (e) {
-    console.log(e);
     return [];
   }
 }
@@ -88,7 +87,6 @@ async function scrapeHTML() {
 
     try {
       const links = await collectLinks(index, indexContract);
-
       links.forEach((url: string) => {
         scrapingQueue.add({
           sourceName,

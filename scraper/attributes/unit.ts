@@ -4,5 +4,11 @@ export default function (unitString: string) {
     return;
   }
 
-  this.value = unitString.replace(/\(|\)/gm, '').replace(/\d+/gm, '').trim();
+  const unit = unitString.replace(/\(|\)/gm, '').replace(/\d+|[¼½¾⅐⅑⅒⅓⅔⅕⅖⅗⅘⅙⅚⅛⅜⅝⅞↉]/gm, '').trim();
+
+  if (unit.length === 0) {
+    return this.value = null;
+  }
+
+  this.value = unit;
 }

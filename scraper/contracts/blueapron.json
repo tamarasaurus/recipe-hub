@@ -1,0 +1,40 @@
+{
+    "itemSelector": ".recipe-page .recipe-page-main",
+    "scrapeAfterLoading": true,
+    "attributes": {
+        "name": {
+            "type": "text",
+            "selector": "meta[itemprop=\"name\"]",
+            "attribute": "content"
+        },
+        "duration": {
+            "type": "duration",
+            "selector": ".recipe-main-list ul li:nth-child(1) .ba-info-list__item-value span:nth-child(1)"
+        },
+        "ingredients": {
+            "itemSelector": ".recipe-ingredients .ba-info-list li[itemprop=\"ingredients\"]" ,
+            "attributes": {
+                "label": { "type": "blueapronLabel", "selector": ".non-story" },
+                "quantity": { "type": "quantity", "selector": ".non-story span" },
+                "unit": { "type": "unit", "selector": ".non-story span"}
+            }
+        },
+        "portions": {
+            "type": "digit",
+            "selector": "[itemprop=\"recipeYield\"]"
+        },
+        "imageurl": {
+            "type": "link",
+            "selector": "[itemprop=\"image thumbnailUrl\"]",
+            "attribute": "content"
+        },
+        "categories": {
+            "type": "csv",
+            "selector": ".recipe-main__description p"
+        },
+        "calories": {
+            "type": "digit",
+            "selector": "span[itemprop=\"nutrition\"]"
+        }
+    }
+}
