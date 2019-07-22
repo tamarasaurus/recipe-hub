@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
-import FoodEmoji from './FoodEmoji'
 import Filters from './Filters'
 
 import * as api from 'utils/api'
@@ -29,13 +28,12 @@ const Link = styled.a``
 const Header = ({ filters, setFilters, user }) => {
   return (
     <Container>
-      <FoodEmoji />
       <StyledFilters filters={filters} setFilters={setFilters} />
       {user &&
         (user.isLoggedIn ? (
           <Link href={api.logoutUrl}>Logout</Link>
         ) : (
-          <Link href={api.loginUrl}>Login</Link>
+          <Link href={api.loginUrl}>Login with Google</Link>
         ))}
     </Container>
   )

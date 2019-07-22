@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components/macro'
 import { animated, useTransition } from 'react-spring'
@@ -19,8 +19,8 @@ const Input = styled.input`
   &:focus {
     outline: none;
   }
-  ${({ isFocused }) =>
-    isFocused &&
+  ${({ isDropdownOpen }) =>
+    isDropdownOpen &&
     css`
       outline: none;
       border-color: ${({ theme }) => theme.colors.accent};
@@ -55,9 +55,12 @@ const Dropdown = styled(animated.div)`
 `
 
 const Filters = ({ className, filters, setFilters }) => {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const openDropdown = useCallback(() => setIsDropdownOpen(true), [])
-  const closeDropdown = useCallback(() => setIsDropdownOpen(false), [])
+  const [isDropdownOpen] = useState(false)
+  // @TODO Uncomment for filtering
+  // const openDropdown = useCallback(() => setIsDropdownOpen(true), [])
+  // const closeDropdown = useCallback(() => setIsDropdownOpen(false), [])
+  const openDropdown = () => {}
+  const closeDropdown = () => {}
 
   const onChange = (e) => {
     setFilters(e.target.name, e.target.value)
@@ -75,11 +78,12 @@ const Filters = ({ className, filters, setFilters }) => {
         name="query"
         placeholder="Search for a recipe name, ingredient or category"
         value={filters.query}
+        autoComplete="off"
+        isDropdownOpen={isDropdownOpen}
         onChange={onChange}
         onFocus={openDropdown}
-        autoComplete="off"
       />
-      {false && isDropdownOpen && (
+      {isDropdownOpen && (
         <>
           <Backdrop onClick={closeDropdown} />
           {dropdownTransition.map(

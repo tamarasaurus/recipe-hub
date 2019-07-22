@@ -1,5 +1,12 @@
 const API_URL = process.env.REACT_APP_API_URL + '/api' || ''
 
+export const SORT_BY = {
+  CREATED_DESC: 'sort=created&order=desc',
+  CREATED_ASC: 'sort=created&order=asc',
+  COMPLEXITY_DESC: 'sort=complexity&order=desc',
+  COMPLEXITY_ASC: 'sort=complexity&order=asc',
+}
+
 const fetchApi = async (query, options) => {
   const res = await fetch(API_URL + query, options)
   return await res.json()
@@ -12,8 +19,8 @@ const post = (query, options) =>
     method: 'POST',
   })
 
-export const getRecipes = ({ keywords = '', offset = 0 } = {}) =>
-  get(`/recipes?keywords=${keywords}&offset=${offset}`)
+export const getRecipes = ({ keywords = '', offset = 0, sortBy = SORT_BY.CREATED_DESC } = {}) =>
+  get(`/recipes?keywords=${keywords}&offset=${offset}&${sortBy}`)
 export const getSavedRecipes = () => get('/recipes/saved')
 export const saveRecipe = (id) => post(`/recipes/${id}/save`)
 export const unsaveRecipe = (id) => post(`/recipes/${id}/unsave`)

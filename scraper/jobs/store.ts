@@ -13,7 +13,7 @@ export default function store(job: any, done: any) {
     },
   }).then((savedRecipe: any) => done(null, savedRecipe))
     .catch((error: Error) => {
-      console.log('error', error)
-      done(error)
+      console.log('error', error);
+      done(error);
     });
 }
