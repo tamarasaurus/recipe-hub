@@ -19,7 +19,7 @@ const post = (query, options) =>
     method: 'POST',
   })
 
-export const getRecipes = ({ keywords = '', offset = 0, sortBy } = {}) =>
+export const getRecipes = ({ keywords = '', offset = 0, sortBy = SORT_BY.CREATED_DESC } = {}) =>
   get(`/recipes?keywords=${keywords}&offset=${offset}&${sortBy}`)
 export const getSavedRecipes = () => get('/recipes/saved')
 export const saveRecipe = (id) => post(`/recipes/${id}/save`)
