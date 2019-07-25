@@ -29,7 +29,7 @@ query(
 
   CREATE TABLE IF NOT EXISTS
   auth_user_recipe (
-    recipe_id INTEGER UNIQUE references recipe(id),
+    recipe_id INTEGER references recipe(id),
     user_id INTEGER references auth_user(id),
     liked BOOLEAN DEFAULT FALSE NOT NULL,
     excluded BOOLEAN DEFAULT FALSE NOT NULL,
