@@ -132,7 +132,7 @@ app.get('/api/recipes/generate', rateLimiter, (req, res) => {
 });
 
 app.get('/api/recipes', rateLimiter, (req, res) => {
-  const { ids, keywords, offset, source, sort, order } = req.query;
+  const { ids, keywords, offset, source, sort, order, liked } = req.query;
   const user = req.user || {};
 
   db.searchRecipes({
@@ -142,6 +142,7 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
     source,
     sort,
     order,
+    liked,
   }, user.id)
     .then((data => res.json(data)))
     .catch((e: Error) => {

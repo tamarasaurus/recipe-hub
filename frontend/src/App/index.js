@@ -39,6 +39,7 @@ const App = () => {
 
   const [filters, setFilterss] = useState({
     query: '',
+    liked: 0,
   })
   const setFilters = (label, value) => {
     const newFilters = {
@@ -65,6 +66,7 @@ const App = () => {
       const newRecipes = await api.getRecipes({
         keywords: filters.query,
         sortBy,
+        liked: filters.liked,
       })
       setRecipes(newRecipes)
       setIsLoadingRecipes(false)
@@ -76,7 +78,7 @@ const App = () => {
 
     const timeout = setTimeout(fetchData, 300)
     return () => clearTimeout(timeout)
-  }, [filters.query, sortBy])
+  }, [filters.liked, filters.query, sortBy])
 
   const loadMore = async () => {
     const newOffset = offset + api.OFFSET
@@ -85,6 +87,7 @@ const App = () => {
       keywords: filters.query,
       offset: newOffset,
       sortBy,
+      liked: filters.liked,
     })
     setRecipes(recipes.concat(newRecipes))
     setIsLoadingRecipes(false)

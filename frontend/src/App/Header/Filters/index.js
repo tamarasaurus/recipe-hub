@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components/macro'
 import { animated, useTransition } from 'react-spring'
@@ -54,16 +54,29 @@ const Dropdown = styled(animated.div)`
   background: ${({ theme }) => theme.colors.base3};
 `
 
+const Label = styled.label`
+  margin-top: 20px;
+  display: inline-block;
+`
+
 const Filters = ({ className, filters, setFilters }) => {
-  const [isDropdownOpen] = useState(false)
-  // @TODO Uncomment for filtering
-  // const openDropdown = useCallback(() => setIsDropdownOpen(true), [])
-  // const closeDropdown = useCallback(() => setIsDropdownOpen(false), [])
-  const openDropdown = () => {}
-  const closeDropdown = () => {}
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const openDropdown = useCallback(() => setIsDropdownOpen(true), [])
+  const closeDropdown = useCallback(() => setIsDropdownOpen(false), [])
 
   const onChange = (e) => {
     setFilters(e.target.name, e.target.value)
+  }
+
+  const onChecked = (e) => {
+    setFilters(e.target.name, e.target.checked ? 1 : 0)
+  }
+
+  const onKeyDown = (e) => {
+    if (e.keyCode === 27) {
+      closeDropdown()
+      e.target.blur()
+    }
   }
 
   const dropdownTransition = useTransition(isDropdownOpen, null, {
@@ -82,6 +95,7 @@ const Filters = ({ className, filters, setFilters }) => {
         isDropdownOpen={isDropdownOpen}
         onChange={onChange}
         onFocus={openDropdown}
+        onKeyDown={onKeyDown}
       />
       {isDropdownOpen && (
         <>
@@ -90,10 +104,16 @@ const Filters = ({ className, filters, setFilters }) => {
             ({ item, key, props }) =>
               item && (
                 <Dropdown key={key} style={props}>
-                  <h3>Sources:</h3>
-                  <input type="checkbox" /> Bon appetit{' '}
-                  <input type="checkbox" /> Quitoque <input type="checkbox" />{' '}
-                  Les commis
+                  <h3> Filter by </h3>
+                  <Label>
+                    <input
+                      name="liked"
+                      checked={filters.liked}
+                      onChange={onChecked}
+                      type="checkbox"
+                    />{' '}
+                    Liked
+                  </Label>
                 </Dropdown>
               ),
           )}
