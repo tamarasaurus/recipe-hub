@@ -3,6 +3,7 @@ import createUser from './queries/create-user';
 import updatePreference from './queries/update-preference';
 import upsertRecipe from './queries/upsert-recipe';
 import searchRecipes from './queries/search-recipes';
+import searchRecipesForUser from './queries/search-recipes-for-user';
 import generateRecipes from './queries/generate-recipes';
 import getSavedRecipes from './queries/get-saved-recipes';
 import getRecipesByPreference from './queries/get-recipes-by-preference';
@@ -24,13 +25,12 @@ export default class Database {
 
   public searchRecipes = async (searchQuery, authId: string) => {
     const userId = await this.getUserId(authId);
-    const recipePreferences = await getRecipesByPreference(userId);
-    const recipes = await searchRecipes(searchQuery);
-    const mappedRecipes = this.mapRecipesToUserPreferences(recipePreferences, recipes);
 
-    return mappedRecipes.filter((recipe: any) => {
-      return recipe.excluded === false;
-    });
+    if (userId) {
+      return searchRecipesForUser(searchQuery, userId);
+    }
+
+    return await searchRecipes(searchQuery);
   }
 
   public generateRecipes = async (authId: string) => {
@@ -43,7 +43,6 @@ export default class Database {
       return recipe.excluded === false;
     });
   }
-
 
   public async getSavedRecipeIdsForUser(authId: string): Promise<string[]> {
     const userId = await this.getUserId(authId);

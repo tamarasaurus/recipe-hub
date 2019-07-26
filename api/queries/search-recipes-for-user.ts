@@ -14,7 +14,7 @@ const allowedSortTypes = {
   complexity: 'r.complexity',
 };
 
-export default async function searchRecipes(searchQuery: SearchQuery) {
+export default async function searchRecipes(searchQuery: SearchQuery, userId: string) {
   const { ids, keywords, offset, source, sort, order, liked } = searchQuery;
   const sortType = allowedSortTypes[sort] || 'created';
   const sortOrder = order || 'desc';
@@ -27,6 +27,8 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
       OR unaccent(lower(r.categories)) LIKE unaccent(lower('%${keywords.trim()}%'))
     `;
   }
+
+  const likedFilter = liked == 1 ? 'WHERE auth_user_recipe.liked = TRUE' : '';
 
   const { rows } = await query(`
     SELECT
@@ -41,7 +43,10 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
       r.updated,
       r.categories,
       r.source,
-      r.complexity
+      r.complexity,
+      COALESCE(r.liked, false) as liked,
+      COALESCE(r.excluded, false) as excluded,
+      COALESCE(r.saved, false) as saved
     FROM (
       SELECT *,
       json_array_length(recipe.ingredients) as complexity,
@@ -51,6 +56,10 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
         AS list
       )), '|') AS labels
       FROM recipe
+      LEFT JOIN auth_user_recipe on auth_user_recipe.user_id = $3
+      AND auth_user_recipe.recipe_id = recipe.id
+      AND auth_user_recipe.excluded IS FALSE OR NULL
+      ${likedFilter}
     ) AS r
     WHERE name IS NOT NULL
     AND source LIKE $1
@@ -62,6 +71,7 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
   `, [
     `%${source || ''}%`,
     offset || 0,
+    userId,
   ]);
 
   return rows;

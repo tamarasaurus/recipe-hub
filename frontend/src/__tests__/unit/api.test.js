@@ -13,7 +13,7 @@ describe('api', () => {
 
     api.getRecipes({ keywords, offset })
     expect(fetch.mock.calls[0][0]).toEqual(
-      'http://localhost:8000/api/recipes?keywords=poulet&offset=24&sort=created&order=desc',
+      'http://localhost:8000/api/recipes?keywords=poulet&offset=24&sort=created&order=desc&liked=0',
     )
   })
 

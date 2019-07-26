@@ -19,8 +19,13 @@ const post = (query, options) =>
     method: 'POST',
   })
 
-export const getRecipes = ({ keywords = '', offset = 0, sortBy = SORT_BY.CREATED_DESC } = {}) =>
-  get(`/recipes?keywords=${keywords}&offset=${offset}&${sortBy}`)
+export const getRecipes = ({
+  keywords = '',
+  offset = 0,
+  sortBy = SORT_BY.CREATED_DESC,
+  liked = 0,
+} = {}) =>
+  get(`/recipes?keywords=${keywords}&offset=${offset}&${sortBy}&liked=${liked}`)
 export const getSavedRecipes = () => get('/recipes/saved')
 export const saveRecipe = (id) => post(`/recipes/${id}/save`)
 export const unsaveRecipe = (id) => post(`/recipes/${id}/unsave`)
