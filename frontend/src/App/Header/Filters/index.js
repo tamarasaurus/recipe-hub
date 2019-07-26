@@ -55,7 +55,7 @@ const Dropdown = styled(animated.div)`
 `
 
 const Label = styled.label`
-  margin-top: 20px;
+  margin-top: ${({ theme }) => theme.px(2)};
   display: inline-block;
 `
 
