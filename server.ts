@@ -158,9 +158,10 @@ app.get('/api/recipes/merge', rateLimiter, (req, res) => {
   const ids = req.query.ids || '';
   mergeIngredients(ids.split(',')).then((mergedIngredients) => {
     res.json(mergedIngredients);
-  }).catch((e: Error) => res.status(500).json({
-    message: e.message,
-  }));
+  })
+  // .catch((e: Error) => res.status(500).json({
+  //   message: e.message,
+  // }));
 })
 
 app.post('/api/recipes/:id/like', rateLimiter, isUserLoggedIn, (req, res) => {

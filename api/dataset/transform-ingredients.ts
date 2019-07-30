@@ -17,6 +17,6 @@ Object.entries(ingredients).forEach(([id, content]: [string, any]) => {
 writeFileSync(
   './api/dataset/ingredients.json',
   JSON.stringify(dictionary, null, 2),
-  { encoding: 'utf-8' }
+  { encoding: 'utf-8' },
 );
 
