@@ -3645,9 +3645,16 @@
   "poivre": "black pepper",
   "fennel fronds": "frondes de fenouil",
   "gigot d'agneau": "leg of lamb",
-  "fennel bulbs": "bulbes de fenouil",
-  "porcini mushrooms": "champignons porcini",
+  "bulbes de fenouil": "fennel bulbs",
+  "champignons porcini": "porcini mushrooms",
   "large onion": "gros oignon",
-  "semi-pearled farro": "farro semi-perlé",
-  "cilantro sauce": "sauce à la coriandre"
+  "farro semi-perlé": "semi-pearled farro",
+  "sauce à la coriandre": "cilantro sauce",
+  "sel & poivre": "salt and pepper",
+  "thym frais": "fresh thyme",
+  "spaghetti": "spaghetti",
+  "kale": "bunches kale",
+  "parmesan rappee": "grated parmesan",
+  "poireaux": "leeks",
+  "moutarde à grains entiers": "whole grain mustard"
 }

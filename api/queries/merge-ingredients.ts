@@ -21,6 +21,7 @@ function translateIngredient(word: string, sourceLanguage: string) {
   return matches.sort((a, b) => b[0] - a[0])[0];
 }
 
+//    WHERE recipe.id = ANY ($1)
 export default async function mergeIngredients(recipeIds: string[]) {
   const { rows } = await query(`
     SELECT
@@ -29,10 +30,9 @@ export default async function mergeIngredients(recipeIds: string[]) {
         portions,
         ingredients
     FROM recipe
-    WHERE recipe.id = ANY ($1)
-    LIMIT 5
+    LIMIT 20
   `,
-    [recipeIds]);
+    []);
 
   const allIngredients = [];
   rows.forEach(row => allIngredients.push(...row.ingredients.map(ingredient => {
