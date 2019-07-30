@@ -1,32 +1,13 @@
 import query from '../query';
+import { SearchQuery } from './types';
 
-interface SearchQuery {
-  keywords?: string;
-  ids?: string[];
-  offset?: number;
-  source?: string;
-  sort?: string;
-  order?: string;
-  liked?: number;
-}
-
-const allowedSortTypes = {
-  complexity: 'r.complexity',
-};
+const allowedSortTypes = { complexity: 'r.complexity' };
+const allowedOrderDirections = ['asc', 'desc'];
 
 export default async function searchRecipes(searchQuery: SearchQuery) {
-  const { ids, keywords, offset, source, sort, order, liked } = searchQuery;
+  const { keywords, offset, source, sort, order } = searchQuery;
   const sortType = allowedSortTypes[sort] || 'created';
-  const sortOrder = order || 'desc';
-
-  let searchFilters = '';
-  if (keywords !== undefined && keywords.trim().length > 0) {
-    searchFilters = `
-      AND unaccent(lower(r.name)) LIKE unaccent(lower('%${keywords.trim()}%'))
-      OR unaccent(lower(r.labels)) LIKE unaccent(lower('%${keywords.trim()}%'))
-      OR unaccent(lower(r.categories)) LIKE unaccent(lower('%${keywords.trim()}%'))
-    `;
-  }
+  const sortOrder = allowedOrderDirections.includes(order) ? order : 'desc';
 
   const { rows } = await query(`
     SELECT
@@ -54,14 +35,16 @@ export default async function searchRecipes(searchQuery: SearchQuery) {
     ) AS r
     WHERE name IS NOT NULL
     AND source LIKE $1
-    ${ids ? `AND r.id IN (${ids})` : ''}
-    ${searchFilters}
+    AND unaccent(lower(r.name)) LIKE unaccent(lower($3))
+    OR unaccent(lower(r.labels)) LIKE unaccent(lower($3))
+    OR unaccent(lower(r.categories)) LIKE unaccent(lower($3))
     ORDER BY ${sortType} ${sortOrder}
     LIMIT 24
     OFFSET $2
   `, [
     `%${source || ''}%`,
     offset || 0,
+    `%${keywords.trim()}%`
   ]);
 
   return rows;
