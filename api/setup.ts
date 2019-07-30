@@ -10,6 +10,7 @@ query(
     id SERIAL UNIQUE PRIMARY KEY NOT NULL,
     name TEXT NOT NULL,
     duration INTEGER,
+    ingredients JSON,
     portions INTEGER,
     imageurl TEXT,
     url TEXT NOT NULL UNIQUE,
@@ -19,21 +20,6 @@ query(
     calories INTEGER,
     source TEXT NOT NULL
   );
-
-  CREATE TABLE IF NOT EXISTS
-  ingredient (
-    id SERIAL UNIQUE PRIMARY KEY NOT NULL,
-    name TEXT NOT NULL,
-  )
-
-  CREATE TABLE IF NOT EXISTS
-  recipe_ingredient (
-    id SERIAL UNIQUE PRIMARY KEY NOT NULL,
-    recipe_id INTEGER references recipe(id),
-    ingredient_id INTEGER references ingredient(id),
-    quantity INTEGER,
-    unit TEXT
-  )
 
   CREATE TABLE IF NOT EXISTS
   auth_user (

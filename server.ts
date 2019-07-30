@@ -8,6 +8,7 @@ import * as helmet from 'helmet';
 import { OAuth2Strategy } from 'passport-google-oauth';
 import rateLimiter from './api/middleware/rate-limiting';
 import * as ConnectRedis from 'connect-redis';
+import mergeIngredients from './api/queries/merge-ingredients';
 
 const RedisStore = ConnectRedis(session);
 const PORT = process.env.PORT || '8000';
@@ -153,6 +154,14 @@ app.get('/api/recipes', rateLimiter, (req, res) => {
     });
 });
 
+app.get('/api/recipes/merge', rateLimiter, (req, res) => {
+  const ids = req.query.ids || '';
+  mergeIngredients(ids.split(',')).then((mergedIngredients) => {
+    res.json(mergedIngredients);
+  }).catch((e: Error) => res.status(500).json({
+    message: e.message,
+  }));
+})
 
 app.post('/api/recipes/:id/like', rateLimiter, isUserLoggedIn, (req, res) => {
   setRecipePreference(req.params.id, req.user.id, { liked: true }, res);
