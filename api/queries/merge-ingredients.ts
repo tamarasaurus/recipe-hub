@@ -21,6 +21,37 @@ function translateIngredient(word: string, sourceLanguage: string) {
   return matches.sort((a, b) => b[0] - a[0])[0];
 }
 
+function findIngredient(array, label) {
+  return array.find(item => {
+    const exactMatch = item.label.toLowerCase() === label.toLowerCase();
+    const similarMatch = compareTwoStrings(item.label.toLowerCase(), label.toLowerCase()) > 0.8;
+    return exactMatch || similarMatch;
+  });
+}
+
+function mergeExactIngredients(ingredients: any) {
+  const mergedExact = [];
+
+  ingredients.forEach(ingredient => {
+    const existing = findIngredient(mergedExact, ingredient.label);
+
+    if (!existing) {
+      mergedExact.push(ingredient);
+    } else if (existing && existing.unit === ingredient.unit) {
+      existing.quantity = existing.quantity + ingredient.quantity;
+      if (existing.label.toLowerCase() !== ingredient.label.toLowerCase()) {
+        console.log('add', existing.label, '|', ingredient.label, '\n');
+      }
+    }
+  });
+
+  return mergedExact;
+}
+
+function mergeSimilarIngredients() {
+
+}
+
 //    WHERE recipe.id = ANY ($1)
 export default async function mergeIngredients(recipeIds: string[]) {
   const { rows } = await query(`
@@ -30,7 +61,7 @@ export default async function mergeIngredients(recipeIds: string[]) {
         portions,
         ingredients
     FROM recipe
-    LIMIT 20
+    LIMIT 400
   `,
     []);
 
@@ -40,9 +71,16 @@ export default async function mergeIngredients(recipeIds: string[]) {
     return ingredient;
   })));
 
-  console.log(allIngredients.sort((a: any, b: any) => {
-    return a.label - b.label;
-  }).map(ingredient => ingredient.label));
+  const sortedIngredients = allIngredients.sort((a: any, b: any) => {
+    return a.label.toLowerCase().localeCompare(b.label.toLowerCase());
+  });
+
+  const mergedIngredients = mergeExactIngredients(sortedIngredients);
+  console.log(
+    JSON.stringify(mergedIngredients.map(ingredient => {
+      return ingredient.label + ': ' + ingredient.quantity + ' ' + ingredient.unit;
+    }), null, 2)
+  );
 
   // merge similar terms before translating
   // merge same language in the second step

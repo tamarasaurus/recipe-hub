@@ -29,7 +29,9 @@ storageQueue.process(storeJob);
 scrapingQueue.on('completed', (job: any, scrapedRecipes: any[]) => {
   console.log('✓ scraped', job.data.url, '\n');
   scrapedRecipes.forEach((recipe: any) => {
-    storageQueue.add(recipe);
+    if (recipe.ingredients.length > 1) {
+      storageQueue.add(recipe);
+    }
     job.remove();
   });
 }).on('error', (error: Error) => console.log('error', error));
@@ -46,18 +48,18 @@ const html = [
     recipeContract: quitoqueRecipe,
     sourceName: 'Quitoque',
   },
-  // {
-  //   index: 'https://lescommis.com/cookbook/recettes/',
-  //   indexContract: lesCommisIndex,
-  //   recipeContract: lesCommisRecipe,
-  //   sourceName: 'Les Commis',
-  // },
-  // {
-  //   index: 'https://www.blueapron.com/pages/sample-recipes',
-  //   indexContract: blueApronIndex,
-  //   recipeContract: blueApronRecipe,
-  //   sourceName: 'Blue Apron',
-  // },
+  {
+    index: 'https://lescommis.com/cookbook/recettes/',
+    indexContract: lesCommisIndex,
+    recipeContract: lesCommisRecipe,
+    sourceName: 'Les Commis',
+  },
+  {
+    index: 'https://www.blueapron.com/pages/sample-recipes',
+    indexContract: blueApronIndex,
+    recipeContract: blueApronRecipe,
+    sourceName: 'Blue Apron',
+  },
 ];
 
 const json = [
