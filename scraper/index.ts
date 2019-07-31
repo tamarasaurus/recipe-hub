@@ -46,27 +46,27 @@ const html = [
     recipeContract: quitoqueRecipe,
     sourceName: 'Quitoque',
   },
-  {
-    index: 'https://lescommis.com/cookbook/recettes/',
-    indexContract: lesCommisIndex,
-    recipeContract: lesCommisRecipe,
-    sourceName: 'Les Commis',
-  },
-  {
-    index: 'https://www.blueapron.com/pages/sample-recipes',
-    indexContract: blueApronIndex,
-    recipeContract: blueApronRecipe,
-    sourceName: 'Blue Apron',
-  },
+  // {
+  //   index: 'https://lescommis.com/cookbook/recettes/',
+  //   indexContract: lesCommisIndex,
+  //   recipeContract: lesCommisRecipe,
+  //   sourceName: 'Les Commis',
+  // },
+  // {
+  //   index: 'https://www.blueapron.com/pages/sample-recipes',
+  //   indexContract: blueApronIndex,
+  //   recipeContract: blueApronRecipe,
+  //   sourceName: 'Blue Apron',
+  // },
 ];
 
 const json = [
-  {
-    parser: parseBonAppetit,
-    itemProperty: 'items',
-    url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=500',
-    sourceName: 'Bon Appetit',
-  },
+  // {
+  //   parser: parseBonAppetit,
+  //   itemProperty: 'items',
+  //   url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=500',
+  //   sourceName: 'Bon Appetit',
+  // },
 ];
 
 // Move to a file

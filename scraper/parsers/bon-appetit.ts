@@ -18,6 +18,7 @@ export default function (data: any) {
     name: data.hed,
     duration: durationInSeconds,
     ingredients: data.ingredientGroups[0].ingredients.map((ingredient: any): any => {
+      console.log(ingredient.name);
       return {
         label: ingredient.name,
         quantity: ingredient.unitQuantity,

@@ -40,13 +40,17 @@ export default async function mergeIngredients(recipeIds: string[]) {
     return ingredient;
   })));
 
+  console.log(allIngredients.sort((a: any, b: any) => {
+    return a.label - b.label;
+  }).map(ingredient => ingredient.label));
+
   // merge similar terms before translating
   // merge same language in the second step
 
-  allIngredients.forEach(({ label, language }) => {
-    const matchingTranslation = translateIngredient(label.toLowerCase(), language);
-    console.log(label.toLowerCase(), matchingTranslation);
-  });
+  // allIngredients.forEach(({ label, language }) => {
+  //   const matchingTranslation = translateIngredient(label.toLowerCase(), language);
+  //   console.log(label.toLowerCase(), matchingTranslation);
+  // });
 
   return rows;
 }
