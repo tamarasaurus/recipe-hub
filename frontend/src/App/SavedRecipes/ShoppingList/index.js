@@ -1,6 +1,7 @@
-import React, { useRef, useEffect, useCallback } from 'react'
+import React, { useRef, useEffect, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components/macro'
+import { getMergedRecipes } from '../../../utils/api'
 
 import Panel from 'components/Panel'
 import Button from 'components/Button'
@@ -71,6 +72,17 @@ const Ingredient = styled.div`
 
 const ShoppingList = ({ recipes, onClose }) => {
   const elRef = useRef(document.createElement('div'))
+  const [mergedIngredients, setMergedIngredients] = useState([])
+
+  useEffect(() => {
+    const fetchMerged = async () => {
+      const recipeIds = recipes.map(({ id }) => id).join(',')
+      const merged = await getMergedRecipes(recipeIds)
+      setMergedIngredients(merged)
+    }
+
+    fetchMerged()
+  }, [recipes])
 
   useEffect(() => {
     const el = elRef.current
@@ -97,14 +109,9 @@ const ShoppingList = ({ recipes, onClose }) => {
   }
 
   const copyIngredients = useCallback(() => {
-    const str = recipes
-      .map((recipe) => recipe.ingredients.map(formatIngredient))
-      .flat()
-      .sort()
-      .join('\n')
-
+    const str = mergedIngredients.map(formatIngredient).join('\n')
     copyToClipboard(str)
-  }, [recipes])
+  }, [mergedIngredients])
 
   const copyRecipe = (recipe) => {
     const str = [

@@ -1,5 +1,4 @@
 import * as Queue from 'bull';
-import * as request from 'request-promise';
 
 // Scraper jobs
 import Scraper from 'contract-scraper';
@@ -16,9 +15,6 @@ import * as quitoqueRecipe from './contracts/quitoque.json';
 
 // Attributes
 import quitoqueLink from './attributes/quitoque-link';
-
-// JSON parsers
-import parseBonAppetit from './parsers/bon-appetit';
 
 const scrapingQueue = new Queue('scraping', process.env.REDIS_URL);
 const storageQueue = new Queue('storage', process.env.REDIS_URL);
@@ -62,16 +58,6 @@ const html = [
   },
 ];
 
-const json = [
-  // {
-  //   parser: parseBonAppetit,
-  //   itemProperty: 'items',
-  //   url: 'https://www.bonappetit.com/api/search?content=recipe&meal=dinner&sort=newest&size=500',
-  //   sourceName: 'Bon Appetit',
-  // },
-];
-
-// Move to a file
 async function collectLinks(url: string, contract: any): Promise<string[]> {
   const scraper = new Scraper(url, contract, { quitoqueLink });
   try {
@@ -103,19 +89,4 @@ async function scrapeHTML() {
   }
 }
 
-async function scrapeJSON() {
-  const parsedResults: any[] = [];
-
-  for (const options of json) {
-    const results = await request.get({ url: options.url, json: true });
-
-    results[options.itemProperty].forEach((result: any) => {
-      parsedResults.push(options.parser(result));
-    });
-  }
-
-  parsedResults.forEach((recipe: any) => storageQueue.add(recipe));
-}
-
 scrapeHTML();
-scrapeJSON();
