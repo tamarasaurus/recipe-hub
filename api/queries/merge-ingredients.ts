@@ -1,61 +1,47 @@
 import query from '../query';
 import { compareTwoStrings } from 'string-similarity';
 
-function findIngredient(array, label) {
-  return array.find(item => {
-    const exactMatch = item.label.toLowerCase() === label.toLowerCase();
-    const similarMatch = compareTwoStrings(
+function findSimilarIngredientLabel(array, label) {
+  return array.find((item: any) => {
+    return compareTwoStrings(
       item.label.toLowerCase(),
       label.toLowerCase(),
     ) > 0.8;
-    return exactMatch || similarMatch;
   });
 }
 
-function mergeExactIngredients(ingredients: any) {
-  const mergedExact = [];
+function mergeSimilarIngredients(ingredients: any) {
+  const merged = [];
 
-  ingredients.forEach(ingredient => {
-    const existing = findIngredient(mergedExact, ingredient.label);
+  ingredients.forEach((ingredient: any) => {
+    const similar = findSimilarIngredientLabel(merged, ingredient.label);
 
-    if (!existing) {
-      mergedExact.push(ingredient);
-    } else if (existing && existing.unit === ingredient.unit) {
-      existing.quantity = (existing.quantity || 0) + ingredient.quantity;
-      if (existing.label.toLowerCase() !== ingredient.label.toLowerCase()) {
-        console.log('add', existing.label, '|', ingredient.label, '\n');
-      }
+    if (!similar) {
+      merged.push(ingredient);
+    } else if (similar.unit === ingredient.unit) {
+      similar.quantity = similar.quantity + ingredient.quantity;
     }
   });
 
-  return mergedExact;
+  return merged;
 }
 
-//    WHERE recipe.id = ANY ($1)
 export default async function mergeIngredients(recipeIds: string[]) {
-  const { rows } = await query(`
-    SELECT
-        id,
-        source,
-        portions,
-        ingredients
-    FROM recipe
+  let { rows } = await query(`
+        SELECT
+            DISTINCT(label) as label,
+            SUM(quantity) as quantity,
+            unit
+        FROM (
+               SELECT id, label, unit, quantity
+               FROM recipe,
+                    json_to_recordset(recipe.ingredients) as ing(label text, unit text, quantity float)
+             ) AS recipeingredients
+        WHERE recipeIngredients.id = ANY ($1)
+        GROUP BY label, unit
+        ORDER BY label asc
   `,
-    []);
+    [recipeIds]);
 
-  const allIngredients = [];
-  rows.forEach(row => allIngredients.push(...row.ingredients));
-
-  const sortedIngredients = allIngredients.sort((a: any, b: any) => {
-    return a.label.toLowerCase().localeCompare(b.label.toLowerCase());
-  });
-
-  const mergedIngredients = mergeExactIngredients(sortedIngredients);
-  console.log(
-    JSON.stringify(mergedIngredients.map(ingredient => {
-      return ingredient.label + ': ' + ingredient.quantity + ' ' + ingredient.unit;
-    }), null, 2)
-  );
-
-  return rows;
+  return mergeSimilarIngredients(rows);
 }
