@@ -17,7 +17,7 @@
     },
     "include": [
         "api/src/**/*", "api.ts",
-         "contracts/**/*",
+        "contracts/**/*",
         "attributes/**/*",
         "index.ts"
     ],
