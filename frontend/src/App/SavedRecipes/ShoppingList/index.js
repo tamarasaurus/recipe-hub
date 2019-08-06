@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useCallback, useState } from 'react'
 import PropTypes from 'prop-types'
 import styled, { css } from 'styled-components/macro'
-import { getMergedRecipes } from '../../../utils/api'
+import { getMergedRecipes } from 'utils/api'
 
 import Panel from 'components/Panel'
 import Button from 'components/Button'
