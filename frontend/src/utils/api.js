@@ -33,6 +33,7 @@ export const likeRecipe = (id) => post(`/recipes/${id}/like`)
 export const unlikeRecipe = (id) => post(`/recipes/${id}/unlike`)
 export const excludeRecipe = (id) => post(`/recipes/${id}/exclude`)
 export const generateRecipes = () => get(`/recipes/generate`)
+export const getMergedRecipes = (ids) => get(`/recipes/merge?ids=${ids}`)
 
 export const getUser = (id) => get(`/user`)
 export const loginUrl = process.env.REACT_APP_API_URL + '/login'

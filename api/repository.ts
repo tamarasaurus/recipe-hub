@@ -8,11 +8,13 @@ import generateRecipes from './queries/generate-recipes';
 import getSavedRecipes from './queries/get-saved-recipes';
 import getRecipesByPreference from './queries/get-recipes-by-preference';
 import { RecipeUserPreference } from './queries/types';
+import mergeIngredients from './queries/merge-ingredients';
 
 export default class Database {
   public getUserId = (authId: string) => getUserId(authId);
   public createUser = (authId: string) => createUser(authId);
   public insertOrUpdateRecipe = (data: any) => upsertRecipe(data);
+  public mergeIngredients = (recipeIds: string[]) => mergeIngredients(recipeIds);
 
   public setRecipePreference = async (
     recipeId: string,
