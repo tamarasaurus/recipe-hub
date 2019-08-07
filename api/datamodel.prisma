@@ -1,0 +1,53 @@
+type User {
+  id: ID! @id
+  name: String! @unique
+  saved: [SavedRecipe]
+  excluded: [ExcludedRecipe]
+  liked: [LikedRecipe]
+}
+
+type SavedRecipe {
+  id: ID! @id
+  user: User!
+  recipe: Recipe!
+}
+
+type ExcludedRecipe {
+  id: ID! @id
+  user: User!
+  recipe: Recipe!
+}
+
+type LikedRecipe {
+  id: ID! @id
+  user: User!
+  recipe: Recipe!
+}
+
+type RecipeSource {
+  id: ID! @id
+  name: String! @unique
+}
+
+type RecipeIngredient {
+  id: ID! @id
+  recipe: Recipe! @relation(name: "Recipe")
+  label: String!
+  quantity: Float
+  unit: String
+}
+
+type Recipe {
+  id: ID! @id
+  name: String!
+  duration: Int
+  ingredients: [RecipeIngredient] @relation(name: "RecipeIngredient")
+  portions: Int
+  imageurl: String
+  url: String! @unique
+  created: DateTime! @createdAt
+  updated: DateTime! @updatedAt
+  categories: [String] @scalarList(strategy: RELATION)
+  calories: Int
+  source: RecipeSource
+}
