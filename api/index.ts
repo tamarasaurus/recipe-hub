@@ -69,33 +69,48 @@ async function go() {
 
   console.log('User', user, '\n');
 
-  const likedRecipe = await prisma.createLikedRecipe({
-    user: {
-      connect: {
+  const alreadyLiked = await prisma.likedRecipes({
+    where: {
+      recipe: {
+        id: recipe.id,
+      },
+      user: {
         id: user.id,
       },
     },
-    recipe: {
-      connect: {
-        id: recipe.id,
-      },
-    },
   });
 
-  const connectLikeForUser = await prisma.updateUser({
-    where: {
-      id: user.id,
-    },
-    data: {
-      liked: {
+  console.log('already liked?', alreadyLiked.length > 0, '\n');
+
+  if (alreadyLiked.length === 0) {
+    const likedRecipe = await prisma.createLikedRecipe({
+      user: {
         connect: {
-          id: likedRecipe.id,
+          id: user.id,
         },
       },
-    },
-  });
+      recipe: {
+        connect: {
+          id: recipe.id,
+        },
+      },
+    });
 
-  console.log('Create the like for user', connectLikeForUser, '\n');
+    const connectLikeForUser = await prisma.updateUser({
+      where: {
+        id: user.id,
+      },
+      data: {
+        liked: {
+          connect: {
+            id: likedRecipe.id,
+          },
+        },
+      },
+    });
+
+    console.log('Create the like for user', connectLikeForUser, '\n');
+  }
 
   const likedRecipesForUser = await prisma.likedRecipes({
     where: {
