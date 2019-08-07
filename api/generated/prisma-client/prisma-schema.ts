@@ -2,7 +2,15 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateRecipe {
+export const typeDefs = /* GraphQL */ `type AggregateExcludedRecipe {
+  count: Int!
+}
+
+type AggregateLikedRecipe {
+  count: Int!
+}
+
+type AggregateRecipe {
   count: Int!
 }
 
@@ -11,6 +19,10 @@ type AggregateRecipeIngredient {
 }
 
 type AggregateRecipeSource {
+  count: Int!
+}
+
+type AggregateSavedRecipe {
   count: Int!
 }
 
@@ -24,9 +36,293 @@ type BatchPayload {
 
 scalar DateTime
 
+type ExcludedRecipe {
+  id: ID!
+  user: User!
+  recipe: Recipe!
+}
+
+type ExcludedRecipeConnection {
+  pageInfo: PageInfo!
+  edges: [ExcludedRecipeEdge]!
+  aggregate: AggregateExcludedRecipe!
+}
+
+input ExcludedRecipeCreateInput {
+  id: ID
+  user: UserCreateOneWithoutExcludedInput!
+  recipe: RecipeCreateOneInput!
+}
+
+input ExcludedRecipeCreateManyWithoutUserInput {
+  create: [ExcludedRecipeCreateWithoutUserInput!]
+  connect: [ExcludedRecipeWhereUniqueInput!]
+}
+
+input ExcludedRecipeCreateWithoutUserInput {
+  id: ID
+  recipe: RecipeCreateOneInput!
+}
+
+type ExcludedRecipeEdge {
+  node: ExcludedRecipe!
+  cursor: String!
+}
+
+enum ExcludedRecipeOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type ExcludedRecipePreviousValues {
+  id: ID!
+}
+
+input ExcludedRecipeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [ExcludedRecipeScalarWhereInput!]
+  OR: [ExcludedRecipeScalarWhereInput!]
+  NOT: [ExcludedRecipeScalarWhereInput!]
+}
+
+type ExcludedRecipeSubscriptionPayload {
+  mutation: MutationType!
+  node: ExcludedRecipe
+  updatedFields: [String!]
+  previousValues: ExcludedRecipePreviousValues
+}
+
+input ExcludedRecipeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ExcludedRecipeWhereInput
+  AND: [ExcludedRecipeSubscriptionWhereInput!]
+  OR: [ExcludedRecipeSubscriptionWhereInput!]
+  NOT: [ExcludedRecipeSubscriptionWhereInput!]
+}
+
+input ExcludedRecipeUpdateInput {
+  user: UserUpdateOneRequiredWithoutExcludedInput
+  recipe: RecipeUpdateOneRequiredInput
+}
+
+input ExcludedRecipeUpdateManyWithoutUserInput {
+  create: [ExcludedRecipeCreateWithoutUserInput!]
+  delete: [ExcludedRecipeWhereUniqueInput!]
+  connect: [ExcludedRecipeWhereUniqueInput!]
+  set: [ExcludedRecipeWhereUniqueInput!]
+  disconnect: [ExcludedRecipeWhereUniqueInput!]
+  update: [ExcludedRecipeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ExcludedRecipeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ExcludedRecipeScalarWhereInput!]
+}
+
+input ExcludedRecipeUpdateWithoutUserDataInput {
+  recipe: RecipeUpdateOneRequiredInput
+}
+
+input ExcludedRecipeUpdateWithWhereUniqueWithoutUserInput {
+  where: ExcludedRecipeWhereUniqueInput!
+  data: ExcludedRecipeUpdateWithoutUserDataInput!
+}
+
+input ExcludedRecipeUpsertWithWhereUniqueWithoutUserInput {
+  where: ExcludedRecipeWhereUniqueInput!
+  update: ExcludedRecipeUpdateWithoutUserDataInput!
+  create: ExcludedRecipeCreateWithoutUserInput!
+}
+
+input ExcludedRecipeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  recipe: RecipeWhereInput
+  AND: [ExcludedRecipeWhereInput!]
+  OR: [ExcludedRecipeWhereInput!]
+  NOT: [ExcludedRecipeWhereInput!]
+}
+
+input ExcludedRecipeWhereUniqueInput {
+  id: ID
+}
+
+type LikedRecipe {
+  id: ID!
+  user: User!
+  recipe: Recipe!
+}
+
+type LikedRecipeConnection {
+  pageInfo: PageInfo!
+  edges: [LikedRecipeEdge]!
+  aggregate: AggregateLikedRecipe!
+}
+
+input LikedRecipeCreateInput {
+  id: ID
+  user: UserCreateOneWithoutLikedInput!
+  recipe: RecipeCreateOneInput!
+}
+
+input LikedRecipeCreateManyWithoutUserInput {
+  create: [LikedRecipeCreateWithoutUserInput!]
+  connect: [LikedRecipeWhereUniqueInput!]
+}
+
+input LikedRecipeCreateWithoutUserInput {
+  id: ID
+  recipe: RecipeCreateOneInput!
+}
+
+type LikedRecipeEdge {
+  node: LikedRecipe!
+  cursor: String!
+}
+
+enum LikedRecipeOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type LikedRecipePreviousValues {
+  id: ID!
+}
+
+input LikedRecipeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [LikedRecipeScalarWhereInput!]
+  OR: [LikedRecipeScalarWhereInput!]
+  NOT: [LikedRecipeScalarWhereInput!]
+}
+
+type LikedRecipeSubscriptionPayload {
+  mutation: MutationType!
+  node: LikedRecipe
+  updatedFields: [String!]
+  previousValues: LikedRecipePreviousValues
+}
+
+input LikedRecipeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: LikedRecipeWhereInput
+  AND: [LikedRecipeSubscriptionWhereInput!]
+  OR: [LikedRecipeSubscriptionWhereInput!]
+  NOT: [LikedRecipeSubscriptionWhereInput!]
+}
+
+input LikedRecipeUpdateInput {
+  user: UserUpdateOneRequiredWithoutLikedInput
+  recipe: RecipeUpdateOneRequiredInput
+}
+
+input LikedRecipeUpdateManyWithoutUserInput {
+  create: [LikedRecipeCreateWithoutUserInput!]
+  delete: [LikedRecipeWhereUniqueInput!]
+  connect: [LikedRecipeWhereUniqueInput!]
+  set: [LikedRecipeWhereUniqueInput!]
+  disconnect: [LikedRecipeWhereUniqueInput!]
+  update: [LikedRecipeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [LikedRecipeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [LikedRecipeScalarWhereInput!]
+}
+
+input LikedRecipeUpdateWithoutUserDataInput {
+  recipe: RecipeUpdateOneRequiredInput
+}
+
+input LikedRecipeUpdateWithWhereUniqueWithoutUserInput {
+  where: LikedRecipeWhereUniqueInput!
+  data: LikedRecipeUpdateWithoutUserDataInput!
+}
+
+input LikedRecipeUpsertWithWhereUniqueWithoutUserInput {
+  where: LikedRecipeWhereUniqueInput!
+  update: LikedRecipeUpdateWithoutUserDataInput!
+  create: LikedRecipeCreateWithoutUserInput!
+}
+
+input LikedRecipeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  recipe: RecipeWhereInput
+  AND: [LikedRecipeWhereInput!]
+  OR: [LikedRecipeWhereInput!]
+  NOT: [LikedRecipeWhereInput!]
+}
+
+input LikedRecipeWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
 type Mutation {
+  createExcludedRecipe(data: ExcludedRecipeCreateInput!): ExcludedRecipe!
+  updateExcludedRecipe(data: ExcludedRecipeUpdateInput!, where: ExcludedRecipeWhereUniqueInput!): ExcludedRecipe
+  upsertExcludedRecipe(where: ExcludedRecipeWhereUniqueInput!, create: ExcludedRecipeCreateInput!, update: ExcludedRecipeUpdateInput!): ExcludedRecipe!
+  deleteExcludedRecipe(where: ExcludedRecipeWhereUniqueInput!): ExcludedRecipe
+  deleteManyExcludedRecipes(where: ExcludedRecipeWhereInput): BatchPayload!
+  createLikedRecipe(data: LikedRecipeCreateInput!): LikedRecipe!
+  updateLikedRecipe(data: LikedRecipeUpdateInput!, where: LikedRecipeWhereUniqueInput!): LikedRecipe
+  upsertLikedRecipe(where: LikedRecipeWhereUniqueInput!, create: LikedRecipeCreateInput!, update: LikedRecipeUpdateInput!): LikedRecipe!
+  deleteLikedRecipe(where: LikedRecipeWhereUniqueInput!): LikedRecipe
+  deleteManyLikedRecipes(where: LikedRecipeWhereInput): BatchPayload!
   createRecipe(data: RecipeCreateInput!): Recipe!
   updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
   updateManyRecipes(data: RecipeUpdateManyMutationInput!, where: RecipeWhereInput): BatchPayload!
@@ -45,6 +341,11 @@ type Mutation {
   upsertRecipeSource(where: RecipeSourceWhereUniqueInput!, create: RecipeSourceCreateInput!, update: RecipeSourceUpdateInput!): RecipeSource!
   deleteRecipeSource(where: RecipeSourceWhereUniqueInput!): RecipeSource
   deleteManyRecipeSources(where: RecipeSourceWhereInput): BatchPayload!
+  createSavedRecipe(data: SavedRecipeCreateInput!): SavedRecipe!
+  updateSavedRecipe(data: SavedRecipeUpdateInput!, where: SavedRecipeWhereUniqueInput!): SavedRecipe
+  upsertSavedRecipe(where: SavedRecipeWhereUniqueInput!, create: SavedRecipeCreateInput!, update: SavedRecipeUpdateInput!): SavedRecipe!
+  deleteSavedRecipe(where: SavedRecipeWhereUniqueInput!): SavedRecipe
+  deleteManySavedRecipes(where: SavedRecipeWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -71,6 +372,12 @@ type PageInfo {
 }
 
 type Query {
+  excludedRecipe(where: ExcludedRecipeWhereUniqueInput!): ExcludedRecipe
+  excludedRecipes(where: ExcludedRecipeWhereInput, orderBy: ExcludedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ExcludedRecipe]!
+  excludedRecipesConnection(where: ExcludedRecipeWhereInput, orderBy: ExcludedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ExcludedRecipeConnection!
+  likedRecipe(where: LikedRecipeWhereUniqueInput!): LikedRecipe
+  likedRecipes(where: LikedRecipeWhereInput, orderBy: LikedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikedRecipe]!
+  likedRecipesConnection(where: LikedRecipeWhereInput, orderBy: LikedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): LikedRecipeConnection!
   recipe(where: RecipeWhereUniqueInput!): Recipe
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
@@ -80,6 +387,9 @@ type Query {
   recipeSource(where: RecipeSourceWhereUniqueInput!): RecipeSource
   recipeSources(where: RecipeSourceWhereInput, orderBy: RecipeSourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RecipeSource]!
   recipeSourcesConnection(where: RecipeSourceWhereInput, orderBy: RecipeSourceOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeSourceConnection!
+  savedRecipe(where: SavedRecipeWhereUniqueInput!): SavedRecipe
+  savedRecipes(where: SavedRecipeWhereInput, orderBy: SavedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SavedRecipe]!
+  savedRecipesConnection(where: SavedRecipeWhereInput, orderBy: SavedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): SavedRecipeConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -122,6 +432,11 @@ input RecipeCreateInput {
   categories: RecipeCreatecategoriesInput
   calories: Int
   source: RecipeSourceCreateOneInput
+}
+
+input RecipeCreateOneInput {
+  create: RecipeCreateInput
+  connect: RecipeWhereUniqueInput
 }
 
 input RecipeCreateOneWithoutIngredientsInput {
@@ -568,6 +883,18 @@ input RecipeUpdatecategoriesInput {
   set: [String!]
 }
 
+input RecipeUpdateDataInput {
+  name: String
+  duration: Int
+  ingredients: RecipeIngredientUpdateManyWithoutRecipeInput
+  portions: Int
+  imageurl: String
+  url: String
+  categories: RecipeUpdatecategoriesInput
+  calories: Int
+  source: RecipeSourceUpdateOneInput
+}
+
 input RecipeUpdateInput {
   name: String
   duration: Int
@@ -590,6 +917,13 @@ input RecipeUpdateManyMutationInput {
   calories: Int
 }
 
+input RecipeUpdateOneRequiredInput {
+  create: RecipeCreateInput
+  update: RecipeUpdateDataInput
+  upsert: RecipeUpsertNestedInput
+  connect: RecipeWhereUniqueInput
+}
+
 input RecipeUpdateOneRequiredWithoutIngredientsInput {
   create: RecipeCreateWithoutIngredientsInput
   update: RecipeUpdateWithoutIngredientsDataInput
@@ -606,6 +940,11 @@ input RecipeUpdateWithoutIngredientsDataInput {
   categories: RecipeUpdatecategoriesInput
   calories: Int
   source: RecipeSourceUpdateOneInput
+}
+
+input RecipeUpsertNestedInput {
+  update: RecipeUpdateDataInput!
+  create: RecipeCreateInput!
 }
 
 input RecipeUpsertWithoutIngredientsInput {
@@ -724,16 +1063,159 @@ input RecipeWhereUniqueInput {
   url: String
 }
 
+type SavedRecipe {
+  id: ID!
+  user: User!
+  recipe: Recipe!
+}
+
+type SavedRecipeConnection {
+  pageInfo: PageInfo!
+  edges: [SavedRecipeEdge]!
+  aggregate: AggregateSavedRecipe!
+}
+
+input SavedRecipeCreateInput {
+  id: ID
+  user: UserCreateOneWithoutSavedInput!
+  recipe: RecipeCreateOneInput!
+}
+
+input SavedRecipeCreateManyWithoutUserInput {
+  create: [SavedRecipeCreateWithoutUserInput!]
+  connect: [SavedRecipeWhereUniqueInput!]
+}
+
+input SavedRecipeCreateWithoutUserInput {
+  id: ID
+  recipe: RecipeCreateOneInput!
+}
+
+type SavedRecipeEdge {
+  node: SavedRecipe!
+  cursor: String!
+}
+
+enum SavedRecipeOrderByInput {
+  id_ASC
+  id_DESC
+}
+
+type SavedRecipePreviousValues {
+  id: ID!
+}
+
+input SavedRecipeScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  AND: [SavedRecipeScalarWhereInput!]
+  OR: [SavedRecipeScalarWhereInput!]
+  NOT: [SavedRecipeScalarWhereInput!]
+}
+
+type SavedRecipeSubscriptionPayload {
+  mutation: MutationType!
+  node: SavedRecipe
+  updatedFields: [String!]
+  previousValues: SavedRecipePreviousValues
+}
+
+input SavedRecipeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: SavedRecipeWhereInput
+  AND: [SavedRecipeSubscriptionWhereInput!]
+  OR: [SavedRecipeSubscriptionWhereInput!]
+  NOT: [SavedRecipeSubscriptionWhereInput!]
+}
+
+input SavedRecipeUpdateInput {
+  user: UserUpdateOneRequiredWithoutSavedInput
+  recipe: RecipeUpdateOneRequiredInput
+}
+
+input SavedRecipeUpdateManyWithoutUserInput {
+  create: [SavedRecipeCreateWithoutUserInput!]
+  delete: [SavedRecipeWhereUniqueInput!]
+  connect: [SavedRecipeWhereUniqueInput!]
+  set: [SavedRecipeWhereUniqueInput!]
+  disconnect: [SavedRecipeWhereUniqueInput!]
+  update: [SavedRecipeUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [SavedRecipeUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [SavedRecipeScalarWhereInput!]
+}
+
+input SavedRecipeUpdateWithoutUserDataInput {
+  recipe: RecipeUpdateOneRequiredInput
+}
+
+input SavedRecipeUpdateWithWhereUniqueWithoutUserInput {
+  where: SavedRecipeWhereUniqueInput!
+  data: SavedRecipeUpdateWithoutUserDataInput!
+}
+
+input SavedRecipeUpsertWithWhereUniqueWithoutUserInput {
+  where: SavedRecipeWhereUniqueInput!
+  update: SavedRecipeUpdateWithoutUserDataInput!
+  create: SavedRecipeCreateWithoutUserInput!
+}
+
+input SavedRecipeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  user: UserWhereInput
+  recipe: RecipeWhereInput
+  AND: [SavedRecipeWhereInput!]
+  OR: [SavedRecipeWhereInput!]
+  NOT: [SavedRecipeWhereInput!]
+}
+
+input SavedRecipeWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  excludedRecipe(where: ExcludedRecipeSubscriptionWhereInput): ExcludedRecipeSubscriptionPayload
+  likedRecipe(where: LikedRecipeSubscriptionWhereInput): LikedRecipeSubscriptionPayload
   recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
   recipeIngredient(where: RecipeIngredientSubscriptionWhereInput): RecipeIngredientSubscriptionPayload
   recipeSource(where: RecipeSourceSubscriptionWhereInput): RecipeSourceSubscriptionPayload
+  savedRecipe(where: SavedRecipeSubscriptionWhereInput): SavedRecipeSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
   id: ID!
   name: String!
+  liked(where: LikedRecipeWhereInput, orderBy: LikedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [LikedRecipe!]
+  saved(where: SavedRecipeWhereInput, orderBy: SavedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [SavedRecipe!]
+  excluded(where: ExcludedRecipeWhereInput, orderBy: ExcludedRecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [ExcludedRecipe!]
 }
 
 type UserConnection {
@@ -745,6 +1227,45 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   name: String!
+  liked: LikedRecipeCreateManyWithoutUserInput
+  saved: SavedRecipeCreateManyWithoutUserInput
+  excluded: ExcludedRecipeCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutExcludedInput {
+  create: UserCreateWithoutExcludedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutLikedInput {
+  create: UserCreateWithoutLikedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateOneWithoutSavedInput {
+  create: UserCreateWithoutSavedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutExcludedInput {
+  id: ID
+  name: String!
+  liked: LikedRecipeCreateManyWithoutUserInput
+  saved: SavedRecipeCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutLikedInput {
+  id: ID
+  name: String!
+  saved: SavedRecipeCreateManyWithoutUserInput
+  excluded: ExcludedRecipeCreateManyWithoutUserInput
+}
+
+input UserCreateWithoutSavedInput {
+  id: ID
+  name: String!
+  liked: LikedRecipeCreateManyWithoutUserInput
+  excluded: ExcludedRecipeCreateManyWithoutUserInput
 }
 
 type UserEdge {
@@ -784,10 +1305,67 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
+  liked: LikedRecipeUpdateManyWithoutUserInput
+  saved: SavedRecipeUpdateManyWithoutUserInput
+  excluded: ExcludedRecipeUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   name: String
+}
+
+input UserUpdateOneRequiredWithoutExcludedInput {
+  create: UserCreateWithoutExcludedInput
+  update: UserUpdateWithoutExcludedDataInput
+  upsert: UserUpsertWithoutExcludedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutLikedInput {
+  create: UserCreateWithoutLikedInput
+  update: UserUpdateWithoutLikedDataInput
+  upsert: UserUpsertWithoutLikedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateOneRequiredWithoutSavedInput {
+  create: UserCreateWithoutSavedInput
+  update: UserUpdateWithoutSavedDataInput
+  upsert: UserUpsertWithoutSavedInput
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutExcludedDataInput {
+  name: String
+  liked: LikedRecipeUpdateManyWithoutUserInput
+  saved: SavedRecipeUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutLikedDataInput {
+  name: String
+  saved: SavedRecipeUpdateManyWithoutUserInput
+  excluded: ExcludedRecipeUpdateManyWithoutUserInput
+}
+
+input UserUpdateWithoutSavedDataInput {
+  name: String
+  liked: LikedRecipeUpdateManyWithoutUserInput
+  excluded: ExcludedRecipeUpdateManyWithoutUserInput
+}
+
+input UserUpsertWithoutExcludedInput {
+  update: UserUpdateWithoutExcludedDataInput!
+  create: UserCreateWithoutExcludedInput!
+}
+
+input UserUpsertWithoutLikedInput {
+  update: UserUpdateWithoutLikedDataInput!
+  create: UserCreateWithoutLikedInput!
+}
+
+input UserUpsertWithoutSavedInput {
+  update: UserUpdateWithoutSavedDataInput!
+  create: UserCreateWithoutSavedInput!
 }
 
 input UserWhereInput {
@@ -819,6 +1397,15 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  liked_every: LikedRecipeWhereInput
+  liked_some: LikedRecipeWhereInput
+  liked_none: LikedRecipeWhereInput
+  saved_every: SavedRecipeWhereInput
+  saved_some: SavedRecipeWhereInput
+  saved_none: SavedRecipeWhereInput
+  excluded_every: ExcludedRecipeWhereInput
+  excluded_some: ExcludedRecipeWhereInput
+  excluded_none: ExcludedRecipeWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

@@ -1,6 +1,27 @@
 type User {
   id: ID! @id
   name: String! @unique
+  liked: [LikedRecipe!]!
+  saved: [SavedRecipe!]!
+  excluded: [ExcludedRecipe!]!
+}
+
+type LikedRecipe {
+  id: ID! @id
+  user: User!
+  recipe: Recipe!
+}
+
+type ExcludedRecipe {
+  id: ID! @id
+  user: User!
+  recipe: Recipe!
+}
+
+type SavedRecipe {
+  id: ID! @id
+  user: User!
+  recipe: Recipe!
 }
 
 type RecipeSource {
