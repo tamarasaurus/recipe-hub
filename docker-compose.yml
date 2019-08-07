@@ -20,17 +20,9 @@ services:
       API_URL: 'http://app:8000'
       SESSION_SECRET: ${SESSION_SECRET}
       ENABLE_DATABASE_SSL: ${ENABLE_DATABASE_SSL:-0}
-
-  scraper:
-    image: scraper
-    build:
-      context: .
-    environment:
-      REDIS_URL: 'redis://cache:6379'
-      POSTGRES_HOST: 'postgres'
-      API_URL: 'http://app:8000'
     depends_on:
       - redis
+      - postgres
 
   redis:
     image: redis
