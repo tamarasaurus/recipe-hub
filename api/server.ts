@@ -1,4 +1,4 @@
-import Database from './api/repository';
+import Database from './repository';
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
@@ -6,9 +6,9 @@ import * as passport from 'passport';
 import * as session from 'express-session';
 import * as helmet from 'helmet';
 import { OAuth2Strategy } from 'passport-google-oauth';
-import rateLimiter from './api/middleware/rate-limiting';
+import rateLimiter from './middleware/rate-limiting';
 import * as ConnectRedis from 'connect-redis';
-import mergeIngredients from './api/queries/merge-ingredients';
+import mergeIngredients from './queries/merge-ingredients';
 
 const RedisStore = ConnectRedis(session);
 const PORT = process.env.PORT || '8000';
