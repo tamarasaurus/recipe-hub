@@ -25,49 +25,32 @@ services:
       - 8000:8000
     volumes:
       - ./node_modules:/usr/src/app/node_modules
-      - ./frontend/node_modules:/usr/src/app/frontend/node_modules
       - ./api:/usr/src/app/api
-
-  api-nginx:
-    image: nginx:alpine
-    volumes:
-      - ./api/nginx.conf:/etc/nginx/conf.d/default.conf
-    depends_on:
-      - api
-
-  frontend-nginx:
-    build:
-      context: frontend
-    environment:
-      REACT_APP_API_URL: 'http://nginx/api'
 
   nginx:
     image: nginx:alpine
     restart: on-failure
     build:
-      context: nginx
+      context: .
     depends_on:
-      - frontend-nginx
-      - api-nginx
+      - api
     ports:
       - 80:80
-      - 443:443
     restart: on-failure
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./frontend/build:/usr/src/app
+      - ./nginx.conf:/etc/nginx/nginx.conf
 
   # Move the Dockerfile inside the scraper folder
-  scraper:
-    image: scraper
-    build:
-      context: .
-    environment:
-      REDIS_URL: 'redis://cache:6379'
-      POSTGRES_HOST: 'postgres'
-      API_URL: 'http://app:8000'
-    depends_on:
-      - redis
+  # scraper:
+  #   image: scraper
+  #   build:
+  #     context: .
+  #   environment:
+  #     REDIS_URL: 'redis://cache:6379'
+  #     POSTGRES_HOST: 'postgres'
+  #     API_URL: 'http://app:8000'
+  #   depends_on:
+  #     - redis
 
   redis:
     image: redis
