@@ -88,11 +88,11 @@ passport.use(new OAuth2Strategy(
   },
 ));
 
-app.get('/login',
+app.get('/auth/login',
   passport.authenticate('google', { scope: 'email' }),
 );
 
-app.get('/logout', (req, res) => {
+app.get('/auth/logout', (req, res) => {
   req.logout();
   res.redirect('/');
 });

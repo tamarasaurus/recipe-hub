@@ -34,9 +34,8 @@ export const unlikeRecipe = (id) => post(`/recipes/${id}/unlike`)
 export const excludeRecipe = (id) => post(`/recipes/${id}/exclude`)
 export const generateRecipes = () => get(`/recipes/generate`)
 export const getMergedRecipes = (ids) => get(`/recipes/merge?ids=${ids}`)
-
 export const getUser = (id) => get(`/user`)
-export const loginUrl = process.env.REACT_APP_API_URL + '/login'
-export const logoutUrl = process.env.REACT_APP_API_URL + '/logout'
 
+export const loginUrl = '/auth/login'
+export const logoutUrl = '/auth/logout'
 export const OFFSET = 24
