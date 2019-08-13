@@ -23,3 +23,4 @@ WORKDIR /usr/src/app
 EXPOSE 8000
 
 COPY . .
+RUN npm install

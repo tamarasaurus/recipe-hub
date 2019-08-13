@@ -16,13 +16,9 @@
         "resolveJsonModule": true
     },
     "include": [
-        "api/src/**/*", "api.ts",
-        "contracts/**/*",
-        "attributes/**/*",
         "index.ts"
     ],
     "exclude": [
         "node_modules",
-        "frontend"
     ]
 }

@@ -13,21 +13,17 @@ services:
       context: api
     command: 'npm start'
     environment:
-      REACT_APP_API_URL: ${API_URL}
       POSTGRES_HOST: 'postgres://postgres:postgres@postgres:5432/postgres'
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
       GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
       REDIS_URL: 'redis://cache:6379'
-      API_URL: 'http://app:8000'
+      API_URL: 'http://app'
       SESSION_SECRET: ${SESSION_SECRET}
       ENABLE_DATABASE_SSL: ${ENABLE_DATABASE_SSL:-0}
     ports:
       - 8000:8000
-    volumes:
-      - ./node_modules:/usr/src/app/node_modules
-      - ./api:/usr/src/app/api
 
-  nginx:
+  app:
     image: nginx:alpine
     restart: on-failure
     build:
@@ -40,17 +36,16 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
 
-  # Move the Dockerfile inside the scraper folder
-  # scraper:
-  #   image: scraper
-  #   build:
-  #     context: .
-  #   environment:
-  #     REDIS_URL: 'redis://cache:6379'
-  #     POSTGRES_HOST: 'postgres'
-  #     API_URL: 'http://app:8000'
-  #   depends_on:
-  #     - redis
+  scraper:
+    image: scraper
+    command: 'npm start'
+    build:
+      context: scraper
+    environment:
+      REDIS_URL: 'redis://cache:6379'
+      API_URL: 'http://app'
+    depends_on:
+      - redis
 
   redis:
     image: redis

@@ -54,7 +54,6 @@
     "jest": "24.7.1",
     "jsonpath": "^1.0.1",
     "normalize-diacritics": "^2.6.1",
-    "numeric-quantity": "^0.3.2",
     "passport": "^0.4.0",
     "passport-google-oauth": "^2.0.0",
     "pg": "^7.11.0",
