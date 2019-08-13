@@ -1,4 +1,4 @@
-const API_URL = process.env.REACT_APP_API_URL + '/api' || ''
+const API_URL = '/api'
 
 export const SORT_BY = {
   CREATED_DESC: 'sort=created&order=desc',
