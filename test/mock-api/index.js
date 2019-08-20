@@ -7,9 +7,6 @@ const PORT = 4000
 const USER = { name: 'Tamara', isLoggedIn: true };
 const app = express();
 const recipes = recipesJSON;
-const likedRecipes = [];
-const excludedRecipes = [];
-const savedRecipes = [];
 
 const corsOptions = {
   origin: '*',

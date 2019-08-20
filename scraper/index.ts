@@ -19,7 +19,7 @@ import quitoqueLink from './attributes/quitoque-link';
 const scrapingQueue = new Queue('scraping', process.env.REDIS_URL);
 const storageQueue = new Queue('storage', process.env.REDIS_URL);
 
-console.log('API_URL', process.env.API_URL)
+console.log('API_URL', process.env.API_URL);
 
 scrapingQueue.process(scrapeJob);
 storageQueue.process(storeJob);
