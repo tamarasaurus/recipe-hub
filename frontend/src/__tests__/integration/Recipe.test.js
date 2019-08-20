@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, cleanup } from '@testing-library/react'
+import { render, cleanup } from '@testing-library/react'
 import Recipe from '../../App/RecipeList/Recipe/index'
 import { ThemeProvider } from 'styled-components/macro'
 
