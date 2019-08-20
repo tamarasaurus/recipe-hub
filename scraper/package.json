@@ -4,7 +4,7 @@
   "description": "recipe hub scraper",
   "main": "index.js",
   "engines": {
-    "node": "11.15.0"
+    "node": "11.x"
   },
   "scripts": {
     "start": "ts-node index.ts"
