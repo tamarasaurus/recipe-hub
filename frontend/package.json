@@ -2,6 +2,7 @@
   "name": "recipe-hub-frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "lodash": "^4.17.14",
     "react": "^16.8.6",

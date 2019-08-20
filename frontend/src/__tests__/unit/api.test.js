@@ -13,7 +13,7 @@ describe('api', () => {
 
     api.getRecipes({ keywords, offset })
     expect(fetch.mock.calls[0][0]).toEqual(
-      'http://localhost:8000/api/recipes?keywords=poulet&offset=24&sort=created&order=desc&liked=0',
+      '/api/recipes?keywords=poulet&offset=24&sort=created&order=desc&liked=0',
     )
   })
 
@@ -22,9 +22,7 @@ describe('api', () => {
 
     const recipeId = 1
     api.saveRecipe(recipeId)
-    expect(fetch.mock.calls[0][0]).toEqual(
-      'http://localhost:8000/api/recipes/1/save',
-    )
+    expect(fetch.mock.calls[0][0]).toEqual('/api/recipes/1/save')
     expect(fetch.mock.calls[0][1]).toEqual({ method: 'POST' })
   })
 })

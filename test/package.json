@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node mock/server.js"
+    "start": "node mock-api/index.js",
+    "test": "jest && cypress run",
+    "test-endtoend": "cypress open"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +15,14 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "faker": "^4.1.0",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "request-promise": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "cypress": "^3.4.1",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.5.3"
   }
 }

@@ -1,0 +1,4 @@
+{
+    "testFiles": "**/**",
+    "integrationFolder": "endtoend"
+}
