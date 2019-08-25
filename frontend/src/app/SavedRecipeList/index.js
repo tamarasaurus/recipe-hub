@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
 import Button from 'components/Button'
-import SavedRecipe from './SavedRecipe'
-import ShoppingList from './ShoppingList'
+import SavedRecipeListItem from 'app/SavedRecipeListItem'
+import ShoppingList from 'app/ShoppingList'
 
 const Container = styled.section`
   position: fixed;
   bottom: 0;
   right: 0;
   background: none;
-  grid-area: SavedRecipes;
+  grid-area: SavedRecipeList;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -93,7 +93,7 @@ const ShoppingListIcon = () => (
   </span>
 )
 
-const SavedRecipes = ({
+const SavedRecipeList = ({
   hasLoaded,
   isLoading,
   savedRecipes,
@@ -111,7 +111,7 @@ const SavedRecipes = ({
           <Title>Your recipes</Title>
           <List>
             {savedRecipes.map((recipe) => (
-              <SavedRecipe
+              <SavedRecipeListItem
                 key={recipe.id}
                 recipe={recipe}
                 onRemove={() => removeSavedRecipe(recipe)}
@@ -142,7 +142,7 @@ const SavedRecipes = ({
   )
 }
 
-SavedRecipes.propTypes = {
+SavedRecipeList.propTypes = {
   hasLoaded: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
@@ -150,4 +150,4 @@ SavedRecipes.propTypes = {
   generateRecipes: PropTypes.func.isRequired,
 }
 
-export default SavedRecipes
+export default SavedRecipeList

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { createGlobalStyle, ThemeProvider } from 'styled-components/macro'
 
-import App from './App'
+import App from './app/App'
 
 const colors = {
   base3: '#ffffff',

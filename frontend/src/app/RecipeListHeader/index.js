@@ -12,7 +12,7 @@ const Container = styled.header`
 
 const Title = styled.h2``
 
-const Header = ({ sortBy, onChange }) => {
+const RecipeListHeader = ({ sortBy, onChange }) => {
   return (
     <Container>
       <Title>Recipes</Title>
@@ -29,9 +29,9 @@ const Header = ({ sortBy, onChange }) => {
   )
 }
 
-Header.propTypes = {
+RecipeListHeader.propTypes = {
   sortBy: PropTypes.oneOf(Object.values(SORT_BY)).isRequired,
   onChange: PropTypes.func.isRequired,
 }
 
-export default Header
+export default RecipeListHeader

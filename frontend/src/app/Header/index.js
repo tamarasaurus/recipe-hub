@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
-import Filters from './Filters'
+import Filters from 'app/Filters'
 
 import * as api from 'utils/api'
 
@@ -25,10 +25,10 @@ const StyledFilters = styled(Filters)`
 
 const Link = styled.a``
 
-const Header = ({ filters, setFilters, user }) => {
+const Header = ({ filters, addFilter, user }) => {
   return (
     <Container>
-      <StyledFilters filters={filters} setFilters={setFilters} />
+      <StyledFilters filters={filters} addFilter={addFilter} />
       {user &&
         (user.isLoggedIn ? (
           <Link href={api.logoutUrl}>Logout</Link>
@@ -41,7 +41,7 @@ const Header = ({ filters, setFilters, user }) => {
 
 Header.propTypes = {
   filters: PropTypes.object,
-  setFilters: PropTypes.func.isRequired,
+  addFilter: PropTypes.func.isRequired,
   user: PropTypes.shape({
     name: PropTypes.string,
     isLoggedIn: PropTypes.bool,

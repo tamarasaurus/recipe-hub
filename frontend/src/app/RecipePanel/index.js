@@ -2,7 +2,7 @@ import React, { memo, useContext } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
-import { AppContext } from 'App'
+import { AppContext } from 'app/App'
 import Panel from 'components/Panel'
 import Button from 'components/Button'
 

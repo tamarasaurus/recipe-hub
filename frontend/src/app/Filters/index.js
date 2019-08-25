@@ -59,17 +59,17 @@ const Label = styled.label`
   display: inline-block;
 `
 
-const Filters = ({ className, filters, setFilters }) => {
+const Filters = ({ className, filters, addFilter }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const openDropdown = useCallback(() => setIsDropdownOpen(true), [])
   const closeDropdown = useCallback(() => setIsDropdownOpen(false), [])
 
   const onChange = (e) => {
-    setFilters(e.target.name, e.target.value)
+    addFilter(e.target.name, e.target.value)
   }
 
   const onChecked = (e) => {
-    setFilters(e.target.name, e.target.checked ? 1 : 0)
+    addFilter(e.target.name, e.target.checked ? 1 : 0)
   }
 
   const onKeyDown = (e) => {
@@ -125,7 +125,7 @@ const Filters = ({ className, filters, setFilters }) => {
 
 Filters.propTypes = {
   filters: PropTypes.object,
-  setFilters: PropTypes.func.isRequired,
+  addFilter: PropTypes.func.isRequired,
 }
 
 export default Filters

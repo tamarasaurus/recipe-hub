@@ -7,9 +7,9 @@ import React, {
 } from 'react'
 import styled from 'styled-components/macro'
 
-import Header from './Header'
-import RecipeList from './RecipeList'
-import SavedRecipes from './SavedRecipes'
+import Header from 'app//Header'
+import RecipeList from 'app/RecipeList'
+import SavedRecipeList from 'app/SavedRecipeList'
 
 import * as api from 'utils/api'
 
@@ -19,7 +19,7 @@ const Layout = styled.div`
   grid-template-rows: auto 1fr;
   grid-template-areas:
     'Header Header'
-    'RecipeList SavedRecipes';
+    'RecipeList SavedRecipeList';
   height: 100%;
   background: ${({ theme }) => theme.colors.base2};
 `
@@ -37,16 +37,15 @@ const App = () => {
     fetchData()
   }, [])
 
-  const [filters, setFilterss] = useState({
+  const [filters, setFilter] = useState({
     query: '',
     liked: 0,
   })
-  const setFilters = (label, value) => {
-    const newFilters = {
+  const addFilter = (label, value) => {
+    setFilter((filters) => ({
       ...filters,
       [label]: value,
-    }
-    setFilterss(newFilters)
+    }))
     setOffset(0)
   }
 
@@ -198,7 +197,7 @@ const App = () => {
   return (
     <AppContext.Provider value={contextValue}>
       <Layout>
-        <Header filters={filters} setFilters={setFilters} user={user} />
+        <Header filters={filters} addFilter={addFilter} user={user} />
         <RecipeList
           hasLoaded={hasLoadedRecipes}
           isLoading={isLoadingRecipes}
@@ -211,7 +210,7 @@ const App = () => {
           sortBy={sortBy}
           onChangeSortBy={setSortBy}
         />
-        <SavedRecipes
+        <SavedRecipeList
           hasLoaded={hasLoadedSavecRecipes}
           isLoading={isLoadingSavecRecipes}
           savedRecipes={savedRecipes}
