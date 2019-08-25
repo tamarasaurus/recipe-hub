@@ -37,7 +37,9 @@ const LoadMore = styled(Button)`
 `
 
 const Placeholders = () =>
-  Array.from(new Array(OFFSET), (_, i) => <RecipeListItem key={i} isPlaceholder />)
+  Array.from(new Array(OFFSET), (_, i) => (
+    <RecipeListItem key={i} isPlaceholder />
+  ))
 
 const RecipeList = ({
   hasLoaded,
@@ -46,7 +48,7 @@ const RecipeList = ({
   toggleSaveRecipe,
   toggleLikeRecipe,
   excludeRecipe,
-  canLoadMore,
+  canLoadMoreRecipes,
   loadMore,
   sortBy,
   onChangeSortBy,
@@ -89,7 +91,7 @@ const RecipeList = ({
             ))}
             {isLoading && <Placeholders />}
           </List>
-          {canLoadMore && (
+          {canLoadMoreRecipes && (
             <LoadMore ref={loadMoreRef} onClick={isLoading ? null : loadMore}>
               {isLoading ? 'Loading...' : 'Load more'}
             </LoadMore>
@@ -116,7 +118,7 @@ RecipeList.propTypes = {
   toggleSaveRecipe: PropTypes.func.isRequired,
   toggleLikeRecipe: PropTypes.func.isRequired,
   excludeRecipe: PropTypes.func.isRequired,
-  canLoadMore: PropTypes.bool.isRequired,
+  canLoadMoreRecipes: PropTypes.bool.isRequired,
   loadMore: PropTypes.func.isRequired,
   sortBy: RecipeListHeader.propTypes.sortBy,
   onChangeSortBy: RecipeListHeader.propTypes.onChange,

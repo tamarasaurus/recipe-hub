@@ -98,7 +98,7 @@ const SavedRecipeList = ({
   isLoading,
   savedRecipes,
   removeSavedRecipe,
-  generateRecipes,
+  generateSavedRecipes,
 }) => {
   const [isShowingShoppingList, toggleShowShoppingList] = useState(false)
   const openShoppingList = () => toggleShowShoppingList(true)
@@ -133,7 +133,7 @@ const SavedRecipeList = ({
       ) : (
         <NoRecipes>
           Start adding recipes to your shopping list by clicking on them
-          <GenerateRecipesButton onClick={generateRecipes}>
+          <GenerateRecipesButton onClick={generateSavedRecipes}>
             Add 5 random recipes to your list
           </GenerateRecipesButton>
         </NoRecipes>
@@ -147,7 +147,7 @@ SavedRecipeList.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   savedRecipes: PropTypes.array.isRequired,
   removeSavedRecipe: PropTypes.func.isRequired,
-  generateRecipes: PropTypes.func.isRequired,
+  generateSavedRecipes: PropTypes.func.isRequired,
 }
 
 export default SavedRecipeList

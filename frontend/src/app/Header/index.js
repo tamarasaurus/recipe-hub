@@ -4,6 +4,7 @@ import styled from 'styled-components/macro'
 
 import Filters from 'app/Filters'
 
+import useUser from 'utils/useUser'
 import * as api from 'utils/api'
 
 const Container = styled.div`
@@ -25,7 +26,9 @@ const StyledFilters = styled(Filters)`
 
 const Link = styled.a``
 
-const Header = ({ filters, addFilter, user }) => {
+const Header = ({ filters, addFilter }) => {
+  const user = useUser()
+
   return (
     <Container>
       <StyledFilters filters={filters} addFilter={addFilter} />
@@ -42,10 +45,6 @@ const Header = ({ filters, addFilter, user }) => {
 Header.propTypes = {
   filters: PropTypes.object,
   addFilter: PropTypes.func.isRequired,
-  user: PropTypes.shape({
-    name: PropTypes.string,
-    isLoggedIn: PropTypes.bool,
-  }),
 }
 
 export default Header
