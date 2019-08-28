@@ -2,8 +2,8 @@ import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
-import RecipePanel from 'App/RecipePanel'
-import Placeholder from './Placeholder'
+import RecipePanel from 'app/RecipePanel'
+import RecipeListItemPlaceholder from 'app/RecipeListItemPlaceholder'
 
 const Container = styled.div`
   position: relative;
@@ -93,7 +93,7 @@ const RecipeLink = styled.a`
   padding: ${({ theme }) => theme.px(1)};
 `
 
-const Recipe = ({
+const RecipeListItem = ({
   recipe,
   isPlaceholder,
   toggleSaveRecipe,
@@ -123,7 +123,7 @@ const Recipe = ({
       onClick={!recipe ? null : () => toggleSaveRecipe(recipe)}
     >
       {isPlaceholder ? (
-        <Placeholder />
+        <RecipeListItemPlaceholder />
       ) : (
         <>
           <ExcludeRecipe
@@ -169,7 +169,7 @@ const Recipe = ({
   )
 }
 
-Recipe.propTypes = {
+RecipeListItem.propTypes = {
   recipe: PropTypes.object,
   isPlaceholder: PropTypes.bool,
   toggleSaveRecipe: PropTypes.func,
@@ -177,4 +177,4 @@ Recipe.propTypes = {
   excludeRecipe: PropTypes.func,
 }
 
-export default Recipe
+export default RecipeListItem

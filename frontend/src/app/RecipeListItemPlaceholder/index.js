@@ -14,7 +14,7 @@ const Text = styled.div`
   background: ${({ theme }) => theme.colors.base1};
 `
 
-const Placeholder = ({
+const RecipeListItemPlaceholder = ({
   hasLoaded,
   isLoading,
   recipes,
@@ -31,4 +31,4 @@ const Placeholder = ({
   )
 }
 
-export default Placeholder
+export default RecipeListItemPlaceholder

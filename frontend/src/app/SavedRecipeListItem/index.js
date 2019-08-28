@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 
-import RecipePanel from 'App/RecipePanel'
+import RecipePanel from 'app/RecipePanel'
 
 const Container = styled.li`
   position: relative;
@@ -26,7 +26,7 @@ const RemoveRecipe = styled.button`
   color: ${({ theme }) => theme.colors.warning};
 `
 
-const SavedRecipe = ({ recipe, onRemove }) => {
+const SavedRecipeListItem = ({ recipe, onRemove }) => {
   const [isShowingRecipePanel, setIsShowingRecipePanel] = useState(false)
   const openRecipePanel = useCallback(() => setIsShowingRecipePanel(true), [])
   const closeRecipePanel = useCallback(() => setIsShowingRecipePanel(false), [])
@@ -44,9 +44,9 @@ const SavedRecipe = ({ recipe, onRemove }) => {
   )
 }
 
-SavedRecipe.propTypes = {
+SavedRecipeListItem.propTypes = {
   recipe: PropTypes.object.isRequired,
   onRemove: PropTypes.func.isRequired,
 }
 
-export default SavedRecipe
+export default SavedRecipeListItem

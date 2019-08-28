@@ -4,8 +4,8 @@ import throttle from 'lodash/throttle'
 import styled from 'styled-components/macro'
 
 import Button from 'components/Button'
-import Header from './Header'
-import Recipe from './Recipe'
+import RecipeListHeader from 'app/RecipeListHeader'
+import RecipeListItem from 'app/RecipeListItem'
 
 import { OFFSET } from 'utils/api'
 
@@ -37,7 +37,9 @@ const LoadMore = styled(Button)`
 `
 
 const Placeholders = () =>
-  Array.from(new Array(OFFSET), (_, i) => <Recipe key={i} isPlaceholder />)
+  Array.from(new Array(OFFSET), (_, i) => (
+    <RecipeListItem key={i} isPlaceholder />
+  ))
 
 const RecipeList = ({
   hasLoaded,
@@ -46,7 +48,7 @@ const RecipeList = ({
   toggleSaveRecipe,
   toggleLikeRecipe,
   excludeRecipe,
-  canLoadMore,
+  canLoadMoreRecipes,
   loadMore,
   sortBy,
   onChangeSortBy,
@@ -76,10 +78,10 @@ const RecipeList = ({
     <Container ref={(el) => setList(el)}>
       {recipes.length ? (
         <>
-          <Header sortBy={sortBy} onChange={onChangeSortBy} />
+          <RecipeListHeader sortBy={sortBy} onChange={onChangeSortBy} />
           <List>
             {recipes.map((recipe) => (
-              <Recipe
+              <RecipeListItem
                 key={recipe.id}
                 recipe={recipe}
                 toggleSaveRecipe={toggleSaveRecipe}
@@ -89,7 +91,7 @@ const RecipeList = ({
             ))}
             {isLoading && <Placeholders />}
           </List>
-          {canLoadMore && (
+          {canLoadMoreRecipes && (
             <LoadMore ref={loadMoreRef} onClick={isLoading ? null : loadMore}>
               {isLoading ? 'Loading...' : 'Load more'}
             </LoadMore>
@@ -97,7 +99,7 @@ const RecipeList = ({
         </>
       ) : !hasLoaded || isLoading ? (
         <>
-          <Header sortBy={sortBy} onChange={onChangeSortBy} />
+          <RecipeListHeader sortBy={sortBy} onChange={onChangeSortBy} />
           <List>
             <Placeholders />
           </List>
@@ -116,10 +118,10 @@ RecipeList.propTypes = {
   toggleSaveRecipe: PropTypes.func.isRequired,
   toggleLikeRecipe: PropTypes.func.isRequired,
   excludeRecipe: PropTypes.func.isRequired,
-  canLoadMore: PropTypes.bool.isRequired,
+  canLoadMoreRecipes: PropTypes.bool.isRequired,
   loadMore: PropTypes.func.isRequired,
-  sortBy: Header.propTypes.sortBy,
-  onChangeSortBy: Header.propTypes.onChange,
+  sortBy: RecipeListHeader.propTypes.sortBy,
+  onChangeSortBy: RecipeListHeader.propTypes.onChange,
 }
 
 export default RecipeList
