@@ -1,6 +1,5 @@
 import React, { useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
-import PropTypes from 'prop-types'
 import styled from 'styled-components/macro'
 import { animated, useSpring } from 'react-spring'
 
@@ -42,7 +41,12 @@ const Content = styled(animated.div)`
   }
 `
 
-const Panel = ({ contentCss, children, onClose }) => {
+interface PanelProps {
+  contentCss: any
+  onClose: () => void
+}
+
+const Panel: React.FC<PanelProps> = ({ contentCss, children, onClose }) => {
   const elRef = useRef(document.createElement('div'))
 
   useEffect(() => {
@@ -50,7 +54,7 @@ const Panel = ({ contentCss, children, onClose }) => {
     document.body.appendChild(el)
     document.body.style.overflow = 'hidden'
 
-    const closeOnEscape = (e) => {
+    const closeOnEscape = (e: KeyboardEvent) => {
       if (e.keyCode === 27) onClose()
     }
     window.addEventListener('keydown', closeOnEscape)
@@ -67,7 +71,7 @@ const Panel = ({ contentCss, children, onClose }) => {
     from: { transform: 'translate(-50%, 100%)' },
   })
 
-  const onClickBackdrop = (e) => {
+  const onClickBackdrop = (e: React.MouseEvent) => {
     e.stopPropagation()
     onClose()
   }
@@ -81,12 +85,6 @@ const Panel = ({ contentCss, children, onClose }) => {
     </Container>,
     elRef.current,
   )
-}
-
-Panel.propTypes = {
-  contentCss: PropTypes.array,
-  children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired,
 }
 
 export default Panel
