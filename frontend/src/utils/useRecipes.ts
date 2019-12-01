@@ -1,15 +1,41 @@
 import { useState, useEffect } from 'react'
 
 import * as api from 'utils/api'
+import { Filters } from 'utils/useFilters'
 
-export default (defaultRecipes, { filters, sortBy, offset, setOffset }) => {
-  const [recipes, setRecipes] = useState(defaultRecipes)
+export interface Recipe {
+  id: string
+  liked: boolean
+  saved: boolean
+  name: string
+  duration: number
+  ingredients: any[]
+  portions: number
+  url: string
+  imageurl: string
+  categories: string[]
+  calories: number
+  source: string
+}
+
+interface Options {
+  filters: Filters
+  sortBy: api.SortBy
+  offset: number
+  setOffset: (offset: number) => void
+}
+
+export default (
+  defaultRecipes: Recipe[],
+  { filters, sortBy, offset, setOffset }: Options,
+) => {
+  const [recipes, setRecipes] = useState<Recipe[]>(defaultRecipes)
   const [hasLoadedRecipes, setHasLoadedRecipes] = useState(false)
   const [isLoadingRecipes, setIsLoadingRecipes] = useState(false)
 
   const [canLoadMoreRecipes, setCanLoadMoreRecipes] = useState(true)
-  const checkIfCanLoadMoreRecipes = (items) => {
-    setCanLoadMoreRecipes(items.length === api.OFFSET)
+  const checkIfCanLoadMoreRecipes = (nbNewRecipes: number) => {
+    setCanLoadMoreRecipes(nbNewRecipes === api.OFFSET)
   }
 
   useEffect(() => {
@@ -25,7 +51,7 @@ export default (defaultRecipes, { filters, sortBy, offset, setOffset }) => {
       setHasLoadedRecipes(true)
 
       setOffset(0)
-      checkIfCanLoadMoreRecipes(newRecipes)
+      checkIfCanLoadMoreRecipes(newRecipes.length)
     }
 
     const timeout = setTimeout(fetchData, 300)
@@ -45,10 +71,10 @@ export default (defaultRecipes, { filters, sortBy, offset, setOffset }) => {
     setIsLoadingRecipes(false)
 
     setOffset(newOffset)
-    checkIfCanLoadMoreRecipes(newRecipes)
+    checkIfCanLoadMoreRecipes(newRecipes.length)
   }
 
-  const toggleLikeRecipe = (recipe) => {
+  const toggleLikeRecipe = (recipe: Recipe) => {
     if (recipe.liked) {
       api.unlikeRecipe(recipe.id)
     } else {
@@ -66,7 +92,7 @@ export default (defaultRecipes, { filters, sortBy, offset, setOffset }) => {
     )
   }
 
-  const excludeRecipe = (recipe) => {
+  const excludeRecipe = (recipe: Recipe) => {
     if (
       window.confirm(
         'Do you really want to exclude this recipe? It will be hidden for ever ever',
