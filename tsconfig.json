@@ -19,7 +19,8 @@
         "api/src/**/*", "api.ts",
         "contracts/**/*",
         "attributes/**/*",
-        "index.ts"
+        "index.ts",
+        "index.d.ts"
     ],
     "exclude": [
         "node_modules",

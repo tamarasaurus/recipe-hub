@@ -15,7 +15,6 @@ const PORT = process.env.PORT || '8000';
 const API_URL = process.env.API_URL || `http://localhost:${PORT}`;
 const SESSION_SECRET = process.env.SESSION_SECRET || 'default';
 
-console.log('API_URL', API_URL);
 const db = new Database();
 const app = express();
 
@@ -100,17 +99,23 @@ app.get('/logout', (req, res) => {
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/', session: true }),
   (req, res) => {
-    return db.createUser(req.user.id).then(() => {
+    const user = req.user;
+    return db.createUser(user.id).then(() => {
       res.redirect('/');
     }).catch(() => res.sendStatus(500));
   },
 );
 
 app.get('/api/user', rateLimiter, (req, res) => {
-  const user = req.user || {};
+  if (!req.user) {
+    return res.json({
+      name: null,
+      isLoggedIn: false,
+    })
+  }
 
   return res.json({
-    name: user.name,
+    name: req.user.name,
     isLoggedIn: req.isAuthenticated(),
   });
 });
@@ -120,7 +125,7 @@ app.post('/api/recipes', (req, res) => {
 });
 
 app.get('/api/recipes/generate', rateLimiter, (req, res) => {
-  const user = req.user || {};
+  const user: Express.User = req.user;
 
   db.generateRecipes(user.id)
     .then((data => res.json(data)))
@@ -134,7 +139,7 @@ app.get('/api/recipes/generate', rateLimiter, (req, res) => {
 
 app.get('/api/recipes', rateLimiter, (req, res) => {
   const { ids, keywords, offset, source, sort, order, liked } = req.query;
-  const user = req.user || {};
+  const user = req.user || { id: null };
 
   db.searchRecipes({
     ids,
