@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/tamarasaurus/recipe-hub.svg?branch=master)](https://travis-ci.org/tamarasaurus/recipe-hub)
 
-Recipe Hub scrapes and stores recipes from subscription box websites. With Recipe Hub you can choose your recipes for the week and generate a shopping list for all the ingredients. Logging in with Google lets you save, like, and exclude recipes. 
+Recipe Hub scrapes and stores recipes from subscription box websites. With Recipe Hub you can choose your recipes for the week and generate a shopping list for all the ingredients. Logging in with Google lets you save, like, and exclude recipes.
 
 ![Recipe Hub UI](https://user-images.githubusercontent.com/1336344/61590615-49b04180-abbc-11e9-814b-033266874edb.png)
 
@@ -15,15 +15,17 @@ Recipe Hub scrapes and stores recipes from subscription box websites. With Recip
 
 ## Setup
 
+### With docker and docker-compose
 
 ```bash
 cp .env.dist .env
+docker-compuse up --build
 ```
 
-In `.env`, replace `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` with real values.
+### Without docker
 
 ```bash
-export $(cat .env)
+cp .env.dist .env
 ./bin/install_dependencies.sh
 ./bin/run.sh
 ```
