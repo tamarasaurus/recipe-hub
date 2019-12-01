@@ -17,11 +17,18 @@ Recipe Hub scrapes and stores recipes from subscription box websites. With Recip
 
 ### With docker and docker-compose
 
+
+
 ```bash
 cp .env.dist .env
 export $(cat .env)
 npm install
 docker-compose up --build
+```
+
+Then to run the scraper
+```
+docker-compose run --rm scraper npm start
 ```
 
 ### Without docker
