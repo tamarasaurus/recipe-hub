@@ -14,6 +14,7 @@ it('merges ingredients with similar names and quantities', () => {
   const expectedIngredients = [
     { label: 'Chicken', unit: 'g', quantity: 120 },
     { label: 'Garlic', unit: 'g', quantity: 2 },
+    { label: 'garlics', unit: 'pieces', quantity: 3 },
     { label: 'chicken fillets', unit: 'g', quantity: 500 },
   ];
 

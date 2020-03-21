@@ -19,6 +19,8 @@ export function mergeSimilarIngredients(ingredients: any) {
       merged.push(ingredient);
     } else if (similar.unit === ingredient.unit) {
       similar.quantity = similar.quantity + ingredient.quantity;
+    } else {
+      merged.push(ingredient);
     }
   });
 
