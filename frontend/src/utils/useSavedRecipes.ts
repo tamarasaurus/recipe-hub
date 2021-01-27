@@ -1,23 +1,28 @@
 import { useState, useEffect } from 'react'
 
 import * as api from 'utils/api'
+import { Recipe } from 'utils/useRecipes'
 
-export default (defaultSavedRecipes, { setRecipes }) => {
+interface Options {
+  setRecipes: (setState: (prevState: Recipe[]) => Recipe[]) => void
+}
+
+export default (defaultSavedRecipes: Recipe[], { setRecipes }: Options) => {
   const [savedRecipes, setSavedRecipes] = useState(defaultSavedRecipes)
-  const [hasLoadedSavecRecipes, setHasLoadedSavecRecipes] = useState(false)
-  const [isLoadingSavecRecipes, setIsLoadingSavecRecipes] = useState(false)
+  const [hasLoadedSavedRecipes, setHasLoadedSavedRecipes] = useState(false)
+  const [isLoadingSavedRecipes, setIsLoadingSavedRecipes] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoadingSavecRecipes(true)
+      setIsLoadingSavedRecipes(true)
       setSavedRecipes(await api.getSavedRecipes())
-      setIsLoadingSavecRecipes(false)
-      setHasLoadedSavecRecipes(true)
+      setIsLoadingSavedRecipes(false)
+      setHasLoadedSavedRecipes(true)
     }
 
     fetchData()
   }, [])
 
-  const toggleSaveRecipe = (recipe) => {
+  const toggleSaveRecipe = (recipe: Recipe) => {
     const isRecipeSaved = savedRecipes.some((r) => r.id === recipe.id)
     if (isRecipeSaved) {
       api.unsaveRecipe(recipe.id)
@@ -33,13 +38,13 @@ export default (defaultSavedRecipes, { setRecipes }) => {
       ])
     }
 
-    setRecipes((recipes) => {
-      return recipes.map((r) => {
+    setRecipes((recipes: Recipe[]) => {
+      return recipes.map((r: Recipe) => {
         if (r.id !== recipe.id) return r
-        return {
-          ...recipe,
+        return Object.assign({
+          recipe,
           saved: !isRecipeSaved,
-        }
+        })
       })
     })
   }
@@ -47,19 +52,21 @@ export default (defaultSavedRecipes, { setRecipes }) => {
   const generateSavedRecipes = async () => {
     const savedRecipes = await api.generateRecipes()
     setSavedRecipes(savedRecipes)
-    setRecipes((recipes) =>
-      recipes.map((recipe) => ({
+    setRecipes((recipes: Recipe[]) => {
+      return recipes.map((recipe: Recipe) => ({
         ...recipe,
-        saved: savedRecipes.some((savedRecipe) => savedRecipe.id === recipe.id),
-      })),
-    )
+        saved: savedRecipes.some(
+          (savedRecipe: Recipe) => savedRecipe.id === recipe.id,
+        ),
+      }))
+    })
   }
 
   return {
     savedRecipes,
     setSavedRecipes,
-    hasLoadedSavecRecipes,
-    isLoadingSavecRecipes,
+    hasLoadedSavedRecipes,
+    isLoadingSavedRecipes,
     toggleSaveRecipe,
     generateSavedRecipes,
   }

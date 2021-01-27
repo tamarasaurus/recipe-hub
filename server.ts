@@ -193,5 +193,5 @@ app.get('/api/recipes/saved', rateLimiter, (req, res) => {
   }
 });
 
-app.use(express.static('./frontend/build/'));
+app.use('/', express.static('./frontend/build/'));
 app.listen(PORT, () => console.log(`Started app on ${PORT}`));
