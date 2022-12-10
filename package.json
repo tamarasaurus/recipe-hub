@@ -48,7 +48,7 @@
     "connect-redis": "^3.4.1",
     "contract-scraper": "^1.0.5",
     "cors": "^2.8.5",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "express-session": "^1.16.1",
     "helmet": "^3.18.0",
     "jest": "24.7.1",
